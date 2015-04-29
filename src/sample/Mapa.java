@@ -1,12 +1,14 @@
 package sample;
 
-import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
 import sample.unitats.arqueria.Bowknight;
 import sample.unitats.infanteria.Halberdier;
 import sample.unitats.infanteria.Knight;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -160,7 +162,5 @@ public class Mapa {
             e.printStackTrace();
         }
     }
-
-    //PROVANT
 
 }
