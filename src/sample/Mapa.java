@@ -142,6 +142,7 @@ public class Mapa {
             System.out.println();
         }
     }
+    /*
 
     //Pre: --
     //Post: Trasllada la unitat de la Posició ori a la Posició fi
@@ -162,6 +163,7 @@ public class Mapa {
             e.printStackTrace();
         }
     }
+    */
 
     //Provant 222
 

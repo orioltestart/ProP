@@ -15,17 +15,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("ProP - FIRE EMBLEM");
+        primaryStage.setScene(new Scene(root, 1200, 700));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) throws IOException {
-        Mapa m;
-        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/mapa1");
-
-        m = new Mapa(f);
-        m.mostrar();
+        launch(args);
     }
 }

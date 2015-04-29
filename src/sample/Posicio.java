@@ -60,6 +60,7 @@ public class Posicio extends Canvas {
         super.getGraphicsContext2D().drawImage(unitat, 0, 0, 40, 40);
     }
 
+    /*
     public void setTerreny(Terreny t) {
         terreny = t;
         super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40); //Pintem el terreny
@@ -70,7 +71,7 @@ public class Posicio extends Canvas {
         super.getGraphicsContext2D().restore();
         super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
     }
-
+*/
     @Override
     public GraphicsContext getGraphicsContext2D() {
         return super.getGraphicsContext2D();
