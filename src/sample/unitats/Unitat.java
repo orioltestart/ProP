@@ -22,12 +22,12 @@ public abstract class Unitat extends Image {
     private Integer MOV;    //nombre de quadres que es pot moure
     private String [] Bonificacio;
     private Integer Rang;   //distancia (en quadres) que pot atacar la unitat
-
+    private String imatge;
 
 
     //constructors
     Unitat(){
-        super("Adreça d'imatge");
+        super("");
         PV = 100;
         POW = 0;
         DEF = 0;
@@ -52,6 +52,10 @@ public abstract class Unitat extends Image {
 
     public void mostraPV(){
         System.out.println(PV);
+    }
+
+    public void setImatge() {
+
     }
 
     public void Mostrar(){
