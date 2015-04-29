@@ -27,6 +27,7 @@ public abstract class Unitat extends Image {
 
     //constructors
     Unitat(){
+        super("Adreça d'imatge");
         PV = 100;
         POW = 0;
         DEF = 0;
@@ -34,6 +35,7 @@ public abstract class Unitat extends Image {
     }
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
+        super("");
         Random r = new Random();
         PV = 100;
         Tipus = t;
