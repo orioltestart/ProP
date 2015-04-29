@@ -91,7 +91,7 @@ public class Mapa {
                                     throw new IllegalArgumentException("Error: Mapa terreny a la posicio: [" + i + "," + j + "] no existeix");
                             }
                             mapa[i][j] = new Posicio(i, j); //Creem la nova posició
-                            mapa[i][j].setTerreny(new Terreny("Terreny Pos: [" + i + "," + j + "]")); //Inserim el terreny determinat a la posició recent creada.
+                            //mapa[i][j].setTerreny(new Terreny("Terreny Pos: [" + i + "," + j + "]")); //Inserim el terreny determinat a la posició recent creada.
                         }
                     }
                     j++;
