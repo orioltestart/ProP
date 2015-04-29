@@ -1,4 +1,6 @@
-package sample;
+package sample.unitats.cavalleria;
+
+import sample.unitats.Mounted;
 
 /**
  * Created by lluis on 22/04/15.

@@ -1,7 +1,10 @@
 package sample;
 
-import sample.terrenys.*;
-import sample.unitats.*;
+import sample.terrenys.Terreny;
+import sample.unitats.Unitat;
+import sample.unitats.arqueria.Bowknight;
+import sample.unitats.infanteria.Halberdier;
+import sample.unitats.infanteria.Knight;
 
 import java.io.*;
 
@@ -54,13 +57,13 @@ public class Mapa {
                             int item = Integer.parseInt(pos[i]); //Intentem Convertir el caràcter en un enter, si no ho és pertany al mapa i llança una Number format exception
                             switch (item) {
                                 case 1:
-                                    aux = new Infanteria();
+                                    aux = new Bowknight();
                                     break;
                                 case 2:
-                                    aux = new Cavalleria();
+                                    aux = new Halberdier();
                                     break;
                                 case 3:
-                                    aux = new Arqueria();
+                                    aux = new Knight();
                                     break;
                                 default:
                                     throw new IllegalArgumentException("Error: Mapa unitat a la posicio: [" + i + "," + j + "] no existeix");

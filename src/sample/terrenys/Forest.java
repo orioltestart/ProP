@@ -1,4 +1,4 @@
-package sample;
+package sample.terrenys;
 
 /**
  * Created by lluis on 24/04/15.

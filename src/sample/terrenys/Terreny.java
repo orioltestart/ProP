@@ -1,37 +1,50 @@
 package sample.terrenys;
 
-import javafx.scene.image.Image;
-
-import java.io.InputStream;
-
 /**
- * Created by OriolTestart on 18/4/15.
+ * Created by lluis on 24/04/15.
  */
-public class Terreny extends Image {
-    private String nom;
+public class Terreny {
 
-    public Terreny(String s) {
-        super("sample/terrenys/flatheightmap.jpg");
-        nom = s;
+    private String NomTipus;
+    private Integer Defensa;
+    private Integer RedDespl;
+    private Boolean Transitable;
+    private Boolean Cura;
+
+    public Terreny(){
+        Defensa = 0;
+        RedDespl = 0;
     }
 
-    public Terreny(String s, boolean b) {
-        super(s, b);
+    public Terreny (String n, Integer d, Integer r, Boolean t, Boolean c){
+        NomTipus = n;
+        Defensa = d;
+        RedDespl = r;
+        Transitable = t;
+        Cura = c;
     }
 
-    public Terreny(String s, double v, double v1, boolean b, boolean b1) {
-        super(s, v, v1, b, b1);
+    public Boolean getTransitable() {
+        return Transitable;
     }
 
-    public Terreny(String s, double v, double v1, boolean b, boolean b1, boolean b2) {
-        super(s, v, v1, b, b1, b2);
+    public Integer getDefensa() {
+        return Defensa;
     }
 
-    public Terreny(InputStream inputStream) {
-        super(inputStream);
+    public Integer getRedDespl() {
+        return RedDespl;
     }
 
-    public Terreny(InputStream inputStream, double v, double v1, boolean b, boolean b1) {
-        super(inputStream, v, v1, b, b1);
+    public String getNomTipus() {
+        return NomTipus;
+    }
+
+    public Boolean getCura() {
+        return Cura;
+    }
+
+    public String toString(){
+        return (NomTipus);
     }
 }

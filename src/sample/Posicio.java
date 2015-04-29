@@ -3,7 +3,7 @@ package sample;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import sample.terrenys.Terreny;
-import sample.unitats.*;
+import sample.unitats.Unitat;
 
 /**
  * Created by OriolTestart on 18/4/15.
