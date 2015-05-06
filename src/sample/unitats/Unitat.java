@@ -32,7 +32,7 @@ public abstract class Unitat {
         DEF = 0;
         MOV = 0;
     }
-    
+
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
         Random r = new Random();
         PV = 100;
