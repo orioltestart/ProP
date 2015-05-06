@@ -70,10 +70,9 @@ public class Posicio extends Canvas {
     }
 
 
-    public void setTerreny() {
-        //terreny = t;
-        super.getGraphicsContext2D().setFill(Color.YELLOW);
-        super.getGraphicsContext2D().fillRect(1, 1, 39, 39);
+    public void setTerreny(Terreny t) {
+        terreny = t;
+        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
     }
 
     /*

@@ -1,5 +1,9 @@
 package sample;
 
+import sample.terrenys.Mountain;
+import sample.terrenys.Plain;
+import sample.terrenys.River;
+import sample.terrenys.Terreny;
 import sample.unitats.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,11 +45,11 @@ public class Mapa {
             MAXH = Integer.parseInt(sCurrentLine.substring(5, 6));
             MAXV = Integer.parseInt(sCurrentLine.substring(7, 8));
 
-            //Saltem les linies en blanc
-            Integer j = 0;
             mapa = new Posicio[MAXH][MAXV];
+
+            Integer j = 0;
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (!sCurrentLine.isEmpty()) { //Si no és una linia en blanc
+                if (!sCurrentLine.isEmpty()) {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
 
                     try {
@@ -71,30 +75,28 @@ public class Mapa {
                         }
                     } catch (NumberFormatException e) { //Si ha fallat la conversió a enter, significa que pertany al mapa.
                         for (int i = 0; i < pos.length; i++) { //Recorrem la linia
-                            //Terreny aux;
+                            Terreny aux;
                             switch (pos[i]) { //Depenent del caràcter que sigui instanciem el que correspongui
                                 case "p":
-                                    System.out.println("Afegim PLANA");
-                                    //aux = new Plana();
+                                    aux = new Plain();
                                     break;
                                 case "M":
-                                    System.out.println("Afegim MUNTANYA");
-                                    //aux = new Muntanya();
+                                    aux = new Mountain();
                                     break;
                                 case "m":
-                                    System.out.println("Afegim MAR");
-                                    //aux = new Mar();
+                                    aux = new River();
                                     break;
                                 default:
                                     throw new IllegalArgumentException("Error: Mapa terreny a la posicio: [" + i + "," + j + "] no existeix");
                             }
-                            //mapa[i][j] = new Posicio(i, j); //Creem la nova posició
-                            //mapa[i][j].setTerreny(new Terreny("Terreny Pos: [" + i + "," + j + "]")); //Inserim el terreny determinat a la posició recent creada.
+                            mapa[i][j] = new Posicio(i, j); //Creem la nova posició
+                            mapa[i][j].setTerreny(aux); //Inserim el terreny determinat a la posició recent creada.
                         }
                     }
                     j++;
                 }
             }
+            System.out.println("Lectura Correcte");
             correcte = true;
             br.close();
         } catch (NumberFormatException e) {
@@ -108,6 +110,19 @@ public class Mapa {
             e.printStackTrace();
             correcte = false;
         }
+    }
+
+
+    public Integer getMidaH() {
+        return MAXH;
+    }
+
+    public Integer getMidaV() {
+        return MAXV;
+    }
+
+    public Posicio getPos(int x, int y) {
+        return mapa[x][y];
     }
 
     public boolean esCorrecte() {

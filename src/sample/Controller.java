@@ -4,14 +4,22 @@
 
 package sample;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
+import sample.terrenys.*;
+
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -45,7 +53,10 @@ public class Controller {
     @FXML
     private GridPane m;
 
-    private Canvas[][] mapa;
+    @FXML
+    private TabPane tp;
+
+    private Mapa mapa;
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
@@ -56,25 +67,18 @@ public class Controller {
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
         assert barraLateral != null : "fx:id=\"barraLateral\" was not injected: check your FXML file 'sample.fxml'.";
 
-        final int numCols = 50;
-        final int numRows = 50;
 
-        m = new GridPane();
+        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/mapa1");
 
-        mapa = new Canvas[50][50];
+        mapa = new Mapa(f);
 
-        for (int i = 0; i < numCols; i++) {
-            for (int j = 0; j < numRows; j++) {
-                Canvas c = new Canvas(i, j);
-                GraphicsContext gc = c.getGraphicsContext2D();
+        Terreny aux = new River();
 
-                gc.setFill(Color.YELLOW);
-                gc.fillRect(1, 1, 39, 39);
-
-                mapa[i][j] = c;
-
-                m.add(c, i, j);
+        for (int i = 0; i < mapa.getMidaH(); i++) {
+            for (int j = 0; j < mapa.getMidaV(); j++) {
+                m.add(mapa.getPos(i, j), i, j);
             }
         }
+
     }
 }
