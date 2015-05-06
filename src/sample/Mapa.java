@@ -71,7 +71,7 @@ public class Mapa {
                                     throw new IllegalArgumentException("Error: Mapa unitat a la posicio: [" + i + "," + j + "] no existeix");
                             }
 
-                            mapa[i][j].setUnitat(aux);
+                            //mapa[i][j].setUnitat(aux);
                         }
                     } catch (NumberFormatException e) { //Si ha fallat la conversió a enter, significa que pertany al mapa.
                         for (int i = 0; i < pos.length; i++) { //Recorrem la linia
@@ -92,7 +92,7 @@ public class Mapa {
                                 default:
                                     throw new IllegalArgumentException("Error: Mapa terreny a la posicio: [" + i + "," + j + "] no existeix");
                             }
-                            mapa[i][j] = new Posicio(i, j); //Creem la nova posició
+                            //mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                             //mapa[i][j].setTerreny(new Terreny("Terreny Pos: [" + i + "," + j + "]")); //Inserim el terreny determinat a la posició recent creada.
                         }
                     }

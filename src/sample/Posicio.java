@@ -1,9 +1,15 @@
 package sample;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
+
+import java.util.EventObject;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -54,27 +60,32 @@ public class Posicio extends Canvas {
         return unitat;
     }
 
-    public void setUnitat(Unitat u) throws IllegalArgumentException {
+    public void setUnitat() {
+        /*
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
-        super.getGraphicsContext2D().drawImage(unitat, 0, 0, 40, 40);
+        */
+        super.getGraphicsContext2D().setFill(Color.RED);
+        super.getGraphicsContext2D().fillText("U", 20, 20);
+    }
+
+
+    public void setTerreny() {
+        //terreny = t;
+        super.getGraphicsContext2D().setFill(Color.YELLOW);
+        super.getGraphicsContext2D().fillRect(1, 1, 39, 39);
     }
 
     /*
-    public void setTerreny(Terreny t) {
-        terreny = t;
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40); //Pintem el terreny
-    }
-
     public void eliminaUnitat() {
         unitat = null;
         super.getGraphicsContext2D().restore();
         super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
     }
-*/
+    */
+
     @Override
     public GraphicsContext getGraphicsContext2D() {
         return super.getGraphicsContext2D();
     }
-
 }
