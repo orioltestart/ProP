@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Created by lluis on 17/04/15.
  */
-public abstract class Unitat extends Image {
+public abstract class Unitat {
     //constant es final
 
     //atributs
@@ -22,12 +22,11 @@ public abstract class Unitat extends Image {
     private Integer MOV;    //nombre de quadres que es pot moure
     private String [] Bonificacio;
     private Integer Rang;   //distancia (en quadres) que pot atacar la unitat
-    private String imatge;
+    private Image img;
 
 
     //constructors
     Unitat(){
-        super("");
         PV = 100;
         POW = 0;
         DEF = 0;
@@ -35,7 +34,6 @@ public abstract class Unitat extends Image {
     }
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
-        super("");
         Random r = new Random();
         PV = 100;
         Tipus = t;
@@ -54,8 +52,8 @@ public abstract class Unitat extends Image {
         System.out.println(PV);
     }
 
-    public void setImatge() {
-
+    public void setImatge(int i) {
+        img = new Image("sample/unitats/" + Classe + "v" + i + ".png");
     }
 
     public void Mostrar(){
@@ -105,9 +103,6 @@ public abstract class Unitat extends Image {
         if (PV<50){
             resultat/=2;
         }
-
-        //System.out.println("ATAC: " + this.POW);
-        //System.out.println("DEFENSA: " + defensaF);
 
         if (resultat < 0){
             resultat = 0;
