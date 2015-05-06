@@ -1,10 +1,6 @@
 package sample;
 
-import sample.unitats.Unitat;
-import sample.unitats.arqueria.Bowknight;
-import sample.unitats.infanteria.Halberdier;
-import sample.unitats.infanteria.Knight;
-
+import sample.unitats.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
