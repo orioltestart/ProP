@@ -1,16 +1,15 @@
+/**
+ * @file Unitat.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Unitat blablabla
+ */
+
 package sample.unitats;
 
-
 import javafx.scene.image.Image;
-
 import java.util.Random;
 
-
-/**
- * Created by lluis on 17/04/15.
- */
 public abstract class Unitat {
-    //constant es final
 
     //atributs
     private Integer ID;
@@ -39,6 +38,7 @@ public abstract class Unitat {
         Tipus = t;
         Classe = c;
         ID = r.nextInt(1000);
+        //els atributs varien
         POW = atac + r.nextInt(20);
         DEF = defensa + r.nextInt(10);
         MOV = moviment;
@@ -48,6 +48,10 @@ public abstract class Unitat {
 
     }
 
+    /**
+     * @pre --
+     * @post
+     */
     public void mostraPV(){
         System.out.println(PV);
     }
@@ -115,7 +119,7 @@ public abstract class Unitat {
         Integer bonusTotal = 1;
 
         if (Bonificacio[0].equals(u.Classe) || Bonificacio[1].equals(u.Classe)){
-            bonusTotal+=2;
+            bonusTotal*=3;
         }
 
         return bonusTotal;

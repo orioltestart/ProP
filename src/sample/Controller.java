@@ -4,28 +4,19 @@
 
 package sample;
 
-import java.io.File;
-import java.net.URL;
-import java.nio.file.Path;
-import java.util.ResourceBundle;
-
-import sample.terrenys.*;
-
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import sample.terrenys.River;
+import sample.terrenys.Terreny;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Controller {
 
@@ -68,7 +59,7 @@ public class Controller {
         assert barraLateral != null : "fx:id=\"barraLateral\" was not injected: check your FXML file 'sample.fxml'.";
 
 
-        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/mapa1");
+        File f = new File("/home/lluis/ProP/src/sample/mapa1");
 
         mapa = new Mapa(f);
 
