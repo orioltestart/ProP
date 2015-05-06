@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 /**
  * Created by lluis on 24/04/15.
  */
+
+
 public class Terreny extends Image {
 
     private String NomTipus;
