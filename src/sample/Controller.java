@@ -59,7 +59,7 @@ public class Controller {
         assert barraLateral != null : "fx:id=\"barraLateral\" was not injected: check your FXML file 'sample.fxml'.";
 
 
-        File f = new File("/home/lluis/ProP/src/sample/mapa1");
+        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/mapa3");
 
         mapa = new Mapa(f);
 
