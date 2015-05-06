@@ -1,6 +1,4 @@
-package sample.unitats.arqueria;
-
-import sample.unitats.Ranged;
+package sample.unitats;
 
 /**
  * Created by lluis on 22/04/15.

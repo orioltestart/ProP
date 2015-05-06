@@ -1,6 +1,4 @@
-package sample.unitats.infanteria;
-
-import sample.unitats.Infantry;
+package sample.unitats;
 
 /**
  * Created by lluis on 22/04/15.
