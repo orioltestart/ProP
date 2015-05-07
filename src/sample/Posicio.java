@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
@@ -29,7 +30,7 @@ public class Posicio extends Canvas {
     }
 
     public Posicio() {
-        super(40, 40);
+        super(80, 80);
         a_x = -1;
         a_y = -1;
         unitat = null;
@@ -38,7 +39,7 @@ public class Posicio extends Canvas {
     }
 
     public Posicio(Integer x, Integer y) {
-        super(40, 40);
+        super(80, 80);
         a_x = x;
         a_y = y;
         unitat = null;
@@ -64,15 +65,19 @@ public class Posicio extends Canvas {
         /*
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
-        */
+
         super.getGraphicsContext2D().setFill(Color.RED);
         super.getGraphicsContext2D().fillText("U", 20, 20);
+        */
     }
 
 
     public void setTerreny(Terreny t) {
         terreny = t;
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
+        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 80, 80);
+        Image img = new Image("sample/unitats/Wyvernknightv1.png");
+        super.getGraphicsContext2D().drawImage(img, 0, 0, 80, 80);
+
     }
 
     /*

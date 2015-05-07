@@ -1,9 +1,6 @@
 package sample;
 
-import sample.terrenys.Mountain;
-import sample.terrenys.Plain;
-import sample.terrenys.River;
-import sample.terrenys.Terreny;
+import sample.terrenys.*;
 import sample.unitats.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,8 +39,10 @@ public class Mapa {
 
             //Llegim les mides X i Y del mapa
             sCurrentLine = br.readLine();
-            MAXH = Integer.parseInt(sCurrentLine.substring(5, 6));
-            MAXV = Integer.parseInt(sCurrentLine.substring(7, 8));
+            MAXH = Integer.parseInt(sCurrentLine.substring(5, 7));
+            MAXV = Integer.parseInt(sCurrentLine.substring(8, 10));
+
+            System.out.println(MAXH + "," + MAXV);
 
             mapa = new Posicio[MAXH][MAXV];
 
@@ -51,7 +50,6 @@ public class Mapa {
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
                 if (!sCurrentLine.isEmpty()) {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
-
                     try {
                         Unitat aux;
                         for (int i = 0; i < pos.length; i++) {
@@ -85,6 +83,12 @@ public class Mapa {
                                     break;
                                 case "m":
                                     aux = new River();
+                                    break;
+                                case "f":
+                                    aux = new Forest();
+                                    break;
+                                case "F":
+                                    aux = new Fortress();
                                     break;
                                 default:
                                     throw new IllegalArgumentException("Error: Mapa terreny a la posicio: [" + i + "," + j + "] no existeix");
