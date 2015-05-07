@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import sample.terrenys.*;
 import sample.unitats.*;
 import java.io.BufferedReader;
@@ -39,8 +41,10 @@ public class Mapa {
 
             //Llegim les mides X i Y del mapa
             sCurrentLine = br.readLine();
-            MAXH = Integer.parseInt(sCurrentLine.substring(5, 7));
-            MAXV = Integer.parseInt(sCurrentLine.substring(8, 10));
+            String[] mida = sCurrentLine.substring(5).split("x");
+
+            MAXH = Integer.parseInt(mida[0]);
+            MAXV = Integer.parseInt(mida[1]);
 
             System.out.println(MAXH + "," + MAXV);
 
@@ -95,6 +99,14 @@ public class Mapa {
                             }
                             mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                             mapa[i][j].setTerreny(aux); //Inserim el terreny determinat a la posició recent creada.
+
+                            mapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    System.out.println("Hola M'han Clicat");
+                                }
+                            });
+
                         }
                     }
                     j++;

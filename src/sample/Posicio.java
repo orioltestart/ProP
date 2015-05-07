@@ -75,7 +75,7 @@ public class Posicio extends Canvas {
     public void setTerreny(Terreny t) {
         terreny = t;
         super.getGraphicsContext2D().drawImage(terreny, 0, 0, 80, 80);
-        Image img = new Image("sample/unitats/Wyvernknightv1.png");
+        Image img = new Image("sample/unitats/Bowknightv1.png");
         super.getGraphicsContext2D().drawImage(img, 0, 0, 80, 80);
 
     }
