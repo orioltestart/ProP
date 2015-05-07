@@ -4,3 +4,21 @@
     Revisar Instancies -> Mapa
     Constructor Unitat (super ())
     Constructor Terreny modificat
+
+07/05/2015
+
+llegenda mapa:
+
+        /**
+         * 0: plain
+         * 1: Forest
+         * 2: Mountain
+         * 3: Fortress
+         * 4: River (full)
+         * 5: River (TL)
+         * 6: River (TR)
+         * 7: River (BL)
+         * 8: River (BR)
+         * 9: Wall
+         */
+les imatges encara no les tinc preparades. pintaho del color que et sembli
