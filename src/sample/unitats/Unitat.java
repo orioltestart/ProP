@@ -64,6 +64,10 @@ public abstract class Unitat {
         return img;
     }
 
+    public Integer getMOV() {
+        return MOV;
+    }
+
     public void Mostrar(){
         System.out.println("ID: "+ID);
         System.out.println("Tipus: "+Tipus);

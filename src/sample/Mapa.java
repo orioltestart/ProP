@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import sample.terrenys.*;
 import sample.unitats.*;
@@ -22,6 +23,7 @@ public class Mapa {
     private Integer MAXH;
     private Integer MAXV;
     private Boolean correcte;
+    private Posicio seleccionada;
 
 
     public Mapa() {
@@ -49,8 +51,6 @@ public class Mapa {
             MAXH = Integer.parseInt(mida[0]);
             MAXV = Integer.parseInt(mida[1]);
 
-            System.out.println(MAXH + "," + MAXV);
-
             mapa = new Posicio[MAXH][MAXV];
 
             Integer j = 0;
@@ -68,9 +68,20 @@ public class Mapa {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     try {
-                                        Posicio p = (Posicio) mouseEvent.getTarget();
-                                        p.setUnitat(new Halberdier());
-                                        System.out.println("[" + p.getX() + "," + p.getY() + "]");
+                                        seleccionada = (Posicio) mouseEvent.getTarget();
+
+                                        if (seleccionada.getUnitat() != null) {
+                                            ArrayList<Posicio> posicions = getRangMoviment(seleccionada);
+
+                                            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                                                for (Posicio aux : posicions) aux.unMask();
+                                            } else {
+                                                for (Posicio aux : posicions) {
+                                                    if (!aux.isMasked()) aux.setMasked();
+                                                }
+
+                                            }
+                                        }
                                     } catch (IllegalArgumentException e) {
                                         System.out.println(e.getMessage());
                                     } catch (Exception e) {
@@ -87,10 +98,11 @@ public class Mapa {
                         }
                     }
                     j++;
-                }
+                } else j = 0;
             }
             System.out.println("Lectura Correcte");
             correcte = true;
+            mapa[10][10].setUnitat(new Wyvernknight());
             br.close();
         } catch (NumberFormatException e) {
             System.out.println("Error: Format del mapa Incorrecte");
@@ -172,9 +184,6 @@ public class Mapa {
     }
 
 
-
-    /*
-
     //Pre: --
     //Post: Trasllada la unitat de la Posició ori a la Posició fi
     //Excepcions: Desplaçar una unitat a una posició ja ocupada llança una IllegalArgumentException així que la posició ori no tingui cap unitat per desplaçar
@@ -194,7 +203,26 @@ public class Mapa {
             e.printStackTrace();
         }
     }
-    */
+
+    public ArrayList<Posicio> getRangMoviment(Posicio p) {
+        ArrayList<Posicio> posicions = new ArrayList<Posicio>();
+        if (p.getUnitat() != null) {
+            Posicio iniciQ = new Posicio(seleccionada.getX() - seleccionada.getUnitat().getMOV(), seleccionada.getY() - seleccionada.getUnitat().getMOV());
+            Posicio finalQ = new Posicio(seleccionada.getX() + seleccionada.getUnitat().getMOV(), seleccionada.getY() + seleccionada.getUnitat().getMOV());
+
+
+            for (int i = iniciQ.getX(); i <= finalQ.getX(); i++) {
+                for (int j = iniciQ.getY(); j <= finalQ.getY(); j++) {
+                    Posicio val = new Posicio(Math.abs(seleccionada.getX() - i), Math.abs(seleccionada.getY() - j));
+                    if (i >= 0 && i < MAXH && j >= 0 && j < MAXV) {
+                        if (val.getX() + val.getY() <= seleccionada.getUnitat().getMOV() && (mapa[i][j] != seleccionada))
+                            posicions.add(mapa[i][j]);
+                    }
+                }
+            }
+        }
+        return posicions;
+    }
 
     //Provant 222
 

@@ -1,8 +1,10 @@
 package sample;
 
 
+
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
@@ -15,9 +17,9 @@ import sample.unitats.Unitat;
 public class Posicio extends Canvas {
     private Integer a_x;
     private Integer a_y;
-    private Boolean seleccionada;
     private Unitat unitat;
     private Terreny terreny;
+    private Boolean masked = false;
 
     @Override
     public String toString() {
@@ -25,21 +27,19 @@ public class Posicio extends Canvas {
     }
 
     public Posicio() {
-        super(80, 80);
+        super(40, 40);
         a_x = -1;
         a_y = -1;
         unitat = null;
         terreny = null;
-        seleccionada = null;
     }
 
     public Posicio(Integer x, Integer y) {
-        super(80, 80);
+        super(40, 40);
         a_x = x;
         a_y = y;
         unitat = null;
         terreny = null;
-        seleccionada = false;
     }
 
     public Integer getX() throws NullPointerException {
@@ -60,21 +60,41 @@ public class Posicio extends Canvas {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
         unitat.setImatge(1);
-        super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 80, 80);
+        super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 40, 40);
+        super.getGraphicsContext2D().save();
     }
 
-
-    public void setTerreny(Terreny t) {
-        terreny = t;
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 80, 80);
-    }
-
-    /*
     public void eliminaUnitat() {
         unitat = null;
         super.getGraphicsContext2D().restore();
         super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
+        super.getGraphicsContext2D().save();
     }
-    */
+
+    public void setTerreny(Terreny t) {
+        terreny = t;
+        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
+        super.getGraphicsContext2D().save();
+    }
+
+    public Boolean isMasked() {
+        return masked;
+    }
+
+    public void setMasked() {
+        super.getGraphicsContext2D().save();
+        super.getGraphicsContext2D().setEffect(new BoxBlur(0, 80, 1));
+        super.getGraphicsContext2D().setFill(Color.RED);
+        super.getGraphicsContext2D().fillRect(0, 0, 40, 40);
+        masked = true;
+    }
+
+    public void unMask() {
+        super.getGraphicsContext2D().restore();
+        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
+        if (unitat != null) super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 40, 40);
+        masked = false;
+    }
+
 
 }
