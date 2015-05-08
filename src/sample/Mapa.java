@@ -1,9 +1,7 @@
 package sample;
 
 import javafx.event.EventHandler;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import sample.terrenys.*;
 import sample.unitats.*;
 import java.io.BufferedReader;
@@ -21,7 +19,6 @@ public class Mapa {
     private Posicio[][] mapa;
     private Integer MAXH;
     private Integer MAXV;
-    private Boolean correcte;
 
     private Posicio seleccionada;
     private Posicio actual;
@@ -30,7 +27,6 @@ public class Mapa {
     public Mapa() {
         MAXH = 0;
         MAXV = 0;
-        correcte = false;
         mapa = new Posicio[MAXH][MAXV];
         nom = "Mapa no construit";
     }
@@ -65,13 +61,14 @@ public class Mapa {
                             mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                             mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
 
+
                             mapa[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     actual = (Posicio) mouseEvent.getTarget();
-                                    if (actual.isMasked()) {
+                                    if (actual.isMasked())
                                         actual.setSeleccionat();
-                                    }
+
                                 }
                             });
 
@@ -79,9 +76,9 @@ public class Mapa {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     Posicio aux = (Posicio) mouseEvent.getTarget();
-                                    if (aux.isMasked()) {
+                                    if (aux.isMasked())
                                         aux.eliminaSeleccio();
-                                    }
+
                                 }
                             });
 
@@ -89,55 +86,43 @@ public class Mapa {
                             mapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
-                                    try {
-                                        Posicio aux = (Posicio) mouseEvent.getTarget();
-                                        ArrayList<Posicio> posicions;
+                                    Posicio aux = (Posicio) mouseEvent.getTarget();
+                                    ArrayList<Posicio> posicions;
 
-                                        if (seleccionada != aux) {
-                                            if (seleccionada != null) {
-                                                posicions = getRangMoviment(seleccionada);
-                                                for (Posicio i : posicions) i.unMask();
-                                            }
-
-                                            seleccionada = aux;
+                                    if (seleccionada != aux) {
+                                        if (seleccionada != null) {
                                             posicions = getRangMoviment(seleccionada);
-                                            for (Posicio i : posicions) i.setMasked();
+                                            for (Posicio i : posicions) i.unMask();
                                         }
 
-
-                                    } catch (IllegalArgumentException e) {
-                                        System.out.println(e.getMessage());
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                                        seleccionada = aux;
+                                        posicions = getRangMoviment(seleccionada);
+                                        for (Posicio i : posicions) i.setMasked();
                                     }
                                 }
                             });
 
                         }
                     } else {
-                        for (int i = 0; i < pos.length; i++) {
+                        for (int i = 0; i < pos.length; i++)
                             mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
-                        }
+
                     }
                     j++;
                 } else j = 0;
             }
             System.out.println("Lectura Correcte");
-            correcte = true;
             mapa[10][10].setUnitat(new Halberdier());
             mapa[11][11].setUnitat(new Halberdier());
             br.close();
 
         } catch (NumberFormatException e) {
             System.out.println("Error: Format del mapa Incorrecte");
-            correcte = false;
         } catch (IllegalArgumentException e) {
             System.out.print(e.getMessage());
-            correcte = false;
         } catch (IOException e) {
             System.out.println("Error: Lectura Fallida");
             e.printStackTrace();
-            correcte = false;
         }
     }
 
@@ -152,10 +137,6 @@ public class Mapa {
 
     public Posicio getPos(int x, int y) {
         return mapa[x][y];
-    }
-
-    public boolean esCorrecte() {
-        return correcte;
     }
 
     //Pre: --

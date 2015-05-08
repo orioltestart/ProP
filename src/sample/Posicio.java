@@ -1,11 +1,8 @@
 package sample;
 
 
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
