@@ -52,7 +52,8 @@ public class Mapa {
 
             Integer j = 0;
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (!sCurrentLine.isEmpty()) {
+                if (!sCurrentLine.isEmpty()) j = 0;
+                else {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
 
                     if (j < MAXV) {
@@ -61,6 +62,7 @@ public class Mapa {
                             mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                             mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
 
+                            /* EVENT HANDLERS PER POSICIONS */
 
                             mapa[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
@@ -106,10 +108,9 @@ public class Mapa {
                     } else {
                         for (int i = 0; i < pos.length; i++)
                             mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
-
                     }
                     j++;
-                } else j = 0;
+                }
             }
             System.out.println("Lectura Correcte");
             mapa[10][10].setUnitat(new Halberdier());
