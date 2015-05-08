@@ -1,16 +1,11 @@
 package sample;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
+
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
-
-import java.util.EventObject;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -61,23 +56,17 @@ public class Posicio extends Canvas {
         return unitat;
     }
 
-    public void setUnitat() {
-        /*
+    public void setUnitat(Unitat u) {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
-
-        super.getGraphicsContext2D().setFill(Color.RED);
-        super.getGraphicsContext2D().fillText("U", 20, 20);
-        */
+        unitat.setImatge(1);
+        super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 80, 80);
     }
 
 
     public void setTerreny(Terreny t) {
         terreny = t;
         super.getGraphicsContext2D().drawImage(terreny, 0, 0, 80, 80);
-        Image img = new Image("sample/unitats/Bowknightv1.png");
-        super.getGraphicsContext2D().drawImage(img, 0, 0, 80, 80);
-
     }
 
     /*
@@ -88,8 +77,4 @@ public class Posicio extends Canvas {
     }
     */
 
-    @Override
-    public GraphicsContext getGraphicsContext2D() {
-        return super.getGraphicsContext2D();
-    }
 }

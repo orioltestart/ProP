@@ -8,6 +8,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
+import java.util.List;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -54,59 +57,33 @@ public class Mapa {
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
                 if (!sCurrentLine.isEmpty()) {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
-                    try {
-                        Unitat aux;
+
+                    if (j < MAXV) {
                         for (int i = 0; i < pos.length; i++) {
 
-                            int item = Integer.parseInt(pos[i]); //Intentem Convertir el caràcter en un enter, si no ho és pertany al mapa i llança una Number format exception
-                            switch (item) {
-                                case 1:
-                                    aux = new Bowknight();
-                                    break;
-                                case 2:
-                                    aux = new Halberdier();
-                                    break;
-                                case 3:
-                                    aux = new Knight();
-                                    break;
-                                default:
-                                    throw new IllegalArgumentException("Error: Mapa unitat a la posicio: [" + i + "," + j + "] no existeix");
-                            }
-
-                            //mapa[i][j].setUnitat(aux);
-                        }
-                    } catch (NumberFormatException e) { //Si ha fallat la conversió a enter, significa que pertany al mapa.
-                        for (int i = 0; i < pos.length; i++) { //Recorrem la linia
-                            Terreny aux;
-                            switch (pos[i]) { //Depenent del caràcter que sigui instanciem el que correspongui
-                                case "p":
-                                    aux = new Plain();
-                                    break;
-                                case "M":
-                                    aux = new Mountain();
-                                    break;
-                                case "m":
-                                    aux = new River();
-                                    break;
-                                case "f":
-                                    aux = new Forest();
-                                    break;
-                                case "F":
-                                    aux = new Fortress();
-                                    break;
-                                default:
-                                    throw new IllegalArgumentException("Error: Mapa terreny a la posicio: [" + i + "," + j + "] no existeix");
-                            }
                             mapa[i][j] = new Posicio(i, j); //Creem la nova posició
-                            mapa[i][j].setTerreny(aux); //Inserim el terreny determinat a la posició recent creada.
+                            mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
 
                             mapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
-                                    System.out.println("Hola M'han Clicat");
+                                    try {
+                                        Posicio p = (Posicio) mouseEvent.getTarget();
+                                        p.setUnitat(new Halberdier());
+                                        System.out.println("[" + p.getX() + "," + p.getY() + "]");
+                                    } catch (IllegalArgumentException e) {
+                                        System.out.println(e.getMessage());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             });
 
+                        }
+                    } else {
+                        Unitat unitat;
+                        for (int i = 0; i < pos.length; i++) {
+                            mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
                         }
                     }
                     j++;
@@ -169,6 +146,33 @@ public class Mapa {
             System.out.println();
         }
     }
+
+    private Terreny fabricaTerrenys(Integer i) {
+        if (i.equals(0)) return new Plain();
+        else if (i.equals(1)) return new Forest();
+        else if (i.equals(2)) return new Mountain();
+        else if (i.equals(3)) return new Fortress();
+        else if (i.equals(4)) return new River();
+        else if (i.equals(5)) return new River();
+        else if (i.equals(6)) return new River();
+        else if (i.equals(7)) return new River();
+        else if (i.equals(8)) return new River();
+        else if (i.equals(9)) return new Plain();
+        else return new Terreny();
+    }
+
+    private Unitat fabricaUnitats(Integer i) {
+        if (i.equals(0)) return new Halberdier();
+        else if (i.equals(1)) return new Knight();
+        else if (i.equals(2)) return new Bowknight();
+        else if (i.equals(3)) return new Marksman();
+        else if (i.equals(4)) return new Paladin();
+        else if (i.equals(5)) return new Wyvernknight();
+        else return new Halberdier(); //Todo
+    }
+
+
+
     /*
 
     //Pre: --

@@ -51,7 +51,7 @@ public class Controller {
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
 
-        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/mapa3");
+        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/prova4");
 
         mapa = new Mapa(f);
 

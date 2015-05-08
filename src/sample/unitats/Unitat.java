@@ -60,6 +60,10 @@ public abstract class Unitat {
         img = new Image("sample/unitats/" + Classe + "v" + i + ".png");
     }
 
+    public Image getImg() {
+        return img;
+    }
+
     public void Mostrar(){
         System.out.println("ID: "+ID);
         System.out.println("Tipus: "+Tipus);
