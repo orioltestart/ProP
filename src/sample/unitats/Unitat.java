@@ -68,6 +68,10 @@ public abstract class Unitat {
         return MOV;
     }
 
+    public Integer getPV() {
+        return PV;
+    }
+
     public void Mostrar(){
         System.out.println("ID: "+ID);
         System.out.println("Tipus: "+Tipus);

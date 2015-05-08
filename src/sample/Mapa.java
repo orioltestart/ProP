@@ -1,8 +1,9 @@
 package sample;
 
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import sample.terrenys.*;
 import sample.unitats.*;
 import java.io.BufferedReader;
@@ -10,8 +11,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
-import java.util.List;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -23,7 +22,9 @@ public class Mapa {
     private Integer MAXH;
     private Integer MAXV;
     private Boolean correcte;
+
     private Posicio seleccionada;
+    private Posicio actual;
 
 
     public Mapa() {
@@ -64,24 +65,46 @@ public class Mapa {
                             mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                             mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
 
+                            mapa[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    actual = (Posicio) mouseEvent.getTarget();
+                                    if (actual.isMasked()) {
+                                        actual.setSeleccionat();
+                                    }
+                                }
+                            });
+
+                            mapa[i][j].setOnMouseExited(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    Posicio aux = (Posicio) mouseEvent.getTarget();
+                                    if (aux.isMasked()) {
+                                        aux.eliminaSeleccio();
+                                    }
+                                }
+                            });
+
+
                             mapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     try {
-                                        seleccionada = (Posicio) mouseEvent.getTarget();
+                                        Posicio aux = (Posicio) mouseEvent.getTarget();
+                                        ArrayList<Posicio> posicions;
 
-                                        if (seleccionada.getUnitat() != null) {
-                                            ArrayList<Posicio> posicions = getRangMoviment(seleccionada);
-
-                                            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                                                for (Posicio aux : posicions) aux.unMask();
-                                            } else {
-                                                for (Posicio aux : posicions) {
-                                                    if (!aux.isMasked()) aux.setMasked();
-                                                }
-
+                                        if (seleccionada != aux) {
+                                            if (seleccionada != null) {
+                                                posicions = getRangMoviment(seleccionada);
+                                                for (Posicio i : posicions) i.unMask();
                                             }
+
+                                            seleccionada = aux;
+                                            posicions = getRangMoviment(seleccionada);
+                                            for (Posicio i : posicions) i.setMasked();
                                         }
+
+
                                     } catch (IllegalArgumentException e) {
                                         System.out.println(e.getMessage());
                                     } catch (Exception e) {
@@ -92,7 +115,6 @@ public class Mapa {
 
                         }
                     } else {
-                        Unitat unitat;
                         for (int i = 0; i < pos.length; i++) {
                             mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
                         }
@@ -102,8 +124,10 @@ public class Mapa {
             }
             System.out.println("Lectura Correcte");
             correcte = true;
-            mapa[10][10].setUnitat(new Wyvernknight());
+            mapa[10][10].setUnitat(new Halberdier());
+            mapa[11][11].setUnitat(new Halberdier());
             br.close();
+
         } catch (NumberFormatException e) {
             System.out.println("Error: Format del mapa Incorrecte");
             correcte = false;
@@ -214,6 +238,7 @@ public class Mapa {
             for (int i = iniciQ.getX(); i <= finalQ.getX(); i++) {
                 for (int j = iniciQ.getY(); j <= finalQ.getY(); j++) {
                     Posicio val = new Posicio(Math.abs(seleccionada.getX() - i), Math.abs(seleccionada.getY() - j));
+
                     if (i >= 0 && i < MAXH && j >= 0 && j < MAXV) {
                         if (val.getX() + val.getY() <= seleccionada.getUnitat().getMOV() && (mapa[i][j] != seleccionada))
                             posicions.add(mapa[i][j]);

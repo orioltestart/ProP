@@ -1,10 +1,11 @@
 package sample;
 
 
-
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
@@ -23,11 +24,15 @@ public class Posicio extends Canvas {
 
     @Override
     public String toString() {
-        return "[" + a_x + "," + a_y + "]: " + unitat.toString() + " " + terreny.toString();
+        String missatge = "";
+        missatge += "[" + a_x + "," + a_y + "]";
+        if (unitat != null) missatge += " U: " + unitat.toString();
+        if (terreny != null) missatge += " T: " + terreny.toString();
+        return missatge;
     }
 
     public Posicio() {
-        super(40, 40);
+        super(80, 80);
         a_x = -1;
         a_y = -1;
         unitat = null;
@@ -35,7 +40,7 @@ public class Posicio extends Canvas {
     }
 
     public Posicio(Integer x, Integer y) {
-        super(40, 40);
+        super(80, 80);
         a_x = x;
         a_y = y;
         unitat = null;
@@ -60,41 +65,71 @@ public class Posicio extends Canvas {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
         unitat.setImatge(1);
-        super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 40, 40);
-        super.getGraphicsContext2D().save();
+        dibuixaUnitat();
     }
 
     public void eliminaUnitat() {
         unitat = null;
-        super.getGraphicsContext2D().restore();
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
-        super.getGraphicsContext2D().save();
+        dibuixaTerreny();
     }
 
     public void setTerreny(Terreny t) {
         terreny = t;
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
-        super.getGraphicsContext2D().save();
+        dibuixaTerreny();
     }
+
+    /*  METODES DE SELECCIO  */
 
     public Boolean isMasked() {
         return masked;
     }
 
     public void setMasked() {
-        super.getGraphicsContext2D().save();
-        super.getGraphicsContext2D().setEffect(new BoxBlur(0, 80, 1));
-        super.getGraphicsContext2D().setFill(Color.RED);
-        super.getGraphicsContext2D().fillRect(0, 0, 40, 40);
+        System.out.println("Enmascarant -> " + this);
+        dibuixaMascara(Color.RED);
         masked = true;
     }
 
     public void unMask() {
-        super.getGraphicsContext2D().restore();
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 40, 40);
-        if (unitat != null) super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 40, 40);
+        dibuixaTerreny();
+        dibuixaUnitat();
         masked = false;
     }
 
+    public void setSeleccionat() {
+        dibuixaMascara(Color.GREEN);
+    }
+
+    public void eliminaSeleccio() {
+        dibuixaTerreny();
+        dibuixaUnitat();
+        if (isMasked()) setMasked();
+    }
+
+    private void dibuixaUnitat() {
+        if (unitat != null) {
+            super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 80, 80);
+            /* BARRA DE VIDA */
+            super.getGraphicsContext2D().setFill(Color.BLACK);
+            super.getGraphicsContext2D().fillRect(3, 3, 74, 10);
+            super.getGraphicsContext2D().setFill(Color.GREENYELLOW);
+            super.getGraphicsContext2D().fillRect(4, 4, 0.72 * unitat.getPV(), 8);
+            /* GUARDEM EL RESULTAT */
+            super.getGraphicsContext2D().save();
+        }
+    }
+
+    private void dibuixaTerreny() {
+        super.getGraphicsContext2D().restore();
+        super.getGraphicsContext2D().drawImage(terreny, 0, 0, 80, 80);
+        super.getGraphicsContext2D().save();
+    }
+
+    private void dibuixaMascara(Color c) {
+        super.getGraphicsContext2D().setFill(c);
+        super.getGraphicsContext2D().setGlobalAlpha(10);
+        super.getGraphicsContext2D().setEffect(new GaussianBlur(100));
+        super.getGraphicsContext2D().fillRect(0, 0, 80, 80);
+    }
 
 }
