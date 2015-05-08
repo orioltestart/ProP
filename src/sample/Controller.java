@@ -26,9 +26,6 @@ public class Controller {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="barraSuperior"
-    private HBox barraSuperior; // Value injected by FXMLLoader
-
     @FXML // fx:id="contenidorMapa"
     private ScrollPane contenidorMapa; // Value injected by FXMLLoader
 
@@ -37,9 +34,6 @@ public class Controller {
 
     @FXML // fx:id="finestra"
     private BorderPane finestra; // Value injected by FXMLLoader
-
-    @FXML // fx:id="barraLateral"
-    private VBox barraLateral; // Value injected by FXMLLoader
 
     @FXML
     private GridPane m;
@@ -52,11 +46,9 @@ public class Controller {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert barraSuperior != null : "fx:id=\"barraSuperior\" was not injected: check your FXML file 'sample.fxml'.";
         assert contenidorMapa != null : "fx:id=\"contenidorMapa\" was not injected: check your FXML file 'sample.fxml'.";
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
-        assert barraLateral != null : "fx:id=\"barraLateral\" was not injected: check your FXML file 'sample.fxml'.";
 
 
         File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/mapa3");
