@@ -10,7 +10,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import sample.terrenys.River;
 import sample.terrenys.Terreny;
 
@@ -51,7 +50,7 @@ public class Controller {
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
 
-        File f = new File("/Users/OriolTestart/IdeaProjects/Mapa/src/sample/prova4");
+        File f = new File("/home/lluis/ProP/src/sample/prova4");
 
         mapa = new Mapa(f);
 

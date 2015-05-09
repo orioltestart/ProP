@@ -6,7 +6,7 @@ package sample.unitats;
 public class Marksman extends Ranged {
 
     public Marksman(){
-        super("Marksman", 70 , 50, 5, 3, "Halberdier-Wyvernknight");
+        super("Marksman", 70 , 40, 4, 3, "Halberdier-Wyvernknight");
 
     }
 }

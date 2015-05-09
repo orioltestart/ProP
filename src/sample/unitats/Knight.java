@@ -6,7 +6,7 @@ package sample.unitats;
 public class Knight extends Infantry {
 
     public Knight(){
-        super("Knight", 70 , 60, 6, "Halberdier-Bowknight");
+        super("Knight", 70 , 55, 4, "Halberdier-Bowknight");
 
     }
 

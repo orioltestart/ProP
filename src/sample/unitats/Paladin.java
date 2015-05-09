@@ -6,7 +6,7 @@ package sample.unitats;
 public class Paladin extends Mounted {
 
     public Paladin(){
-        super("Paladin", 70 , 50, 8, "Marksman-Knight");
+        super("Paladin", 70 , 45, 7, "Marksman-Knight");
 
     }
 }
