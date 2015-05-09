@@ -103,6 +103,12 @@ public class Posicio extends Canvas {
         if (isMasked()) setMasked();
     }
 
+    public void actualitzar() {
+        dibuixaTerreny();
+        dibuixaUnitat();
+        if (isMasked()) dibuixaMascara(Color.RED);
+    }
+
     private void dibuixaUnitat() {
         if (unitat != null) {
             super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, 80, 80);

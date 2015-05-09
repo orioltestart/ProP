@@ -63,52 +63,11 @@ public class Mapa {
                             mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
 
                             /* EVENT HANDLERS PER POSICIONS */
-
-                            mapa[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    actual = (Posicio) mouseEvent.getTarget();
-                                    if (actual.isMasked())
-                                        actual.setSeleccionat();
-
-                                }
-                            });
-
-                            mapa[i][j].setOnMouseExited(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    Posicio aux = (Posicio) mouseEvent.getTarget();
-                                    if (aux.isMasked())
-                                        aux.eliminaSeleccio();
-
-                                }
-                            });
-
-
-                            mapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    Posicio aux = (Posicio) mouseEvent.getTarget();
-                                    ArrayList<Posicio> posicions;
-
-                                    if (seleccionada != aux) {
-                                        if (seleccionada != null) {
-                                            posicions = getRangMoviment(seleccionada);
-                                            for (Posicio i : posicions) i.unMask();
-                                        }
-
-                                        seleccionada = aux;
-                                        posicions = getRangMoviment(seleccionada);
-                                        for (Posicio i : posicions) i.setMasked();
-                                    }
-                                }
-                            });
-
+                            assignarHandlers(i, j);
                         }
                     } else {
                         for (int i = 0; i < pos.length; i++)
                             mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
-
                     }
                     j++;
                 }
@@ -116,6 +75,8 @@ public class Mapa {
             System.out.println("Lectura Correcte");
             mapa[10][10].setUnitat(new Halberdier());
             mapa[11][11].setUnitat(new Halberdier());
+            mapa[11][11].getUnitat().reduirPV(89);
+            mapa[11][11].actualitzar();
             br.close();
 
         } catch (NumberFormatException e) {
@@ -211,7 +172,7 @@ public class Mapa {
         }
     }
 
-    public ArrayList<Posicio> getRangMoviment(Posicio p) {
+    private ArrayList<Posicio> getRangMoviment(Posicio p) {
         ArrayList<Posicio> posicions = new ArrayList<Posicio>();
         if (p.getUnitat() != null) {
             Posicio iniciQ = new Posicio(seleccionada.getX() - seleccionada.getUnitat().getMOV(), seleccionada.getY() - seleccionada.getUnitat().getMOV());
@@ -230,6 +191,48 @@ public class Mapa {
             }
         }
         return posicions;
+    }
+
+    private void assignarHandlers(int x, int y) {
+        mapa[x][y].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                actual = (Posicio) mouseEvent.getTarget();
+                if (actual.isMasked())
+                    actual.setSeleccionat();
+
+            }
+        });
+
+        mapa[x][y].setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Posicio aux = (Posicio) mouseEvent.getTarget();
+                if (aux.isMasked())
+                    aux.eliminaSeleccio();
+
+            }
+        });
+
+
+        mapa[x][y].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Posicio aux = (Posicio) mouseEvent.getTarget();
+                ArrayList<Posicio> posicions;
+
+                if (seleccionada != aux) {
+                    if (seleccionada != null) {
+                        posicions = getRangMoviment(seleccionada);
+                        for (Posicio i : posicions) i.unMask();
+                    }
+
+                    seleccionada = aux;
+                    posicions = getRangMoviment(seleccionada);
+                    for (Posicio i : posicions) i.setMasked();
+                }
+            }
+        });
     }
 
     //Provant 222
