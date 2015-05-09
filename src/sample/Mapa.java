@@ -234,7 +234,6 @@ public class Mapa {
                     j++;
                 }
             }
-
             System.out.println("Lectura d'unitats correcte");
         } catch (IOException e) {
             e.printStackTrace();

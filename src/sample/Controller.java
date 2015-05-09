@@ -10,11 +10,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import sample.terrenys.River;
-import sample.terrenys.Terreny;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,7 +46,7 @@ public class Controller {
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
-        File terreny = new File("src/sample/prova4");
+        File terreny = new File("src/sample/mapes/prova4");
         //File unitats = new File("src/saimple/unitats1");
 
         mapa = new Mapa(terreny.getAbsolutePath());
