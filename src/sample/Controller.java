@@ -14,6 +14,7 @@ import sample.terrenys.River;
 import sample.terrenys.Terreny;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,18 +50,16 @@ public class Controller {
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
+        File terreny = new File("src/sample/prova4");
+        //File unitats = new File("src/saimple/unitats1");
 
-        File f = new File("/home/lluis/ProP/src/sample/prova4");
-
-        mapa = new Mapa(f);
-
-        Terreny aux = new River();
+        mapa = new Mapa(terreny.getAbsolutePath());
+        //mapa.llegirUnitats(unitats.getAbsolutePath());
 
         for (int i = 0; i < mapa.getMidaH(); i++) {
             for (int j = 0; j < mapa.getMidaV(); j++) {
                 m.add(mapa.getPos(i, j), i, j);
             }
         }
-
     }
 }
