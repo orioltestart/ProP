@@ -52,7 +52,7 @@ public class Mapa {
 
             Integer j = 0;
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (!sCurrentLine.isEmpty()) j = 0;
+                if (sCurrentLine.isEmpty()) j = 0;
                 else {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
 
@@ -108,6 +108,7 @@ public class Mapa {
                     } else {
                         for (int i = 0; i < pos.length; i++)
                             mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
+
                     }
                     j++;
                 }
