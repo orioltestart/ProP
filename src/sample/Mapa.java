@@ -2,6 +2,7 @@ package sample;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import sample.terrenys.*;
 import sample.unitats.*;
 
@@ -140,8 +141,8 @@ public class Mapa {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 actual = (Posicio) mouseEvent.getTarget();
-                if (actual.isMasked())
-                    actual.setSeleccionat();
+                if (actual.isMasked() && actual != seleccionada)
+                    actual.setMasked(Color.GREEN);
 
             }
         });
@@ -150,7 +151,7 @@ public class Mapa {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Posicio aux = (Posicio) mouseEvent.getTarget();
-                if (aux.isMasked())
+                if (aux.isMasked() && aux != seleccionada)
                     aux.eliminaSeleccio();
 
             }
@@ -165,13 +166,15 @@ public class Mapa {
 
                 if (seleccionada != aux) {
                     if (seleccionada != null) {
+                        seleccionada.unMask();
                         posicions = getRangMoviment(seleccionada);
                         for (Posicio i : posicions) i.unMask();
                     }
 
                     seleccionada = aux;
+                    seleccionada.setMasked(Color.YELLOW);
                     posicions = getRangMoviment(seleccionada);
-                    for (Posicio i : posicions) i.setMasked();
+                    for (Posicio i : posicions) i.setMasked(Color.RED);
                 }
             }
         });

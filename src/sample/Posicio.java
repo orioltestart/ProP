@@ -2,6 +2,7 @@ package sample;
 
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 import sample.terrenys.Terreny;
@@ -81,9 +82,9 @@ public class Posicio extends Canvas {
         return masked;
     }
 
-    public void setMasked() {
+    public void setMasked(Color c) {
         System.out.println("Enmascarant -> " + this);
-        dibuixaMascara(Color.RED);
+        dibuixaMascara(c);
         masked = true;
     }
 
@@ -93,14 +94,10 @@ public class Posicio extends Canvas {
         masked = false;
     }
 
-    public void setSeleccionat() {
-        dibuixaMascara(Color.GREEN);
-    }
-
     public void eliminaSeleccio() {
         dibuixaTerreny();
         dibuixaUnitat();
-        if (isMasked()) setMasked();
+        if (isMasked()) setMasked(Color.RED);
     }
 
     public void actualitzar() {
@@ -130,9 +127,11 @@ public class Posicio extends Canvas {
 
     private void dibuixaMascara(Color c) {
         super.getGraphicsContext2D().setFill(c);
-        super.getGraphicsContext2D().setGlobalAlpha(10);
-        super.getGraphicsContext2D().setEffect(new GaussianBlur(100));
-        super.getGraphicsContext2D().fillRect(0, 0, 80, 80);
+        super.getGraphicsContext2D().setEffect(new BoxBlur(7, 7, 2));
+        super.getGraphicsContext2D().fillRect(0, 0, 80, 5);
+        super.getGraphicsContext2D().fillRect(0, 0, 5, 80);
+        super.getGraphicsContext2D().fillRect(0, 75, 80, 5);
+        super.getGraphicsContext2D().fillRect(75, 0, 5, 80);
     }
 
 }
