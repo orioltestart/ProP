@@ -57,5 +57,6 @@ public class Controller {
                 m.add(mapa.getPos(i, j), i, j);
             }
         }
+
     }
 }

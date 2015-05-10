@@ -132,6 +132,7 @@ public class Posicio extends Canvas {
         super.getGraphicsContext2D().fillRect(0, 0, 5, 80);
         super.getGraphicsContext2D().fillRect(0, 75, 80, 5);
         super.getGraphicsContext2D().fillRect(75, 0, 5, 80);
+
     }
 
 }
