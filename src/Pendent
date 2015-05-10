@@ -35,3 +35,52 @@ llegenda mapa:
 
 
 les imatges encara no les tinc preparades. pintaho del color que et sembli
+
+
+
+dibuixar el rombe
+
+public static void mostraRangMov() {
+
+        int midaX = 20;
+        int midaY = 20;
+        int [][] prova = new int [midaX][midaY];
+
+        //inicialitzacio
+        for ( int i = 0; i < midaX; i++ ) {
+            for ( int j = 0; j < midaY; j++ ){
+                prova[i][j] = 0;
+            }
+        }
+        /////////////////////////////////////////////////////////////////7
+        int x = 1;
+        int y = 1;
+        int mov = 6;
+
+        for (int i = 0; i <= mov ; i++) {
+            if ((y - mov + i) >= 0 ) {
+                prova[x][y - mov + i] = 1;
+                for (int j = 1; j <= i; j++) {
+                    if ((x+j)<midaX) prova[x + j][y - mov + i] = 1;
+                    if ((x-j)>=0) prova[x - j][y - mov + i] = 1;
+                }
+            }
+            if ((y + mov - i) < midaY && i<mov) {
+                prova[x][y + mov - i] = 1;
+                for (int j = 1; j <= i; j++) {
+                    if ((x+j)<midaX) prova[x + j][y + mov - i] = 1;
+                    if ((x-j)>=0) prova[x - j][y + mov - i] = 1;
+                }
+            }
+        }
+        prova[x][y] = 7;
+
+        ////////////////////////////////////////////////////////////////////
+        //mostrar
+        for ( int i = 0; i < midaX; i++ ) {
+            for ( int j = 0; j < midaY; j++ ){
+                System.out.print(prova[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
