@@ -59,6 +59,10 @@ public class Posicio extends Canvas {
         return unitat;
     }
 
+    public Boolean teUnitat() {
+        return unitat != null;
+    }
+
     public void setUnitat(Unitat u) {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
