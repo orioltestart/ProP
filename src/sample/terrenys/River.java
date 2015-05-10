@@ -10,6 +10,6 @@ public class River extends Terreny {
     }
 
     public River(int t){
-        super("River"+t, -10, 3, true, false);
+        super("River"+t, -5, 3, true, false);
     }
 }
