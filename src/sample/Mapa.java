@@ -4,10 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import sample.terrenys.*;
 import sample.unitats.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -31,60 +29,10 @@ public class Mapa {
         nom = "Mapa no construit";
     }
 
-    public Mapa(File f) {
-        BufferedReader br;
-
+    public Mapa(String f) {
         try {
-            br = new BufferedReader(new FileReader(f));
-
-            //Llegim el nom del mapa
-            String sCurrentLine = br.readLine();
-            nom = sCurrentLine.substring(4);
-
-            //Llegim les mides X i Y del mapa
-            sCurrentLine = br.readLine();
-            String[] mida = sCurrentLine.substring(5).split("x");
-
-            MAXH = Integer.parseInt(mida[0]);
-            MAXV = Integer.parseInt(mida[1]);
-
-            mapa = new Posicio[MAXH][MAXV];
-
-            Integer j = 0;
-            while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (sCurrentLine.isEmpty()) j = 0;
-                else {
-                    String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
-
-                    if (j < MAXV) {
-                        for (int i = 0; i < pos.length; i++) {
-
-                            mapa[i][j] = new Posicio(i, j); //Creem la nova posició
-                            mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
-
-                            /* EVENT HANDLERS PER POSICIONS */
-                            assignarHandlers(i, j);
-                        }
-                    } else {
-                        for (int i = 0; i < pos.length; i++)
-                            mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i])));
-                    }
-                    j++;
-                }
-            }
-            System.out.println("Lectura Correcte");
-            mapa[10][10].setUnitat(new Halberdier());
-            mapa[11][11].setUnitat(new Halberdier());
-            mapa[11][11].getUnitat().reduirPV(89);
-            mapa[11][11].actualitzar();
-            br.close();
-
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Format del mapa Incorrecte");
-        } catch (IllegalArgumentException e) {
-            System.out.print(e.getMessage());
+            llegirMapa(f);
         } catch (IOException e) {
-            System.out.println("Error: Lectura Fallida");
             e.printStackTrace();
         }
     }
@@ -115,17 +63,7 @@ public class Mapa {
         return aux;
     }
 
-
-    //Pre: --
-    //Post: Mostra per consola el Mapa en format de matriu
-    public void mostrar() {
-        for (int i = 0; i < MAXH; i++) {
-            for (int j = 0; j < MAXV; j++) {
-                System.out.print(mapa[i][j]);
-            }
-            System.out.println();
-        }
-    }
+    //FABRIQUES D'OBJECTES
 
     private Terreny fabricaTerrenys(Integer i) {
         if (i.equals(0)) return new Plain();
@@ -148,7 +86,7 @@ public class Mapa {
         else if (i.equals(3)) return new Marksman();
         else if (i.equals(4)) return new Paladin();
         else if (i.equals(5)) return new Wyvernknight();
-        else return new Halberdier(); //Todo
+        else return null;
     }
 
 
@@ -172,6 +110,8 @@ public class Mapa {
         }
     }
 
+    // CERCA DE LES CASELLES ON ES POT DESPLAÇAR LA UNITAT
+
     private ArrayList<Posicio> getRangMoviment(Posicio p) {
         ArrayList<Posicio> posicions = new ArrayList<Posicio>();
         if (p.getUnitat() != null) {
@@ -192,6 +132,8 @@ public class Mapa {
         }
         return posicions;
     }
+
+    //ASSIGNACIO DE PROPIETATS INTERACTIVES A LES POSICIONS
 
     private void assignarHandlers(int x, int y) {
         mapa[x][y].setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -235,6 +177,66 @@ public class Mapa {
         });
     }
 
-    //Provant 222
+    // METODES DE LECTURA DES DE FITXER
 
+    private void llegirMapa(String f) throws IOException {
+
+        BufferedReader br = new BufferedReader(new FileReader(f));
+        //Llegim el nom del mapa
+        nom = br.readLine().substring(4);
+
+        //Llegim les mides X i Y del mapa
+        String[] mida = br.readLine().substring(5).split("x");
+
+        MAXH = Integer.parseInt(mida[0]);
+        MAXV = Integer.parseInt(mida[1]);
+
+        mapa = new Posicio[MAXH][MAXV]; //Reservem memoria
+
+        String sCurrentLine;
+        Integer j = 0;
+
+        while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
+            if (!sCurrentLine.isEmpty()) {
+
+                String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
+
+                for (int i = 0; i < pos.length; i++) {
+                    mapa[i][j] = new Posicio(i, j); //Creem la nova posició
+                    mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
+                    assignarHandlers(i, j);
+                }
+                j++;
+            }
+        }
+        System.out.println("Lectura Correcte");
+        mapa[10][10].setUnitat(new Halberdier());
+        mapa[11][11].setUnitat(new Halberdier());
+        mapa[11][11].getUnitat().reduirPV(89);
+        mapa[11][11].actualitzar();
+        br.close();
+    }
+
+    public void llegirUnitats(String u) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(u));
+
+            String sCurrentLine;
+            Integer j = 0;
+            while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
+                if (!sCurrentLine.isEmpty()) {
+
+                    String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
+
+                    for (int i = 0; i < pos.length; i++)
+                        mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i]))); //Afegim les unitats corresponents a les posicions
+
+                    j++;
+                }
+            }
+            System.out.println("Lectura d'unitats correcte");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
