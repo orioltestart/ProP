@@ -96,9 +96,9 @@ public class Mapa {
     //Excepcions: Desplaçar una unitat a una posició ja ocupada llança una IllegalArgumentException així que la posició ori no tingui cap unitat per desplaçar
     public void desplacar(Posicio ori, Posicio fi) throws IllegalArgumentException {
         try {
-            if (mapa[ori.getX()][ori.getY()].getUnitat() == null)
+            if (mapa[ori.getX()][ori.getY()].teUnitat())
                 throw new IllegalArgumentException("Aquesta posició no té cap unitats dins");
-            if (mapa[fi.getX()][fi.getY()].getUnitat() != null)
+            if (mapa[fi.getX()][fi.getY()].teUnitat())
                 throw new IllegalArgumentException("Aquesta posició de destí ja està ocupada per un altre unitats");
 
             Unitat aux = mapa[ori.getX()][ori.getY()].getUnitat();
@@ -115,19 +115,23 @@ public class Mapa {
 
     private ArrayList<Posicio> getRangMoviment(Posicio p) {
         ArrayList<Posicio> posicions = new ArrayList<Posicio>();
-        if (p.getUnitat() != null) {
-            Posicio iniciQ = new Posicio(seleccionada.getX() - seleccionada.getUnitat().getMOV(), seleccionada.getY() - seleccionada.getUnitat().getMOV());
-            Posicio finalQ = new Posicio(seleccionada.getX() + seleccionada.getUnitat().getMOV(), seleccionada.getY() + seleccionada.getUnitat().getMOV());
+        int x = p.getX();
+        int y = p.getY();
+        int mov = p.getUnitat().getMOV();
 
-
-            for (int i = iniciQ.getX(); i <= finalQ.getX(); i++) {
-                for (int j = iniciQ.getY(); j <= finalQ.getY(); j++) {
-                    Posicio val = new Posicio(Math.abs(seleccionada.getX() - i), Math.abs(seleccionada.getY() - j));
-
-                    if (i >= 0 && i < MAXH && j >= 0 && j < MAXV) {
-                        if (val.getX() + val.getY() <= seleccionada.getUnitat().getMOV() && (mapa[i][j] != seleccionada))
-                            posicions.add(mapa[i][j]);
-                    }
+        for (int i = 0; i <= mov; i++) {
+            if ((y - mov + i) >= 0) {
+                posicions.add(mapa[x][y - mov + i]);
+                for (int j = 1; j <= i; j++) {
+                    if ((x + j) < MAXH) posicions.add(mapa[x + j][y - mov + i]);
+                    if ((x - j) >= 0) posicions.add(mapa[x - j][y - mov + i]);
+                }
+            }
+            if ((y + mov - i) < MAXV && i < mov) {
+                posicions.add(mapa[x][y + mov - i]);
+                for (int j = 1; j <= i; j++) {
+                    if ((x + j) < MAXH) posicions.add(mapa[x + j][y + mov - i]);
+                    if ((x - j) >= 0) posicions.add(mapa[x - j][y + mov - i]);
                 }
             }
         }
@@ -164,17 +168,22 @@ public class Mapa {
                 Posicio aux = (Posicio) mouseEvent.getTarget();
                 ArrayList<Posicio> posicions;
 
-                if (seleccionada != aux) {
-                    if (seleccionada != null) {
-                        seleccionada.unMask();
-                        posicions = getRangMoviment(seleccionada);
-                        for (Posicio i : posicions) i.unMask();
+                if (seleccionada != aux) { //Si no selecciono la que ja tinc seleccionada
+                    if (seleccionada != null) { //Si ja en tenia una de seleccionada
+                        seleccionada.unMask(); //La desenmascaro
+                        if (seleccionada.teUnitat()) {
+                            //todo Implementacio del moviment aqui
+                            posicions = getRangMoviment(seleccionada); //Agafo totes les caselles per desenmascarar
+                            for (Posicio i : posicions) i.unMask(); //Les desenmascaro
+                        }
                     }
 
-                    seleccionada = aux;
-                    seleccionada.setMasked(Color.YELLOW);
-                    posicions = getRangMoviment(seleccionada);
-                    for (Posicio i : posicions) i.setMasked(Color.RED);
+                    seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
+                    seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
+                    if (seleccionada.teUnitat()) { //Si te una unitat
+                        posicions = getRangMoviment(seleccionada); //Agafo totes les caselles per enmascarar
+                        for (Posicio i : posicions) i.setMasked(Color.RED); //Les pinto de vermell
+                    }
                 }
             }
         });

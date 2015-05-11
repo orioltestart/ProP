@@ -59,6 +59,10 @@ public class Posicio extends Canvas {
         return unitat;
     }
 
+    public Boolean teUnitat() {
+        return unitat != null;
+    }
+
     public void setUnitat(Unitat u) {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         unitat = u;
@@ -132,6 +136,7 @@ public class Posicio extends Canvas {
         super.getGraphicsContext2D().fillRect(0, 0, 5, 80);
         super.getGraphicsContext2D().fillRect(0, 75, 80, 5);
         super.getGraphicsContext2D().fillRect(75, 0, 5, 80);
+
     }
 
 }
