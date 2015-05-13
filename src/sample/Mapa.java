@@ -72,11 +72,16 @@ public class Mapa {
         else if (i.equals(2)) return new Mountain();
         else if (i.equals(3)) return new Fortress();
         else if (i.equals(4)) return new River();
-        else if (i.equals(5)) return new River();
-        else if (i.equals(6)) return new River();
-        else if (i.equals(7)) return new River();
-        else if (i.equals(8)) return new River();
-        else if (i.equals(9)) return new Plain();
+        else if (i.equals(5)) return new River(5);
+        else if (i.equals(6)) return new River(6);
+        else if (i.equals(7)) return new River(7);
+        else if (i.equals(8)) return new River(8);
+        else if (i.equals(9)) return new Obstacle();
+        else if (i.equals(10)) return new Plain(1); //cami
+        else if (i.equals(11)) return new Plain(2); //maó
+        else if (i.equals(12)) return new Plain(3); //pontH
+        else if (i.equals(13)) return new Plain(4); //pontV
+        else if (i.equals(14)) return new Obstacle(1);
         else return new Terreny();
     }
 

@@ -16,7 +16,7 @@ public class Terreny extends Image {
     private Boolean Cura;
 
     public Terreny(){
-        super("sample/terrenys/Plain.png");
+        super("sample/terrenys/nothing.png");
         Defensa = 0;
         RedDespl = 0;
     }

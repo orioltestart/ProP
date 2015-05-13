@@ -8,4 +8,7 @@ public class Obstacle extends Terreny {
     public Obstacle (){
         super("Obstacle", 0, 10, false, false);
     }
+    public Obstacle(int i){
+        super ("Wall", 0, 10, false, false);
+    }
 }

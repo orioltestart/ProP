@@ -8,4 +8,8 @@ public class Plain extends Terreny {
     public Plain (){
         super("Plain", 0, 0, true, false);
     }
+
+    public Plain (int t){
+        super("Plain"+t, 0, 0, true, false);
+    }
 }
