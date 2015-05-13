@@ -87,12 +87,12 @@ public class Mapa {
     }
 
     private Unitat fabricaUnitats(Integer i) {
-        if (i.equals(0)) return new Halberdier();
-        else if (i.equals(1)) return new Knight();
-        else if (i.equals(2)) return new Bowknight();
-        else if (i.equals(3)) return new Marksman();
-        else if (i.equals(4)) return new Paladin();
-        else if (i.equals(5)) return new Wyvernknight();
+        if (i.equals(1)) return new Halberdier();
+        else if (i.equals(2)) return new Knight();
+        else if (i.equals(3)) return new Bowknight();
+        else if (i.equals(4)) return new Marksman();
+        else if (i.equals(5)) return new Paladin();
+        else if (i.equals(6)) return new Wyvernknight();
         else return null;
     }
 
@@ -143,58 +143,6 @@ public class Mapa {
         }
         return posicions;
     }
-
-    //ASSIGNACIO DE PROPIETATS INTERACTIVES A LES POSICIONS
-/*
-    private void assignarHandlers(int x, int y) {
-        mapa[x][y].setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                actual = (Posicio) mouseEvent.getTarget();
-                if (actual.isMasked() && actual != seleccionada)
-                    actual.setMasked(Color.GREEN);
-
-            }
-        });
-
-        mapa[x][y].setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Posicio aux = (Posicio) mouseEvent.getTarget();
-                if (aux.isMasked() && aux != seleccionada)
-                    aux.eliminaSeleccio();
-
-            }
-        });
-
-
-        mapa[x][y].setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Posicio aux = (Posicio) mouseEvent.getTarget();
-                ArrayList<Posicio> posicions;
-
-                if (seleccionada != aux) { //Si no selecciono la que ja tinc seleccionada
-                    if (seleccionada != null) { //Si ja en tenia una de seleccionada
-                        seleccionada.unMask(); //La desenmascaro
-                        if (seleccionada.teUnitat()) {
-                            //todo Implementacio del moviment aqui
-                            posicions = getRangMoviment(seleccionada); //Agafo totes les caselles per desenmascarar
-                            for (Posicio i : posicions) i.unMask(); //Les desenmascaro
-                        }
-                    }
-
-                    seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
-                    seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
-                    if (seleccionada.teUnitat()) { //Si te una unitat
-                        posicions = getRangMoviment(seleccionada); //Agafo totes les caselles per enmascarar
-                        for (Posicio i : posicions) i.setMasked(Color.RED); //Les pinto de vermell
-                    }
-                }
-            }
-        });
-    }
-*/
     // METODES DE LECTURA DES DE FITXER
 
     private void llegirMapa(String f) throws IOException {
@@ -222,16 +170,11 @@ public class Mapa {
                 for (int i = 0; i < pos.length; i++) {
                     mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
-                    //assignarHandlers(i, j);
                 }
                 j++;
             }
         }
         System.out.println("Lectura Correcte");
-        mapa[10][10].setUnitat(new Halberdier());
-        mapa[11][11].setUnitat(new Halberdier());
-        mapa[11][11].getUnitat().reduirPV(89);
-        mapa[11][11].actualitzar();
         br.close();
     }
 
@@ -242,13 +185,15 @@ public class Mapa {
             String sCurrentLine;
             Integer j = 0;
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (!sCurrentLine.isEmpty()) {
-
+                if (sCurrentLine.isEmpty()) j = 0;
+                else {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
 
-                    for (int i = 0; i < pos.length; i++)
+                    for (int i = 0; i < pos.length; i++) {
+                        System.out.println(pos[i] + " [" + i + "," + j + "]" + pos.length);
                         mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i]))); //Afegim les unitats corresponents a les posicions
-
+                    }
+                    System.out.println("Fila " + j + " completada");
                     j++;
                 }
             }

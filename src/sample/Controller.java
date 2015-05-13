@@ -7,6 +7,7 @@ package sample;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -71,11 +72,11 @@ public class Controller {
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
-        File terreny = new File("src/sample/mapes/prova4");
-        //File unitats = new File("src/saimple/unitats1");
+        File terreny = new File("src/sample/mapes/mapa5");
+        File unitats = new File("src/sample/mapes/unitats51");
 
         mapa = new Mapa(terreny.getAbsolutePath());
-        //mapa.llegirUnitats(unitats.getAbsolutePath());
+        mapa.llegirUnitats(unitats.getAbsolutePath());
 
 
         for (int i = 0; i < mapa.getMidaH(); i++) {

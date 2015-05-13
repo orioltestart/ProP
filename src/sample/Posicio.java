@@ -6,6 +6,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
+import sample.terrenys.Mountain;
+import sample.terrenys.Plain;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
 
@@ -67,9 +69,12 @@ public class Posicio extends Canvas {
 
     public void setUnitat(Unitat u) {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
+        if (terreny == null) terreny = new Terreny();
         unitat = u;
-        unitat.setImatge(1);
-        dibuixaUnitat();
+        if (unitat != null) {
+            unitat.setImatge(1);
+            dibuixaUnitat();
+        }
     }
 
     public void eliminaUnitat() {
@@ -89,7 +94,6 @@ public class Posicio extends Canvas {
     }
 
     public void setMasked(Color c) {
-        System.out.println("Enmascarant -> " + this);
         dibuixaMascara(c);
         masked = true;
     }
