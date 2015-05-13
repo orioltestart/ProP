@@ -5,11 +5,7 @@ package sample.terrenys;
  */
 public class River extends Terreny {
 
-    public River(){
-        super("River", -10, 3, true, false);
-    }
-
     public River(int t){
-        super("River"+t, -5, 3, true, false);
+        super("River", t, -10, 3, true, false);
     }
 }

@@ -57,7 +57,7 @@ public abstract class Unitat {
     }
 
     public void setImatge(int i) {
-        img = new Image("sample/unitats/" + Classe + "v" + i + ".png");
+        img = new Image("sample/Imatges/" + Classe + "v" + i + ".png");
     }
 
     public Image getImg() {

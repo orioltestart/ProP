@@ -1,13 +1,9 @@
 package sample;
 
 
-import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
-import sample.terrenys.Mountain;
-import sample.terrenys.Plain;
 import sample.terrenys.Terreny;
 import sample.unitats.Unitat;
 
@@ -21,7 +17,7 @@ public class Posicio extends Canvas {
     private Unitat unitat;
     private Terreny terreny;
     private Boolean masked = false;
-    final static Integer a_mida = 40;
+    final static Integer a_mida = 60;
 
 
     @Override

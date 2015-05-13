@@ -22,12 +22,12 @@ llegenda mapa:
          * 8: River (BR)
          * 9: Wall
          * UNITATS:
-         * 0: Halberdier
-         * 1: Knight
-         * 2: Bowknight
-         * 3: Marksman
-         * 4: Paladin
-         * 5: WyvernKnight
+         * 1: Halberdier
+         * 2: Knight
+         * 3: Bowknight
+         * 4: Marksman
+         * 5: Paladin
+         * 6: WyvernKnight
          *
 
          Caldria afegir un Terreny i Unitat buida per caselles no inicialitzades (Sempre va be per fer instancies quan el mapa esta malament[culpa del usuari])

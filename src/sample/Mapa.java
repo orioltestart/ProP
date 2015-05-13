@@ -1,12 +1,11 @@
 package sample;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import sample.terrenys.*;
 import sample.unitats.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -68,21 +67,22 @@ public class Mapa {
     //FABRIQUES D'OBJECTES
 
     private Terreny fabricaTerrenys(Integer i) {
-        if (i.equals(0)) return new Plain();
-        else if (i.equals(1)) return new Forest();
-        else if (i.equals(2)) return new Mountain();
-        else if (i.equals(3)) return new Fortress();
-        else if (i.equals(4)) return new River();
+        if (i.equals(0)) return new Plain(0);   //plain
+        else if (i.equals(1)) return new Forest(1); //forest
+        else if (i.equals(2)) return new Mountain(2);   //mountain
+        else if (i.equals(3)) return new Fortress(3);   //fortress
+        else if (i.equals(4)) return new River(4);  //
         else if (i.equals(5)) return new River(5);
         else if (i.equals(6)) return new River(6);
         else if (i.equals(7)) return new River(7);
         else if (i.equals(8)) return new River(8);
-        else if (i.equals(9)) return new Obstacle();
-        else if (i.equals(10)) return new Plain(1); //cami
-        else if (i.equals(11)) return new Plain(2); //maó
-        else if (i.equals(12)) return new Plain(3); //pontH
-        else if (i.equals(13)) return new Plain(4); //pontV
-        else if (i.equals(14)) return new Obstacle(1);
+        else if (i.equals(9)) return new Obstacle(9);
+        else if (i.equals(10)) return new Plain(10); //cami
+        else if (i.equals(11)) return new Plain(11); //maó
+        else if (i.equals(12)) return new Plain(12); //pontH
+        else if (i.equals(13)) return new Plain(13); //pontV
+        else if (i.equals(14)) return new Obstacle(14); //murH
+        else if (i.equals(15)) return new Obstacle(15); //murV
         else return new Terreny();
     }
 

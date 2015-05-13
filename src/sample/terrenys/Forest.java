@@ -5,7 +5,7 @@ package sample.terrenys;
  */
 public class Forest extends Terreny {
 
-    public Forest (){
-        super("Forest", 10, 1, true, false);
+    public Forest (int i){
+        super("Forest", i, 10, 1, true, false);
     }
 }
