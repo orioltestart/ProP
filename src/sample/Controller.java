@@ -143,7 +143,6 @@ public class Controller {
                             }
                         }
                     }
-
                     seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
                     seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
                     actualitzaColumnes(seleccionada);
