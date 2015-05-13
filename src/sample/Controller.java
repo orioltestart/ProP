@@ -4,7 +4,12 @@
 
 package sample;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -38,6 +43,13 @@ public class Controller {
     private TabPane tp;
 
     private Mapa mapa;
+
+    @FXML
+    private Label text1;
+
+    @FXML
+    private Label text2;
+
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
