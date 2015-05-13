@@ -19,9 +19,6 @@ public class Mapa {
     private Integer MAXH;
     private Integer MAXV;
 
-    private Posicio seleccionada;
-    private Posicio actual;
-
 
     public Mapa() {
         MAXH = 0;
@@ -49,6 +46,10 @@ public class Mapa {
 
     public Posicio getPos(int x, int y) {
         return mapa[x][y];
+    }
+
+    public Posicio[][] getMapa() {
+        return mapa;
     }
 
     //Pre: --
@@ -118,7 +119,7 @@ public class Mapa {
 
     // CERCA DE LES CASELLES ON ES POT DESPLAÇAR LA UNITAT
 
-    private ArrayList<Posicio> getRangMoviment(Posicio p) {
+    public ArrayList<Posicio> getRangMoviment(Posicio p) {
         ArrayList<Posicio> posicions = new ArrayList<Posicio>();
         int x = p.getX();
         int y = p.getY();
@@ -144,7 +145,7 @@ public class Mapa {
     }
 
     //ASSIGNACIO DE PROPIETATS INTERACTIVES A LES POSICIONS
-
+/*
     private void assignarHandlers(int x, int y) {
         mapa[x][y].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -193,7 +194,7 @@ public class Mapa {
             }
         });
     }
-
+*/
     // METODES DE LECTURA DES DE FITXER
 
     private void llegirMapa(String f) throws IOException {
@@ -221,7 +222,7 @@ public class Mapa {
                 for (int i = 0; i < pos.length; i++) {
                     mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
-                    assignarHandlers(i, j);
+                    //assignarHandlers(i, j);
                 }
                 j++;
             }
