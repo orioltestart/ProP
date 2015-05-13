@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 public class Terreny extends Image {
 
     private String Tipus; //fortress, plain ...
-    private String Nom;     // castle, bridge1, etc
+    private Integer Id;     // castle, bridge1, etc
     private Integer Defensa;
     private Integer RedDespl;
     private Boolean Transitable;
@@ -30,7 +30,7 @@ public class Terreny extends Image {
     public Terreny (String t, int i, Integer d, Integer r, Boolean tr, Boolean c){
         super("sample/Imatges/" + terrains[i] + ".png");
         Tipus = t;
-        Nom = terrains[i];
+        Id = i;
         Defensa = d;
         RedDespl = r;
         Transitable = tr;
@@ -58,6 +58,19 @@ public class Terreny extends Image {
     }
 
     public String toString(){
-        return (Nom);
+        return (terrains[Id]);
+    }
+
+    public Terreny copia() {
+        return new Terreny(Tipus, Id, Defensa, RedDespl, Transitable, Cura);
+    }
+
+    public String getAtributs() {
+        String missatge = "";
+        missatge += "Defensa: " + Defensa + "\nReduc Despl: " + RedDespl;
+        missatge += "\nCura: ";
+        if (Cura) missatge += "Si";
+        else missatge += "No";
+        return missatge;
     }
 }

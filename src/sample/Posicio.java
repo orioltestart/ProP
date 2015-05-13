@@ -4,8 +4,8 @@ package sample;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.paint.Color;
-import sample.terrenys.Terreny;
-import sample.unitats.Unitat;
+import sample.terrenys.*;
+import sample.unitats.*;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -16,8 +16,10 @@ public class Posicio extends Canvas {
     private Integer a_y;
     private Unitat unitat;
     private Terreny terreny;
+
     private Boolean masked = false;
-    final static Integer a_mida = 60;
+    final static Integer a_mida = 40;
+    private Integer midaQuadre;
 
 
     @Override
@@ -35,6 +37,16 @@ public class Posicio extends Canvas {
         a_y = -1;
         unitat = null;
         terreny = null;
+        midaQuadre = a_mida;
+    }
+
+    public Posicio(Integer mida) {
+        super(mida, mida);
+        a_x = -1;
+        a_y = -1;
+        unitat = null;
+        terreny = new Terreny();
+        midaQuadre = mida;
     }
 
     public Posicio(Integer x, Integer y) {
@@ -43,6 +55,12 @@ public class Posicio extends Canvas {
         a_y = y;
         unitat = null;
         terreny = null;
+        midaQuadre = a_mida;
+    }
+
+    public Posicio(Posicio p) {
+        this(p.getX(), p.getY());
+
     }
 
     public Integer getX() throws NullPointerException {
@@ -57,6 +75,10 @@ public class Posicio extends Canvas {
 
     public Unitat getUnitat() {
         return unitat;
+    }
+
+    public Terreny getTerreny() {
+        return terreny;
     }
 
     public Boolean teUnitat() {
@@ -114,12 +136,12 @@ public class Posicio extends Canvas {
 
     private void dibuixaUnitat() {
         if (unitat != null) {
-            super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, a_mida, a_mida);
+            super.getGraphicsContext2D().drawImage(unitat.getImg(), 0, 0, midaQuadre, midaQuadre);
             /* BARRA DE VIDA */
             super.getGraphicsContext2D().setFill(Color.BLACK);
-            super.getGraphicsContext2D().fillRect(3, 3, a_mida - 6, a_mida / 8);
+            super.getGraphicsContext2D().fillRect(3, 3, midaQuadre - 6, midaQuadre / 8);
             super.getGraphicsContext2D().setFill(Color.GREENYELLOW);
-            super.getGraphicsContext2D().fillRect(4, 4, 0.72 * unitat.getPV(), a_mida / 10);
+            super.getGraphicsContext2D().fillRect(4, 4, midaQuadre - 8 * unitat.getPV() / 100, midaQuadre / 10);
             /* GUARDEM EL RESULTAT */
             super.getGraphicsContext2D().save();
         }
@@ -127,17 +149,18 @@ public class Posicio extends Canvas {
 
     private void dibuixaTerreny() {
         super.getGraphicsContext2D().restore();
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, a_mida, a_mida);
+        super.getGraphicsContext2D().drawImage(terreny, 0, 0, midaQuadre, midaQuadre);
         super.getGraphicsContext2D().save();
     }
 
     private void dibuixaMascara(Color c) {
         super.getGraphicsContext2D().setFill(c);
+        //todo revisar
         super.getGraphicsContext2D().setEffect(new BoxBlur(7, 7, 2));
-        super.getGraphicsContext2D().fillRect(0, 0, a_mida, 5);
-        super.getGraphicsContext2D().fillRect(0, 0, 5, a_mida);
-        super.getGraphicsContext2D().fillRect(0, a_mida, a_mida, 5);
-        super.getGraphicsContext2D().fillRect(a_mida - 5, 0, 5, a_mida);
+        super.getGraphicsContext2D().fillRect(0, 0, midaQuadre, midaQuadre * 0.0625);
+        super.getGraphicsContext2D().fillRect(0, 0, midaQuadre * 0.0625, midaQuadre);
+        super.getGraphicsContext2D().fillRect(0, midaQuadre, midaQuadre - midaQuadre * 0.0625, midaQuadre * 0.0625);
+        super.getGraphicsContext2D().fillRect(midaQuadre - midaQuadre * 0.0625, 0, midaQuadre * 0.0625, midaQuadre);
 
     }
 

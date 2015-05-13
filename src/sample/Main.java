@@ -19,6 +19,7 @@ public class Main extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+
         primaryStage.setTitle("ProP - FIRE EMBLEM");
         primaryStage.setScene(new Scene(root, 1000, 700));
 

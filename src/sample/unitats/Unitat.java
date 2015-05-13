@@ -72,6 +72,13 @@ public abstract class Unitat {
         return PV;
     }
 
+    public String getAtributs() {
+        String missatge = "";
+        missatge += "Tipus : " + Tipus + "\nClasse: " + Classe + "\nVida: " + PV;
+        missatge += " \nPoder: " + POW + "\nDefensa: " + DEF + "\nMov: " + MOV + "  Rang: " + Rang;
+        return missatge;
+    }
+
     public void Mostrar(){
         System.out.println("ID: "+ID);
         System.out.println("Tipus: "+Tipus);
@@ -141,4 +148,12 @@ public abstract class Unitat {
         return (Classe);
     }
 
+    public Unitat copia() {
+        if (Classe.equals("Bowknight")) return new Bowknight();
+        else if (Classe.equals("Halberder")) return new Halberdier();
+        else if (Classe.equals("Knight")) return new Knight();
+        else if (Classe.equals("Marksman")) return new Marksman();
+        else if (Classe.equals("Paladin")) return new Paladin();
+        else return new Wyvernknight();
+    }
 }

@@ -12,59 +12,27 @@
 <?import javafx.scene.control.Label?>
 
 <BorderPane fx:id="finestra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="sample.Controller">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
     <bottom>
-        <VBox>
+        <VBox alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1270.0">
             <children>
-                <HBox fx:id="barraInferior" VBox.vgrow="ALWAYS">
+                <HBox VBox.vgrow="ALWAYS">
                     <children>
-                        <TabPane fx:id="tabPane" side="LEFT" tabClosingPolicy="UNAVAILABLE">
-                            <tabs>
-                                <Tab text="Atacar">
-                                    <content>
-                                        <AnchorPane>
-                                            <children>
-                                                <HBox spacing="10.0"/>
-                                            </children>
-                                        </AnchorPane>
-                                    </content>
-                                </Tab>
-                                <Tab text="Casella">
-                                    <content>
-                                        <AnchorPane/>
-                                    </content>
-                                </Tab>
-                                <Tab text="Ajuda">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                    prefWidth="200.0"/>
-                                    </content>
-                                </Tab>
-                                <Tab text="Jugadors">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                    prefWidth="200.0"/>
-                                    </content>
-                                </Tab>
-                            </tabs>
-                            <HBox.margin>
-                                <Insets/>
-                            </HBox.margin>
-                        </TabPane>
-                        <VBox fx:id="actualInf" alignment="TOP_CENTER"/>
+                        <HBox fx:id="targetaTerreny" prefHeight="100.0" prefWidth="200.0"/>
+                        <HBox fx:id="targetaUnitat" prefHeight="100.0" prefWidth="200.0"/>
+                        <HBox fx:id="targetaAtac" prefHeight="100.0" prefWidth="200.0"/>
+                        <HBox fx:id="targetaTerreny2" prefHeight="100.0" prefWidth="200.0"/>
+                        <HBox fx:id="targetaUnitat2" prefHeight="100.0" prefWidth="200.0"/>
                     </children>
                 </HBox>
                 <HBox>
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Posicio Seleccionada: "/>
-                        <Label fx:id="text1" text="Cap"/>
-                        <Region HBox.hgrow="ALWAYS"/>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Posicio Actual: "/>
-                        <Label fx:id="text2" text="Cap"/>
+                        <Label fx:id="text1" text="Label"/>
                     </children>
                 </HBox>
             </children>
@@ -73,11 +41,11 @@
     <center>
         <ScrollPane fx:id="contenidorMapa" BorderPane.alignment="CENTER">
             <content>
-                <AnchorPane>
+                <StackPane fx:id="pilaMapa">
                     <children>
                         <GridPane fx:id="m"/>
                     </children>
-                </AnchorPane>
+                </StackPane>
             </content>
         </ScrollPane>
     </center>

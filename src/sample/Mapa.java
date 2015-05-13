@@ -189,11 +189,9 @@ public class Mapa {
                 else {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
 
-                    for (int i = 0; i < pos.length; i++) {
-                        System.out.println(pos[i] + " [" + i + "," + j + "]" + pos.length);
+                    for (int i = 0; i < pos.length; i++)
                         mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i]))); //Afegim les unitats corresponents a les posicions
-                    }
-                    System.out.println("Fila " + j + " completada");
+
                     j++;
                 }
             }

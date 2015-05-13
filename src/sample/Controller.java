@@ -8,23 +8,22 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import sample.terrenys.Plain;
+import javafx.scene.shape.Rectangle;
+import sample.unitats.Unitat;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class Controller {
 
@@ -53,17 +52,30 @@ public class Controller {
     private Label text1;
 
     @FXML
-    private Label text2;
-
-    @FXML
     private TabPane tabPane;
 
     @FXML
-    private VBox actualInf;
+    private HBox targetaTerreny;
+
+    @FXML
+    private HBox targetaUnitat;
+
+    @FXML
+    private HBox targetaTerreny2;
+
+    @FXML
+    private HBox targetaUnitat2;
+
+    @FXML
+    private HBox targetaAtac;
+
+
+    @FXML
+    private StackPane pilaMapa;
 
     private Posicio seleccionada;
     private Posicio actual;
-
+    private Posicio desti;
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
@@ -86,6 +98,9 @@ public class Controller {
             }
         }
 
+        pilaMapa.getChildren().add(new Rectangle(100, 100, Color.BLUE));
+
+
     }
 
     private void assignarHandlers(int x, int y) {
@@ -97,7 +112,7 @@ public class Controller {
                 actual = (Posicio) mouseEvent.getTarget();
                 if (actual.isMasked() && actual != seleccionada)
                     actual.setMasked(Color.GREEN);
-                text2.setText(actual.toString());
+                text1.setText(actual.toString());
             }
         });
 
@@ -122,15 +137,16 @@ public class Controller {
                     if (seleccionada != null) { //Si ja en tenia una de seleccionada
                         seleccionada.unMask(); //La desenmascaro
                         if (seleccionada.teUnitat()) {
-                            //todo Implementacio del moviment aqui
                             posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per desenmascarar
-                            for (Posicio i : posicions) i.unMask(); //Les desenmascaro
+                            for (Posicio i : posicions) {
+                                i.unMask(); //Les desenmascaro
+                            }
                         }
                     }
 
                     seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
-                    text1.setText(seleccionada.toString());
                     seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
+                    actualitzaColumnes(seleccionada);
                     if (seleccionada.teUnitat()) { //Si te una unitat
                         posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per enmascarar
                         for (Posicio i : posicions) i.setMasked(Color.RED); //Les pinto de vermell
@@ -138,5 +154,22 @@ public class Controller {
                 }
             }
         });
+    }
+
+    private void actualitzaColumnes(Posicio aux) {
+        //Construim targetaTerreny
+        Posicio t = new Posicio(100);
+        t.setTerreny(aux.getTerreny().copia());
+
+        if (!targetaTerreny.getChildren().isEmpty()) targetaTerreny.getChildren().clear();
+        if (!targetaUnitat.getChildren().isEmpty()) targetaUnitat.getChildren().clear();
+
+        targetaTerreny.getChildren().addAll(t, new Label(t.getTerreny().getAtributs()));
+
+        if (aux.teUnitat()) {
+            Posicio u = new Posicio(100);
+            u.setUnitat(aux.getUnitat().copia());
+            targetaUnitat.getChildren().addAll(u, new Label(u.getUnitat().getAtributs()));
+        }
     }
 }
