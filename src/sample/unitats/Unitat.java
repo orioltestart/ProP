@@ -7,6 +7,7 @@
 package sample.unitats;
 
 import javafx.scene.image.Image;
+
 import java.util.Random;
 
 public abstract class Unitat {
@@ -23,6 +24,7 @@ public abstract class Unitat {
     private Integer Rang;   //distancia (en quadres) que pot atacar la unitat
     private Image img;
 
+    //
 
     //constructors
     Unitat(){
@@ -33,13 +35,13 @@ public abstract class Unitat {
     }
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
+        //falta el id todo
         Random r = new Random();
         PV = 100;
         Tipus = t;
         Classe = c;
-        ID = r.nextInt(1000);
         //els atributs varien
-        POW = atac + r.nextInt(20);
+        POW = atac + r.nextInt(30);
         DEF = defensa + r.nextInt(10);
         MOV = moviment;
         //pot haver-hi diverses bonificacions
@@ -116,8 +118,15 @@ public abstract class Unitat {
         }
     }
 
-    public Integer calcularAtac(Unitat u, Integer BonusT){
+    public boolean potContraatacar(Unitat u) {
+        //comparar les dues posicions
+        //todo
+        return true;
+    }
 
+    public Integer calcularAtac(Unitat u){
+
+        Integer BonusT = 0; //todo
         Integer defensaF = u.getDEF() + BonusT;
         Integer atacF = this.POW ;
 
@@ -159,5 +168,9 @@ public abstract class Unitat {
 
         res.PV = PV;
         return res;
+    }
+
+    public Integer getRang() {
+        return Rang;
     }
 }

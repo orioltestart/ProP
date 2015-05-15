@@ -19,7 +19,8 @@ public class Terreny extends Image {
     final static String terrains[] =
             {"Plain", "Forest", "Mountain", "Fortress",
                     "River", "River5" , "River6", "River7", "River8",
-                    "Stone", "Road", "Floor", "BridgeH", "BridgeV", "WallH", "WallV", "Goal"};
+                    "Stone", "Road", "Floor", "BridgeH", "BridgeV",
+                    "Wall", "Throne"};
 
     public Terreny(){
         super("sample/Imatges/nothing.png");

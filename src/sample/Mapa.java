@@ -82,7 +82,7 @@ public class Mapa {
         else if (i.equals(12)) return new Plain(12); //pontH
         else if (i.equals(13)) return new Plain(13); //pontV
         else if (i.equals(14)) return new Obstacle(14); //murH
-        else if (i.equals(15)) return new Obstacle(15); //murV
+        else if (i.equals(15)) return new Fortress(15); //meta
         else return new Terreny();
     }
 
@@ -124,6 +124,8 @@ public class Mapa {
         int x = p.getX();
         int y = p.getY();
         int mov = p.getUnitat().getMOV();
+        int rang = p.getUnitat().getRang();
+
 
         for (int i = 0; i <= mov; i++) {
             if ((y - mov + i) >= 0) {
