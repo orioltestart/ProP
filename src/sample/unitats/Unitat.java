@@ -149,11 +149,15 @@ public abstract class Unitat {
     }
 
     public Unitat copia() {
-        if (Classe.equals("Bowknight")) return new Bowknight();
-        else if (Classe.equals("Halberder")) return new Halberdier();
-        else if (Classe.equals("Knight")) return new Knight();
-        else if (Classe.equals("Marksman")) return new Marksman();
-        else if (Classe.equals("Paladin")) return new Paladin();
-        else return new Wyvernknight();
+        Unitat res;
+        if (Classe.equals("Bowknight")) res = new Bowknight();
+        else if (Classe.equals("Halberder")) res = new Halberdier();
+        else if (Classe.equals("Knight")) res = new Knight();
+        else if (Classe.equals("Marksman")) res = new Marksman();
+        else if (Classe.equals("Paladin")) res = new Paladin();
+        else res = new Wyvernknight();
+
+        res.PV = PV;
+        return res;
     }
 }

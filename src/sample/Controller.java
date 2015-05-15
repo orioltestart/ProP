@@ -4,26 +4,28 @@
 
 package sample;
 
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.ImageView;
+import javafx.scene.effect.Shadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import sample.unitats.Unitat;
+
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 public class Controller {
 
@@ -51,31 +53,9 @@ public class Controller {
     @FXML
     private Label text1;
 
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private HBox targetaTerreny;
-
-    @FXML
-    private HBox targetaUnitat;
-
-    @FXML
-    private HBox targetaTerreny2;
-
-    @FXML
-    private HBox targetaUnitat2;
-
-    @FXML
-    private HBox targetaAtac;
-
-
-    @FXML
-    private StackPane pilaMapa;
 
     private Posicio seleccionada;
     private Posicio actual;
-    private Posicio desti;
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
@@ -90,17 +70,12 @@ public class Controller {
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath());
 
-
         for (int i = 0; i < mapa.getMidaH(); i++) {
             for (int j = 0; j < mapa.getMidaV(); j++) {
                 assignarHandlers(i, j);
                 m.add(mapa.getPos(i, j), i, j);
             }
         }
-
-        pilaMapa.getChildren().add(new Rectangle(100, 100, Color.BLUE));
-
-
     }
 
     private void assignarHandlers(int x, int y) {
@@ -110,9 +85,9 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 actual = (Posicio) mouseEvent.getTarget();
+                text1.setText(actual.toString());
                 if (actual.isMasked() && actual != seleccionada)
                     actual.setMasked(Color.GREEN);
-                text1.setText(actual.toString());
             }
         });
 
@@ -131,44 +106,56 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Posicio aux = (Posicio) mouseEvent.getTarget();
-                ArrayList<Posicio> posicions;
-
-                if (seleccionada != aux) { //Si no selecciono la que ja tinc seleccionada
-                    if (seleccionada != null) { //Si ja en tenia una de seleccionada
-                        seleccionada.unMask(); //La desenmascaro
-                        if (seleccionada.teUnitat()) {
-                            posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per desenmascarar
-                            for (Posicio i : posicions) {
-                                i.unMask(); //Les desenmascaro
-                            }
-                        }
-                    }
-                    seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
-                    seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
-                    actualitzaColumnes(seleccionada);
-                    if (seleccionada.teUnitat()) { //Si te una unitat
-                        posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per enmascarar
-                        for (Posicio i : posicions) i.setMasked(Color.RED); //Les pinto de vermell
-                    }
-                }
+                seleccionarPosicio(aux);
             }
         });
     }
 
-    private void actualitzaColumnes(Posicio aux) {
-        //Construim targetaTerreny
-        Posicio t = new Posicio(100);
-        t.setTerreny(aux.getTerreny().copia());
+    private VBox construeixTargeta(Posicio aux) {
+        VBox vbox = new VBox();
+        vbox.setStyle("-fx-border-color: white;" + "-fx-border-width: 2px;" + "-fx-border-radius: 4px;");
+        vbox.setCursor(Cursor.HAND);
+        vbox.setMaxSize(130, 170);
+        vbox.setPrefSize(130, 170);
+        vbox.setMinSize(130, 170);
 
-        if (!targetaTerreny.getChildren().isEmpty()) targetaTerreny.getChildren().clear();
-        if (!targetaUnitat.getChildren().isEmpty()) targetaUnitat.getChildren().clear();
-
-        targetaTerreny.getChildren().addAll(t, new Label(t.getTerreny().getAtributs()));
-
+        Posicio t = new Posicio(50);
+        t.setTerreny(aux.getTerreny());
+        vbox.getChildren().add(t);
         if (aux.teUnitat()) {
-            Posicio u = new Posicio(100);
-            u.setUnitat(aux.getUnitat().copia());
-            targetaUnitat.getChildren().addAll(u, new Label(u.getUnitat().getAtributs()));
+            t.setUnitat(aux.getUnitat());
+            vbox.getChildren().add(new Label(t.getUnitat().getAtributs()));
+        }
+        vbox.setSpacing(10);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        return vbox;
+    }
+
+    private void seleccionarPosicio(Posicio aux) {
+        ArrayList<Posicio> posicions;
+
+        if (seleccionada != aux) { //Si no selecciono la que ja tinc seleccionada
+            if (seleccionada != null) { //Si ja en tenia una de seleccionada
+                seleccionada.unMask(); //La desenmascaro
+                barraInferior.getChildren().clear();
+                if (seleccionada.teUnitat()) {
+                    posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per desenmascarar
+                    for (Posicio i : posicions) {
+                        i.unMask(); //Les desenmascaro
+                    }
+                }
+            }
+            seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
+            seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
+            if (seleccionada.teUnitat()) { //Si te una unitat
+
+                posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per enmascarar
+                for (Posicio i : posicions) {
+                    i.setMasked(Color.LIGHTGOLDENRODYELLOW); //Les pinto de vermell
+                    if (i.teUnitat()) barraInferior.getChildren().add(construeixTargeta(i));
+                }
+            }
         }
     }
 }

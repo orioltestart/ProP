@@ -21,7 +21,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
         primaryStage.setTitle("ProP - FIRE EMBLEM");
-        primaryStage.setScene(new Scene(root, 1000, 700));
+        primaryStage.setScene(new Scene(root, 1050, 750));
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

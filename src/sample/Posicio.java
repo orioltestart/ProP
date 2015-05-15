@@ -58,9 +58,9 @@ public class Posicio extends Canvas {
         midaQuadre = a_mida;
     }
 
-    public Posicio(Posicio p) {
-        this(p.getX(), p.getY());
-
+    public void setCoordenades(int x, int y) {
+        a_x = x;
+        a_y = y;
     }
 
     public Integer getX() throws NullPointerException {
@@ -125,13 +125,13 @@ public class Posicio extends Canvas {
     public void eliminaSeleccio() {
         dibuixaTerreny();
         dibuixaUnitat();
-        if (isMasked()) setMasked(Color.RED);
+        if (isMasked()) setMasked(Color.LIGHTGOLDENRODYELLOW);
     }
 
     public void actualitzar() {
         dibuixaTerreny();
         dibuixaUnitat();
-        if (isMasked()) dibuixaMascara(Color.RED);
+        if (isMasked()) dibuixaMascara(Color.LIGHTGOLDENRODYELLOW);
     }
 
     private void dibuixaUnitat() {
@@ -141,7 +141,7 @@ public class Posicio extends Canvas {
             super.getGraphicsContext2D().setFill(Color.BLACK);
             super.getGraphicsContext2D().fillRect(3, 3, midaQuadre - 6, midaQuadre / 8);
             super.getGraphicsContext2D().setFill(Color.GREENYELLOW);
-            super.getGraphicsContext2D().fillRect(4, 4, midaQuadre - 8 * unitat.getPV() / 100, midaQuadre / 10);
+            super.getGraphicsContext2D().fillRect(4, 4, (midaQuadre - 8) * unitat.getPV() / 100, midaQuadre / 10);
             /* GUARDEM EL RESULTAT */
             super.getGraphicsContext2D().save();
         }
@@ -156,7 +156,7 @@ public class Posicio extends Canvas {
     private void dibuixaMascara(Color c) {
         super.getGraphicsContext2D().setFill(c);
         //todo revisar
-        super.getGraphicsContext2D().setEffect(new BoxBlur(7, 7, 2));
+        super.getGraphicsContext2D().setEffect(new BoxBlur(7, 7, 1));
         super.getGraphicsContext2D().fillRect(0, 0, midaQuadre, midaQuadre * 0.0625);
         super.getGraphicsContext2D().fillRect(0, 0, midaQuadre * 0.0625, midaQuadre);
         super.getGraphicsContext2D().fillRect(0, midaQuadre, midaQuadre - midaQuadre * 0.0625, midaQuadre * 0.0625);
