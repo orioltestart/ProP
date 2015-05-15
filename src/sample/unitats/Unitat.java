@@ -7,8 +7,11 @@
 package sample.unitats;
 
 import javafx.scene.image.Image;
+import sample.Posicio;
 
 import java.util.Random;
+
+import static java.lang.Math.abs;
 
 public abstract class Unitat {
 
@@ -23,6 +26,8 @@ public abstract class Unitat {
     private String [] Bonificacio;
     private Integer Rang;   //distancia (en quadres) que pot atacar la unitat
     private Image img;
+    private Integer Propietari;
+    private Posicio PosAct;
 
     //
 
@@ -35,7 +40,6 @@ public abstract class Unitat {
     }
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
-        //falta el id todo
         Random r = new Random();
         PV = 100;
         Tipus = t;
@@ -50,28 +54,12 @@ public abstract class Unitat {
 
     }
 
-    /**
-     * @pre --
-     * @post
-     */
-    public void mostraPV(){
-        System.out.println(PV);
-    }
-
-    public void setImatge(int i) {
-        img = new Image("sample/Imatges/" + Classe + "v" + i + ".png");
-    }
-
-    public Image getImg() {
-        return img;
-    }
-
-    public Integer getMOV() {
-        return MOV;
-    }
-
-    public Integer getPV() {
-        return PV;
+    public void AssignaValorsPersonals (Posicio ini, Integer i){
+        Propietari = i;
+        setImatge(i);
+        SetPosicio(ini);
+        String cadena = "PosAct.getX() + PosAct.getY()";
+        ID = Integer.parseInt(cadena);
     }
 
     public String getAtributs() {
@@ -98,11 +86,6 @@ public abstract class Unitat {
         System.out.println();
     }
 
-
-    public Integer getDEF() {
-        return DEF;
-    }
-
     public void reduirPV( Integer dany){
         PV-=dany;
 
@@ -118,15 +101,15 @@ public abstract class Unitat {
         }
     }
 
-    public boolean potContraatacar(Unitat u) {
-        //comparar les dues posicions
-        //todo
-        return true;
+    public boolean potAtacar(Unitat u) {
+        Posicio r = new Posicio(abs(PosAct.getX()-u.PosAct.getX()), abs(PosAct.getY()-u.PosAct.getY()));
+        if (r.getX() <= Rang && r.getY() <= Rang) return true;
+        return false;
     }
 
     public Integer calcularAtac(Unitat u){
 
-        Integer BonusT = 0; //todo
+        Integer BonusT = PosAct.getTerreny().getDefensa();
         Integer defensaF = u.getDEF() + BonusT;
         Integer atacF = this.POW ;
 
@@ -170,7 +153,42 @@ public abstract class Unitat {
         return res;
     }
 
+
+    //Getter
+
     public Integer getRang() {
         return Rang;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public Integer getMOV() {
+        return MOV;
+    }
+
+    public Integer getPV() {
+        return PV;
+    }
+
+    public Integer getDEF() {
+        return DEF;
+    }
+
+    public Posicio getPosAct() { return PosAct; }
+
+    public boolean Enemiga (Unitat u) {
+        return !Propietari.equals(u.Propietari);
+    }
+
+    //Setter
+
+    public void setImatge(int i) {
+        img = new Image("sample/Imatges/" + Classe + "v" + i + ".png");
+    }
+
+    public void SetPosicio (Posicio n){
+        PosAct = n;
     }
 }

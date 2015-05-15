@@ -90,7 +90,7 @@ public class Posicio extends Canvas {
         if (terreny == null) terreny = new Terreny();
         unitat = u;
         if (unitat != null) {
-            unitat.setImatge(1);
+            unitat.setImatge(2);
             dibuixaUnitat();
         }
     }

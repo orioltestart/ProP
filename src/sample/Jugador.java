@@ -36,16 +36,17 @@ public class Jugador {
     }
 
     public void atacar (Unitat u, Unitat u2) {
+        if (u.Enemiga(u2)) {
             Integer a = u.calcularAtac(u2);
             u2.reduirPV(a);
-            // tractar rang todo
-            //tractar excepcio unitats aliades todo
-            a = u2.calcularAtac(u);
-            u.reduirPV(a);
-
+            if (u2.potAtacar(u)) {  //contraatac
+                a = u2.calcularAtac(u);
+                u.reduirPV(a);
+            }
             //puntuacions
             if (u.AplicarBonificacio(u2) == 3) Puntacio += 500;
             else Puntacio += 300;
+        }
     }
 
     public Integer getPuntacio() {
