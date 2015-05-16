@@ -174,6 +174,7 @@ public class Controller {
         }
     }
 
+
     private void assignarHandlers(int x, int y) {
         Posicio[][] pos = mapa.getMapa();
 
@@ -219,6 +220,7 @@ public class Controller {
                         } else { //Si no estava dins del rang
                             eliminaSeleccio();
                             seleccionada.reset();
+                            actual = null;
                             actualitzaContenidor(null, barraInforme); //Elimino les posicions del informe
                             seleccionada = clicada; //Poso la seleccionada com a la clicada
                             pintaRang(); //Pinto el rang de la nova posicio
