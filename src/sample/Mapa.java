@@ -126,6 +126,7 @@ public class Mapa {
         int mov = 0;
         if (s.equals("Atac")) mov = p.getUnitat().getRang();
         else if (s.equals("Moure")) mov = p.getUnitat().getMOV();
+        else if (s.equals("Total")) mov = p.getUnitat().getRang()+p.getUnitat().getMOV();
 
 
         for (int i = 0; i <= mov; i++) {
