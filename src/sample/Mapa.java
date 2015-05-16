@@ -119,11 +119,13 @@ public class Mapa {
 
     // CERCA DE LES CASELLES ON ES POT DESPLAÇAR LA UNITAT
 
-    public ArrayList<Posicio> getRangMoviment(Posicio p) {
+    public ArrayList<Posicio> getRang(Posicio p, String s) {
         ArrayList<Posicio> posicions = new ArrayList<Posicio>();
         int x = p.getX();
         int y = p.getY();
-        int mov = p.getUnitat().getMOV();
+        int mov = 0;
+        if (s.equals("Atac")) mov = p.getUnitat().getRang();
+        else if (s.equals("Moure")) mov = p.getUnitat().getMOV();
 
 
         for (int i = 0; i <= mov; i++) {
@@ -148,32 +150,6 @@ public class Mapa {
     public Boolean ComprovaObjectiu (Posicio o, Posicio p){
         return (mapa[o.getX()][o.getY()].teUnitat() && mapa[o.getX()][o.getY()].getUnitat().Enemiga(p.getUnitat()));
 
-    }
-
-    //CERCA DE LES UNITATS QUE POT ATACAR LA UNITAT
-    public ArrayList<Posicio> getRangAtac(Posicio p) {
-        ArrayList<Posicio> objectius = new ArrayList<Posicio>();
-        int x = p.getX();
-        int y = p.getY();
-        int rang = p.getUnitat().getRang();
-
-        for (int i = 0; i <= rang; i++) {
-            if ((y - rang + i) >= 0) {
-                if (ComprovaObjectiu(mapa[x][y - rang + i], p)) objectius.add(mapa[x][y - rang + i]);
-                for (int j = 1; j <= i; j++) {
-                    if ((x + j) < MAXH && ComprovaObjectiu(mapa[x+j][y - rang + i], p))objectius.add(mapa[x + j][y - rang + i]);
-                    if ((x - j) >= 0 && ComprovaObjectiu(mapa[x-j][y - rang + i], p))objectius.add(mapa[x - j][y - rang + i]);
-                }
-            }
-            if ((y + rang - i) < MAXV && i < rang) {
-                if (ComprovaObjectiu(mapa[x][y + rang - i], p)) objectius.add(mapa[x][y + rang - i]);
-                for (int j = 1; j <= i; j++) {
-                    if ((x + j) < MAXH && ComprovaObjectiu(mapa[x+j][y + rang - i], p)) objectius.add(mapa[x + j][y + rang - i]);
-                    if ((x - j) >= 0 && ComprovaObjectiu(mapa[x-j][y + rang - i], p)) objectius.add(mapa[x - j][y + rang - i]);
-                }
-            }
-        }
-        return objectius;
     }
 
     // METODES DE LECTURA DES DE FITXER
@@ -230,7 +206,7 @@ public class Mapa {
             }
             System.out.println("Lectura d'unitats correcte");
             mapa[2][6].getUnitat().reduirPV(30);
-            mapa[2][6].actualitzar();
+            mapa[2][6].reset();
 
         } catch (IOException e) {
             e.printStackTrace();

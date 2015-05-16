@@ -7,18 +7,18 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.Shadow;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import sample.unitats.Unitat;
 
 
@@ -41,6 +41,10 @@ public class Controller {
     @FXML // fx:id="barraInferior"
     private HBox barraInferior; // Value injected by FXMLLoader
 
+    @FXML
+    private VBox barraDesti;
+
+
     @FXML // fx:id="finestra"
     private BorderPane finestra; // Value injected by FXMLLoader
 
@@ -53,6 +57,36 @@ public class Controller {
     @FXML
     private Label text1;
 
+    @FXML
+    private VBox posicioActual;
+
+    @FXML
+    private Button seg;
+
+    @FXML
+    private Button ant;
+
+    @FXML
+    private Button btAtacMoure;
+
+    @FXML
+    private Text textDesti;
+
+    @FXML
+    private Button btGuardar;
+
+    @FXML
+    private Button btSortir;
+
+    @FXML
+    private HBox barraInforme;
+
+    private Integer index = 0;
+
+
+    private ArrayList<Posicio> atacables = new ArrayList<Posicio>();
+
+    private ArrayList<Posicio> pintades = new ArrayList<Posicio>();
 
     private Posicio seleccionada;
     private Posicio actual;
@@ -67,8 +101,56 @@ public class Controller {
         File terreny = new File("src/sample/mapes/mapa5");
         File unitats = new File("src/sample/mapes/unitats51");
 
+
+        ant.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (!atacables.isEmpty()) {
+                    actualitzaContenidor(atacables.get(index), barraDesti);
+                    if (index == 0) index = atacables.size() - 1;
+                    else index--;
+                }
+            }
+        });
+
+        seg.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (!atacables.isEmpty()) {
+                    actualitzaContenidor(atacables.get(index), barraDesti);
+                    if (index == atacables.size() - 1) index = 0;
+                    else index++;
+                }
+            }
+        });
+
+
+        btAtacMoure.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Button b = (Button) actionEvent.getTarget();
+                eliminaSeleccio();
+                if (b.getText().equals("Atac")) {
+                    seg.setDisable(true);
+                    ant.setDisable(true);
+                    b.setText("Moure");
+                    textDesti.setText("Posicio Destí");
+                } else {
+                    seg.setDisable(false);
+                    ant.setDisable(false);
+                    b.setText("Atac");
+                    textDesti.setText("Unitats Atacables");
+                }
+
+                pintaRang();
+                if (!atacables.isEmpty())
+                    actualitzaContenidor(atacables.get(index), barraDesti);
+            }
+        });
+
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath());
+
 
         for (int i = 0; i < mapa.getMidaH(); i++) {
             for (int j = 0; j < mapa.getMidaV(); j++) {
@@ -86,8 +168,10 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 actual = (Posicio) mouseEvent.getTarget();
                 text1.setText(actual.toString());
-                if (actual.isMasked() && actual != seleccionada)
-                    actual.setMasked(Color.GREEN);
+
+                if (btAtacMoure.getText().equals("Moure") && dinsRang(actual)) actualitzaContenidor(actual, barraDesti);
+
+                if (actual != seleccionada) actual.pinta(Color.GREEN);
             }
         });
 
@@ -95,9 +179,11 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Posicio aux = (Posicio) mouseEvent.getTarget();
-                if (aux.isMasked() && aux != seleccionada)
-                    aux.eliminaSeleccio();
 
+                if (btAtacMoure.getText().equals("Moure")) actualitzaContenidor(null, barraDesti);
+
+                if (!dinsRang(aux) && aux != seleccionada) aux.reset();
+                else if (aux != seleccionada) aux.pinta(Color.RED);
             }
         });
 
@@ -105,57 +191,45 @@ public class Controller {
         pos[x][y].setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                Posicio aux = (Posicio) mouseEvent.getTarget();
-                seleccionarPosicio(aux);
+
             }
         });
     }
 
-    private VBox construeixTargeta(Posicio aux) {
-        VBox vbox = new VBox();
-        vbox.setStyle("-fx-border-color: white;" + "-fx-border-width: 2px;" + "-fx-border-radius: 4px;");
-        vbox.setCursor(Cursor.HAND);
-        vbox.setMaxSize(130, 170);
-        vbox.setPrefSize(130, 170);
-        vbox.setMinSize(130, 170);
 
-        Posicio t = new Posicio(50);
-        t.setTerreny(aux.getTerreny());
-        vbox.getChildren().add(t);
-        if (aux.teUnitat()) {
+    private void pintaRang() {
+        index = 0;
+        if (seleccionada.teUnitat()) {
+            for (Posicio i : mapa.getRang(seleccionada, btAtacMoure.getText())) {
+                i.pinta(Color.RED);
+                pintades.add(i);
+                if (btAtacMoure.getText().equals("Atac") && i.teUnitat())
+                    atacables.add(i);
+            }
+        }
+    }
+
+    private void eliminaSeleccio() {
+        for (Posicio i : pintades) i.reset();
+        pintades.clear();
+        atacables.clear();
+    }
+
+    private void actualitzaContenidor(Posicio aux, Pane p) {
+        p.getChildren().clear();
+        if (aux != null) {
+            Posicio t = new Posicio(100);
+            t.setTerreny(aux.getTerreny());
             t.setUnitat(aux.getUnitat());
-            vbox.getChildren().add(new Label(t.getUnitat().getAtributs()));
-        }
-        vbox.setSpacing(10);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        return vbox;
-    }
 
-    private void seleccionarPosicio(Posicio aux) {
-        ArrayList<Posicio> posicions;
-
-        if (seleccionada != aux) { //Si no selecciono la que ja tinc seleccionada
-            if (seleccionada != null) { //Si ja en tenia una de seleccionada
-                seleccionada.unMask(); //La desenmascaro
-                barraInferior.getChildren().clear();
-                if (seleccionada.teUnitat()) {
-                    posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per desenmascarar
-                    for (Posicio i : posicions) {
-                        i.unMask(); //Les desenmascaro
-                    }
-                }
-            }
-            seleccionada = aux; //Si no en tenia cap de seleccionada poso l'actual
-            seleccionada.setMasked(Color.YELLOW);  //La pinto de groc
-            if (seleccionada.teUnitat()) { //Si te una unitat
-
-                posicions = mapa.getRangMoviment(seleccionada); //Agafo totes les caselles per enmascarar
-                for (Posicio i : posicions) {
-                    i.setMasked(Color.LIGHTGOLDENRODYELLOW); //Les pinto de vermell
-                    if (i.teUnitat()) barraInferior.getChildren().add(construeixTargeta(i));
-                }
-            }
+            p.getChildren().add(t);
+            if (t.teUnitat()) p.getChildren().add(new Label(t.getUnitat().getAtributs()));
         }
     }
+
+    private Boolean dinsRang(Posicio aux) {
+        for (Posicio i : pintades) if (i == aux) return true;
+        return false;
+    }
+
 }

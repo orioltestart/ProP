@@ -17,7 +17,9 @@ public class Posicio extends Canvas {
     private Unitat unitat;
     private Terreny terreny;
 
-    private Boolean masked = false;
+    private Boolean teMascara = false;
+    private Color colorMascara;
+
     final static Integer a_mida = 40;
     private Integer midaQuadre;
 
@@ -56,11 +58,6 @@ public class Posicio extends Canvas {
         unitat = null;
         terreny = null;
         midaQuadre = a_mida;
-    }
-
-    public void setCoordenades(int x, int y) {
-        a_x = x;
-        a_y = y;
     }
 
     public Integer getX() throws NullPointerException {
@@ -107,31 +104,13 @@ public class Posicio extends Canvas {
 
     /*  METODES DE SELECCIO  */
 
-    public Boolean isMasked() {
-        return masked;
-    }
-
-    public void setMasked(Color c) {
+    public void pinta(Color c) {
         dibuixaMascara(c);
-        masked = true;
     }
 
-    public void unMask() {
+    public void reset() {
         dibuixaTerreny();
         dibuixaUnitat();
-        masked = false;
-    }
-
-    public void eliminaSeleccio() {
-        dibuixaTerreny();
-        dibuixaUnitat();
-        if (isMasked()) setMasked(Color.LIGHTGOLDENRODYELLOW);
-    }
-
-    public void actualitzar() {
-        dibuixaTerreny();
-        dibuixaUnitat();
-        if (isMasked()) dibuixaMascara(Color.LIGHTGOLDENRODYELLOW);
     }
 
     private void dibuixaUnitat() {
@@ -155,12 +134,11 @@ public class Posicio extends Canvas {
 
     private void dibuixaMascara(Color c) {
         super.getGraphicsContext2D().setFill(c);
-        //todo revisar
-        super.getGraphicsContext2D().setEffect(new BoxBlur(7, 7, 1));
-        super.getGraphicsContext2D().fillRect(0, 0, midaQuadre, midaQuadre * 0.0625);
-        super.getGraphicsContext2D().fillRect(0, 0, midaQuadre * 0.0625, midaQuadre);
-        super.getGraphicsContext2D().fillRect(0, midaQuadre, midaQuadre - midaQuadre * 0.0625, midaQuadre * 0.0625);
-        super.getGraphicsContext2D().fillRect(midaQuadre - midaQuadre * 0.0625, 0, midaQuadre * 0.0625, midaQuadre);
+        super.getGraphicsContext2D().fillRect(0, 0, midaQuadre, 4);
+        super.getGraphicsContext2D().fillRect(0, 0, 4, midaQuadre);
+        super.getGraphicsContext2D().fillRect(0, midaQuadre - 4, midaQuadre, midaQuadre - 4);
+        super.getGraphicsContext2D().fillRect(midaQuadre - 4, 0, midaQuadre, midaQuadre);
+
 
     }
 
