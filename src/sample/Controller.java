@@ -151,9 +151,11 @@ public class Controller {
                     tipusInforme.setText("Atac");
                 }
 
-                pintaRang();
-                if (!atacables.isEmpty())
-                    actualitzaContenidor(atacables.get(index), barraInforme);
+                if (seleccionada != null) {
+                    pintaRang();
+                    if (!atacables.isEmpty())
+                        actualitzaContenidor(atacables.get(index), barraInforme);
+                }
 
             }
         });
