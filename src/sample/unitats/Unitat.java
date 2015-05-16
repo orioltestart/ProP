@@ -64,8 +64,8 @@ public abstract class Unitat {
 
     public String getAtributs() {
         String missatge = "";
-        missatge += "Tipus : " + Tipus + "\nClasse: " + Classe + "\nVida: " + PV;
-        missatge += " \nPoder: " + POW + "\nDefensa: " + DEF + "\nMov: " + MOV + "  Rang: " + Rang;
+        missatge += "Tipus : " + Tipus + " Classe: " + Classe + "\nVida: " + PV;
+        missatge += " Poder: " + POW + "\nDefensa: " + DEF + "\nMov: " + MOV + "  Rang: " + Rang;
         return missatge;
     }
 
