@@ -205,8 +205,6 @@ public class Mapa {
                 }
             }
             System.out.println("Lectura d'unitats correcte");
-            mapa[2][6].getUnitat().reduirPV(30);
-            mapa[2][6].reset();
 
         } catch (IOException e) {
             e.printStackTrace();
