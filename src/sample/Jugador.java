@@ -13,7 +13,7 @@ public class Jugador {
     Integer Puntacio;
     ArrayList <Unitat> Exercit;
 
-
+    //constructors
 
     public Jugador(){
         Puntacio = 0;
@@ -24,6 +24,8 @@ public class Jugador {
         Puntacio = 0;
         Num = i;
     }
+
+
 
     public void AfegirUnitat (Unitat u) {
         Exercit.add(u);
@@ -49,7 +51,18 @@ public class Jugador {
         }
     }
 
+
+    //getter
+
     public Integer getPuntacio() {
         return Puntacio;
+    }
+
+    public Integer getNum (){
+        return Num;
+    }
+
+    public Integer nombreUnitats() {
+        return Exercit.size();
     }
 }
