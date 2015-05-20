@@ -102,18 +102,24 @@ public class Mapa {
     //Excepcions: Desplaçar una unitat a una posició ja ocupada llança una IllegalArgumentException així que la posició ori no tingui cap unitat per desplaçar
     public void desplacar(Posicio ori, Posicio fi) throws IllegalArgumentException {
         try {
-            if (mapa[ori.getX()][ori.getY()].teUnitat())
+            if (!mapa[ori.getX()][ori.getY()].teUnitat())
                 throw new IllegalArgumentException("Aquesta posició no té cap unitats dins");
             if (mapa[fi.getX()][fi.getY()].teUnitat())
                 throw new IllegalArgumentException("Aquesta posició de destí ja està ocupada per un altre unitats");
+            if (ori == fi) throw new IllegalArgumentException("No es pot moure a la mateixa posició de la que està");
 
             Unitat aux = mapa[ori.getX()][ori.getY()].getUnitat();
+
+            aux.restaMov(distanciaRecorreguda(ori, fi));
 
             mapa[ori.getX()][ori.getY()].eliminaUnitat(); //Eliminem la unitat del origen
             mapa[fi.getX()][fi.getY()].setUnitat(aux); //La coloquem al destí
 
+            ori.reset();
+            fi.reset();
+
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -125,7 +131,7 @@ public class Mapa {
         int y = p.getY();
         int mov = 0;
         if (s.equals("Atac")) mov = p.getUnitat().getRang();
-        else if (s.equals("Moure")) mov = p.getUnitat().getMOV();
+        else if (s.equals("Moure")) mov = p.getUnitat().getMov();
 
 
         for (int i = 0; i <= mov; i++) {
@@ -209,5 +215,9 @@ public class Mapa {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Integer distanciaRecorreguda(Posicio a, Posicio b) {
+        return (Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY()));
     }
 }

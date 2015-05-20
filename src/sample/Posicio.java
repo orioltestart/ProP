@@ -86,8 +86,10 @@ public class Posicio extends Canvas {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         if (terreny == null) terreny = new Terreny();
         unitat = u;
+
         if (unitat != null) {
             unitat.setImatge(2);
+            unitat.SetPosicio(this);
             dibuixaUnitat();
         }
     }
@@ -105,6 +107,7 @@ public class Posicio extends Canvas {
     /*  METODES DE SELECCIO  */
 
     public void pinta(Color c) {
+        reset();
         dibuixaMascara(c);
     }
 
@@ -134,12 +137,11 @@ public class Posicio extends Canvas {
 
     private void dibuixaMascara(Color c) {
         super.getGraphicsContext2D().setFill(c);
+        super.getGraphicsContext2D().setEffect(new BoxBlur(7, 7, 2));
         super.getGraphicsContext2D().fillRect(0, 0, midaQuadre, 4);
         super.getGraphicsContext2D().fillRect(0, 0, 4, midaQuadre);
         super.getGraphicsContext2D().fillRect(0, midaQuadre - 4, midaQuadre, midaQuadre - 4);
         super.getGraphicsContext2D().fillRect(midaQuadre - 4, 0, midaQuadre, midaQuadre);
-
-
     }
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
@@ -26,19 +27,19 @@
                               style="-fx-border-color: #FFFFFF; -fx-border-radius: 4px; -fx-border-width: 2px;"
                               VBox.vgrow="ALWAYS">
                             <children>
-                                <Text fx:id="textDesti" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                <Text fx:id="textCursor" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
                                       text="Posicio Cursor" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0"/>
                                     </font>
                                 </Text>
-                                <VBox fx:id="barraDesti" alignment="TOP_CENTER" VBox.vgrow="ALWAYS"/>
+                                <VBox fx:id="barraCursor" alignment="TOP_CENTER" VBox.vgrow="ALWAYS"/>
                             </children>
                         </VBox>
                         <HBox alignment="CENTER"/>
                     </children>
                 </VBox>
-                <VBox alignment="TOP_CENTER"
+                <VBox alignment="CENTER"
                       style="-fx-border-color: #FFFFFF; -fx-border-radius: 4px; -fx-border-width: 2px;"
                       HBox.hgrow="ALWAYS">
                     <children>
@@ -56,7 +57,30 @@
                                 </Label>
                             </children>
                         </HBox>
-                        <VBox fx:id="barraInforme" alignment="TOP_CENTER"/>
+                        <HBox alignment="CENTER">
+                            <children>
+                                <VBox fx:id="barraOrigen" alignment="CENTER" maxWidth="200.0" minWidth="200.0"
+                                      prefWidth="200.0"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <VBox alignment="CENTER">
+                                    <children>
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Es desplaça a">
+                                            <font>
+                                                <Font size="14.0"/>
+                                            </font>
+                                        </Text>
+                                        <ImageView pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@Imatges/direction4.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <VBox fx:id="barraDesti" alignment="CENTER" maxWidth="200.0" minWidth="200.0"
+                                      prefWidth="200.0"/>
+                            </children>
+                        </HBox>
                         <Region VBox.vgrow="ALWAYS"/>
                         <HBox>
                             <children>

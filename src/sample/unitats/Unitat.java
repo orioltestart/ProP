@@ -22,7 +22,8 @@ public abstract class Unitat {
     private Integer PV;
     private Integer POW;
     private Integer DEF;
-    private Integer MOV;    //nombre de quadres que es pot moure
+    private Integer movActual;
+    private Integer movTotal;    //nombre de quadres que es pot moure
     private String [] Bonificacio;
     private Integer Rang;   //distancia (en quadres) que pot atacar la unitat
     private Image img;
@@ -36,7 +37,8 @@ public abstract class Unitat {
         PV = 100;
         POW = 0;
         DEF = 0;
-        MOV = 0;
+        movTotal = 0;
+        movActual = 0;
     }
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
@@ -47,7 +49,8 @@ public abstract class Unitat {
         //els atributs varien
         POW = atac + r.nextInt(30);
         DEF = defensa + r.nextInt(10);
-        MOV = moviment;
+        movTotal = moviment;
+        movActual = movTotal;
         //pot haver-hi diverses bonificacions
         Bonificacio = bonus.split("-");
         Rang = rang;
@@ -64,8 +67,8 @@ public abstract class Unitat {
 
     public String getAtributs() {
         String missatge = "";
-        missatge += "Tipus : " + Tipus + " Classe: " + Classe + "\nVida: " + PV;
-        missatge += " Poder: " + POW + "\nDefensa: " + DEF + "\nMov: " + MOV + "  Rang: " + Rang;
+        missatge += "Tipus : " + Tipus + "\nClasse: " + Classe + "\nVida: " + PV;
+        missatge += " | Poder: " + POW + "\nDefensa: " + DEF + "\nMov: " + movTotal + " |  Rang: " + Rang;
         return missatge;
     }
 
@@ -76,7 +79,7 @@ public abstract class Unitat {
         System.out.println("PV: "+PV);
         System.out.println("POW: " + POW);
         System.out.println("DEF: "+DEF);
-        System.out.println("MOV: "+MOV);
+        System.out.println("movTotal: " + movTotal);
         System.out.println("Rang: "+Rang);
         System.out.println("Avantatge contra:");
 
@@ -164,8 +167,12 @@ public abstract class Unitat {
         return img;
     }
 
-    public Integer getMOV() {
-        return MOV;
+    public Integer getMov() {
+        return movActual;
+    }
+
+    public void restaMov(Integer n) {
+        movActual -= n;
     }
 
     public Integer getPV() {
