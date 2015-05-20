@@ -31,6 +31,7 @@ public abstract class Unitat {
     private Image img;
     private Integer Propietari = 1;
     private Posicio PosAct;
+    private Boolean ready;
 
     //
 
@@ -139,19 +140,6 @@ public abstract class Unitat {
         return (Classe);
     }
 
-    public Unitat copia() {
-        Unitat res;
-        if (Classe.equals("Bowknight")) res = new Bowknight();
-        else if (Classe.equals("Halberder")) res = new Halberdier();
-        else if (Classe.equals("Knight")) res = new Knight();
-        else if (Classe.equals("Marksman")) res = new Marksman();
-        else if (Classe.equals("Paladin")) res = new Paladin();
-        else res = new Wyvernknight();
-
-        res.PV = PV;
-        return res;
-
-    }
 
     //Getter
 
@@ -187,6 +175,20 @@ public abstract class Unitat {
 
     public boolean Enemiga (Unitat u) {
         return !Propietari.equals(u.Propietari);
+    }
+
+    //Setter
+
+    public void repos(){
+        ready = false;
+    }
+
+    public void setReady (){
+        ready = true;
+    }
+
+    public void setImatge(int i) {
+        img = new Image("sample/Imatges/" + Classe + "v" + i + ".png");
     }
 
     public void setPosicio(Posicio n) {

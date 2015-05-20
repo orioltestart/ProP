@@ -32,7 +32,7 @@ public class Partida {
     }
 
     public void ControlMaquina(Jugador j) throws InterruptedException {
-        //iterador per totes les unitats
+        //iterador per totes les unitats del jugador
         Iterator itu = j.getExercit().iterator();
         while (itu.hasNext()) {
             Unitat agressor = (Unitat) itu.next();
@@ -50,7 +50,7 @@ public class Partida {
                 }
             }
             if (millorDany>0){
-                //a partir de la posicio Objectiu
+                //a partir de la posicio Objectiu, busquem la millor posicio per mourens
                 ArrayList<Posicio> area = mapa.getRang(Objectiu, agressor.getRang());
                 area.retainAll(rang);
                 Posicio desti= new Posicio();
@@ -65,9 +65,32 @@ public class Partida {
                 Thread.sleep(2000);
                 j.atacar(agressor, Objectiu.getUnitat());
                 Thread.sleep(2000);
+                j.enRepos(agressor);
             }
         }
         //si no hi ha cap unitat al rang, no fa res
+
+    }
+
+    public void jugar () throws InterruptedException {
+
+        for (int i = 0; i<MaxTorns; i++){
+            System.out.println("TORN "+i);
+            j1.activaExercit();
+            j2.activaExercit();
+            // todo while (boto no pitjat)
+                //juga
+            Thread.sleep(2000);
+            //torn jugador 1
+
+
+            //bloquejar accions del ratoli
+
+
+            ControlMaquina(j2);
+        }
+        //si arriba aqui vol dir que s'ha acabat la partida
+        System.out.println("FI DE LA PARTIDA");
 
     }
 

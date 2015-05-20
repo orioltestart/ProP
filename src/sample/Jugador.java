@@ -52,8 +52,10 @@ public class Jugador {
         }
     }
 
-    public void desplacarUnitat (Posicio origen, Posicio fi){
-
+    public void activaExercit(){
+        for (Unitat u : Exercit){
+            u.setReady();
+        }
     }
 
 
@@ -73,5 +75,9 @@ public class Jugador {
 
     public ArrayList<Unitat> getExercit() {
         return Exercit;
+    }
+
+    public void enRepos(Unitat u){
+        u.repos();
     }
 }
