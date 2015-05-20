@@ -96,7 +96,7 @@ public class Controller {
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize() throws InterruptedException {
         assert contenidorMapa != null : "fx:id=\"contenidorMapa\" was not injected: check your FXML file 'sample.fxml'.";
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";

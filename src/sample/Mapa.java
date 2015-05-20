@@ -131,8 +131,8 @@ public class Mapa {
         int y = p.getY();
         int mov = 0;
         if (s.equals("Atac")) mov = p.getUnitat().getRang();
-        else if (s.equals("Moure")) mov = p.getUnitat().getMOV();
-        else if (s.equals("Total")) mov = p.getUnitat().getRang()+p.getUnitat().getMOV();
+        else if (s.equals("Moure")) mov = p.getUnitat().getMov();
+        else if (s.equals("Total")) mov = p.getUnitat().getRang() + p.getUnitat().getMov();
 
 
         for (int i = 0; i <= mov; i++) {
