@@ -2,6 +2,7 @@ package sample;
 
 import sample.unitats.Unitat;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -34,34 +35,40 @@ public class Partida {
         //iterador per totes les unitats
         Iterator itu = j.getExercit().iterator();
         while (itu.hasNext()) {
-            Unitat u = (Unitat) itu.next();
-            Iterator itp = mapa.getRang(u.getPosAct(),"Total").iterator();
+            Unitat agressor = (Unitat) itu.next();
+            ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(),agressor.getRang()+agressor.getMOV());
+            Iterator itp = rang.iterator();
+            //iterador per totes les caselles dins del rang
             Integer millorDany = 0;
-            Integer millorDef = -20;
-            Posicio millor = new Posicio();
+            Posicio Objectiu = new Posicio();
+            //obtenir la unitat enemiga a la qual li farem mes punts de dany
             while (itp.hasNext()){
                 Posicio pos = (Posicio) itp.next();
-                if (pos.teUnitat() && pos.getUnitat().Enemiga(u) &&
-                        u.calcularAtac(pos.getUnitat()) > millorDany &&
-                        pos.getTerreny().getDefensa() > millorDef){
-                    millorDany = u.calcularAtac(pos.getUnitat());
-                    millor = pos;
-                    millorDef = pos.getTerreny().getDefensa();
+                if (pos.teUnitat() && pos.getUnitat().Enemiga(agressor) && agressor.calcularAtac(pos.getUnitat()) > millorDany){
+                    millorDany = agressor.calcularAtac(pos.getUnitat());
+                    Objectiu = pos;
                 }
             }
             if (millorDany>0){
+                //a partir de la posicio Objectiu
+                ArrayList<Posicio> area = mapa.getRang(Objectiu, agressor.getRang());
+                area.retainAll(rang);
+                Posicio desti= new Posicio();
+                Integer millorDef = -20;
+                for (Posicio h : area){
+                    if (h.getTerreny().getDefensa() > millorDef)
+                        desti = h;
+                }
+
                 Thread.sleep(2000);
-                mapa.desplacar(u.getPosAct(), millor);
+                mapa.desplacar(agressor.getPosAct(), desti);
                 Thread.sleep(2000);
-                j.atacar(u, millor.getUnitat());
+                j.atacar(agressor, Objectiu.getUnitat());
                 Thread.sleep(2000);
             }
-            //si no hi ha cap unitat al rang, no fa res
         }
-    }
+        //si no hi ha cap unitat al rang, no fa res
 
-    public void RealitzarDesplacament(Posicio o, Posicio f){
-        mapa.desplacar(o,f);
     }
 
 }

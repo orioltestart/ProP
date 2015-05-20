@@ -148,6 +148,31 @@ public class Mapa {
         return posicions;
     }
 
+    public ArrayList<Posicio> getRang(Posicio p, Integer mov){
+        ArrayList<Posicio> posicions = new ArrayList<Posicio>();
+        int x = p.getX();
+        int y = p.getY();
+
+        for (int i = 0; i <= mov; i++) {
+            if ((y - mov + i) >= 0) {
+                posicions.add(mapa[x][y - mov + i]);
+                for (int j = 1; j <= i; j++) {
+                    if ((x + j) < MAXH) posicions.add(mapa[x + j][y - mov + i]);
+                    if ((x - j) >= 0) posicions.add(mapa[x - j][y - mov + i]);
+                }
+            }
+            if ((y + mov - i) < MAXV && i < mov) {
+                posicions.add(mapa[x][y + mov - i]);
+                for (int j = 1; j <= i; j++) {
+                    if ((x + j) < MAXH) posicions.add(mapa[x + j][y + mov - i]);
+                    if ((x - j) >= 0) posicions.add(mapa[x - j][y + mov - i]);
+                }
+            }
+        }
+
+        return posicions;
+    }
+
     public Boolean ComprovaObjectiu (Posicio o, Posicio p){
         return (mapa[o.getX()][o.getY()].teUnitat() && mapa[o.getX()][o.getY()].getUnitat().Enemiga(p.getUnitat()));
 
