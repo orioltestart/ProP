@@ -219,19 +219,34 @@ public class Mapa {
         br.close();
     }
 
-    public void llegirUnitats(String u) {
+    public void llegirUnitats(String u, Jugador a, Jugador b) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(u));
 
             String sCurrentLine;
             Integer j = 0;
+            Integer jugador = 1;
+            Unitat aux;
             while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (sCurrentLine.isEmpty()) j = 0;
+                if (sCurrentLine.isEmpty()) {
+                    j = 0;
+                    jugador++;
+                }
                 else {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
+                    for (int i = 0; i < pos.length; i++) {
+                        aux = fabricaUnitats(Integer.parseInt(pos[i]));
+                        System.out.println("Afegint posicio: [" + i + "," + j + "] La unitat: " + aux);
+                        if (aux != null) {
+                            aux.setPropietari(jugador);
+                            System.out.print("Afegit a jugador: " + jugador + " La unitat: " + aux);
 
-                    for (int i = 0; i < pos.length; i++)
-                        mapa[i][j].setUnitat(fabricaUnitats(Integer.parseInt(pos[i]))); //Afegim les unitats corresponents a les posicions
+                            if (jugador == 1) a.getExercit().add(aux);
+                            else b.getExercit().add(aux);
+
+                            mapa[i][j].setUnitat(aux); //Afegim les unitats corresponents a les posicions
+                        }
+                    }
 
                     j++;
                 }

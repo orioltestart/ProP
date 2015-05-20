@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import sample.unitats.Unitat;
 
 
 import java.io.File;
@@ -102,10 +103,29 @@ public class Controller {
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
         File terreny = new File("src/sample/mapes/mapa5");
-        File unitats = new File("src/sample/mapes/unitats52");
+        File unitats = new File("src/sample/mapes/unitats51");
 
 
         // BOTONS!!!
+        assignarBotons();
+        //Final de BOTONS
+
+        jugador1 = new Jugador(1);
+        jugador2 = new Jugador(2);
+
+        mapa = new Mapa(terreny.getAbsolutePath());
+        mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
+
+
+        for (int i = 0; i < mapa.getMidaH(); i++) {
+            for (int j = 0; j < mapa.getMidaV(); j++) {
+                assignarHandlers(i, j);
+                m.add(mapa.getPos(i, j), i, j);
+            }
+        }
+    }
+
+    private void assignarBotons() {
         ant.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -177,19 +197,6 @@ public class Controller {
 
             }
         });
-
-        //Final de BOTONS
-
-        mapa = new Mapa(terreny.getAbsolutePath());
-        mapa.llegirUnitats(unitats.getAbsolutePath());
-
-
-        for (int i = 0; i < mapa.getMidaH(); i++) {
-            for (int j = 0; j < mapa.getMidaV(); j++) {
-                assignarHandlers(i, j);
-                m.add(mapa.getPos(i, j), i, j);
-            }
-        }
     }
 
 
@@ -299,6 +306,12 @@ public class Controller {
     private Boolean dinsRang(Posicio aux) {
         for (Posicio i : pintades) if (i == aux) return true;
         return false;
+    }
+
+    private void mostraExercitJugadors() {
+        for (Unitat u : jugador1.getExercit()) System.out.println(u);
+
+        for (Unitat u : jugador2.getExercit()) System.out.println(u);
     }
 
 }

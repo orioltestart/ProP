@@ -10,13 +10,15 @@ import javafx.scene.image.Image;
 import sample.Posicio;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.Math.abs;
 
 public abstract class Unitat {
 
     //atributs
-    private Integer ID;
+    private static final AtomicInteger seq = new AtomicInteger(1);
+    private int ID;
     private String Tipus;   //INF, CAV, RANG.
     private String Classe;  //piquer, arquer, cavaller...
     private Integer PV;
@@ -27,7 +29,7 @@ public abstract class Unitat {
     private String [] Bonificacio;
     private Integer Rang;   //distancia (en quadres) que pot atacar la unitat
     private Image img;
-    private Integer Propietari;
+    private Integer Propietari = 1;
     private Posicio PosAct;
 
     //
@@ -43,6 +45,7 @@ public abstract class Unitat {
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
         Random r = new Random();
+        ID = seq.getAndIncrement();
         PV = 100;
         Tipus = t;
         Classe = c;
@@ -54,15 +57,8 @@ public abstract class Unitat {
         //pot haver-hi diverses bonificacions
         Bonificacio = bonus.split("-");
         Rang = rang;
+        img = null;
 
-    }
-
-    public void AssignaValorsPersonals (Posicio ini, Integer i){
-        Propietari = i;
-        setImatge(i);
-        SetPosicio(ini);
-        String cadena = "PosAct.getX() + PosAct.getY()";
-        ID = Integer.parseInt(cadena);
     }
 
     public String getAtributs() {
@@ -157,7 +153,6 @@ public abstract class Unitat {
 
     }
 
-
     //Getter
 
     public Integer getRang() {
@@ -194,13 +189,12 @@ public abstract class Unitat {
         return !Propietari.equals(u.Propietari);
     }
 
-    //Setter
-
-    public void setImatge(int i) {
-        img = new Image("sample/Imatges/" + Classe + "v" + i + ".png");
+    public void setPosicio(Posicio n) {
+        PosAct = n;
     }
 
-    public void SetPosicio (Posicio n){
-        PosAct = n;
+    public void setPropietari(Integer jugador) {
+        Propietari = jugador;
+        img = new Image("sample/Imatges/" + Classe + "v" + Propietari + ".png");
     }
 }

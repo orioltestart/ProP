@@ -88,8 +88,7 @@ public class Posicio extends Canvas {
         unitat = u;
 
         if (unitat != null) {
-            unitat.setImatge(2);
-            unitat.SetPosicio(this);
+            unitat.setPosicio(this);
             dibuixaUnitat();
         }
     }

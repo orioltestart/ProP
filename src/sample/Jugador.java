@@ -23,6 +23,7 @@ public class Jugador {
     public Jugador (int i) {
         Puntacio = 0;
         Num = i;
+        Exercit = new ArrayList<Unitat>();
     }
 
 
