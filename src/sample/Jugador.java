@@ -51,6 +51,10 @@ public class Jugador {
         }
     }
 
+    public void desplacarUnitat (Posicio origen, Posicio fi){
+
+    }
+
 
     //getter
 
@@ -64,5 +68,9 @@ public class Jugador {
 
     public Integer nombreUnitats() {
         return Exercit.size();
+    }
+
+    public ArrayList<Unitat> getExercit() {
+        return Exercit;
     }
 }
