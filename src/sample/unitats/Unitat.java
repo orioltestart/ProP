@@ -168,8 +168,12 @@ public abstract class Unitat {
         return img;
     }
 
-    public Integer getMov() {
+    public Integer getMovAct() {
         return movActual;
+    }
+
+    public Integer getMovTot() {
+        return movTotal;
     }
 
     public void restaMov(Integer n) {

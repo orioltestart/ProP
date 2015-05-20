@@ -36,7 +36,7 @@ public class Partida {
         Iterator itu = j.getExercit().iterator();
         while (itu.hasNext()) {
             Unitat agressor = (Unitat) itu.next();
-            ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(),agressor.getRang()+agressor.getMOV());
+            ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(), agressor.getRang() + agressor.getMov());
             Iterator itp = rang.iterator();
             //iterador per totes les caselles dins del rang
             Integer millorDany = 0;
