@@ -31,7 +31,6 @@ public abstract class Unitat {
     private Image img;
     private Integer Propietari = 1;
     private Posicio PosAct;
-    private Boolean ready;
 
     //
 
@@ -137,11 +136,9 @@ public abstract class Unitat {
     }
 
     public String toString(){
-        return (Classe);
+        return ("ID: " + ID + " Classe: " + Classe + " Propietari: " + Propietari);
     }
 
-
-    //Getter
 
     public Integer getRang() {
         return Rang;

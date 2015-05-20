@@ -123,6 +123,9 @@ public class Controller {
                 m.add(mapa.getPos(i, j), i, j);
             }
         }
+
+        mostraExercitJugadors();
+
     }
 
     private void assignarBotons() {

@@ -236,10 +236,8 @@ public class Mapa {
                     String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
                     for (int i = 0; i < pos.length; i++) {
                         aux = fabricaUnitats(Integer.parseInt(pos[i]));
-                        System.out.println("Afegint posicio: [" + i + "," + j + "] La unitat: " + aux);
                         if (aux != null) {
                             aux.setPropietari(jugador);
-                            System.out.print("Afegit a jugador: " + jugador + " La unitat: " + aux);
 
                             if (jugador == 1) a.getExercit().add(aux);
                             else b.getExercit().add(aux);
