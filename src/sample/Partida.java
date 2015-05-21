@@ -1,3 +1,9 @@
+/**
+ * @file Partida.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Partida todo
+ */
+
 package sample;
 
 import sample.unitats.Unitat;
@@ -5,12 +11,9 @@ import sample.unitats.Unitat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Created by lluis on 16/05/15.
- */
 public class Partida {
 
-    Integer comptadorTorns;
+    Integer comptadorTorns; // 0<comptadorTorns < MaxTorns
     Integer MaxTorns;
     Mapa mapa;
     Jugador j1, j2;
@@ -31,6 +34,14 @@ public class Partida {
         mapa = m;
     }
 
+
+
+    /**
+     @pre --
+     @post la maquina realitza les funcions de un jugador j
+     @return void
+     @param j es el jugador controlat per la maquina
+     */
     public void ControlMaquina(Jugador j) throws InterruptedException {
         //iterador per totes les unitats del jugador
         Iterator itu = j.getExercit().iterator();
@@ -65,13 +76,19 @@ public class Partida {
                 Thread.sleep(2000);
                 j.atacar(agressor, Objectiu.getUnitat());
                 Thread.sleep(2000);
-                j.enRepos(agressor);
             }
+            j.enRepos(agressor);
         }
         //si no hi ha cap unitat al rang, no fa res
 
     }
 
+    /**
+     @pre --
+     @post els jugadors j1 i j2 juguen l'un contra l'altre per torns: cada torn actua primer un i despres l'altre
+     estrictament (quan un juga, l'altre ha d'esperar). Guanya el jugador que compleix l'objectiu primer
+     @return void
+     */
     public void jugar () throws InterruptedException {
 
         for (int i = 0; i<MaxTorns; i++){

@@ -1,3 +1,9 @@
+/**
+ * @file Posicio.java
+ * @author Oriol Testart
+ * @brief La classe Posicio todo
+ */
+
 package sample;
 
 
@@ -6,10 +12,6 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.paint.Color;
 import sample.terrenys.*;
 import sample.unitats.*;
-
-/**
- * Created by OriolTestart on 18/4/15.
- */
 
 public class Posicio extends Canvas {
     private Integer a_x;

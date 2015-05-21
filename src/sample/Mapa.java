@@ -1,3 +1,9 @@
+/**
+ * @file Mapa.java
+ * @author Oriol Testart
+ * @brief La classe Mapa todo
+ */
+
 package sample;
 
 import sample.terrenys.*;

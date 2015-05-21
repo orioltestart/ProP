@@ -1,8 +1,11 @@
+/**
+ * @file Knight.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Knight todo
+ */
+
 package sample.unitats;
 
-/**
- * Created by lluis on 22/04/15.
- */
 public class Knight extends Infantry {
 
     public Knight(){

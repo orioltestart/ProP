@@ -1,8 +1,11 @@
+/**
+ * @file Fortress.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Fortress todo
+ */
+
 package sample.terrenys;
 
-/**
- * Created by lluis on 24/04/15.
- */
 public class Fortress extends Terreny {
 
     public Fortress (int t){

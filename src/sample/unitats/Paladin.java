@@ -1,8 +1,11 @@
+/**
+ * @file Paladin.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Paladin todo
+ */
+
 package sample.unitats;
 
-/**
- * Created by lluis on 22/04/15.
- */
 public class Paladin extends Mounted {
 
     public Paladin(){

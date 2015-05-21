@@ -1,8 +1,11 @@
+/**
+ * @file Obstacle.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Obstacle todo
+ */
+
 package sample.terrenys;
 
-/**
- * Created by lluis on 24/04/15.
- */
 public class Obstacle extends Terreny {
 
     public Obstacle(int i){

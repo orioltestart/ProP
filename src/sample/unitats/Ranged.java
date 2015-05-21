@@ -1,8 +1,11 @@
+/**
+ * @file Ranged.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Ranged todo
+ */
+
 package sample.unitats;
 
-/**
- * Created by lluis on 17/04/15.
- */
 public class Ranged extends Unitat {
 
     public Ranged(String c, Integer atk, Integer def, Integer m, Integer r, String bonus){

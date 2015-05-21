@@ -1,8 +1,11 @@
+/**
+ * @file Infantry.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Infantry todo
+ */
+
 package sample.unitats;
 
-/**
- * Created by lluis on 17/04/15.
- */
 public class Infantry extends Unitat {
 
     public Infantry(String c, Integer atk, Integer def, Integer m, String bonus){

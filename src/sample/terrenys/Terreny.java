@@ -1,18 +1,20 @@
+/**
+ * @file Terreny.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Terreny todo
+ */
+
 package sample.terrenys;
 
 import javafx.scene.image.Image;
 
-/**
- * Created by lluis on 24/04/15.
- */
-
 
 public class Terreny extends Image {
 
-    private String Tipus; //fortress, plain ...
-    private Integer Id;     // castle, bridge1, etc
-    private Integer Defensa;
-    private Integer RedDespl;
+    private String Tipus; //fortress, plain, forest ...
+    private Integer Id;     // castle, bridge1, River1, etc
+    private Integer Defensa;    //bonificacio de defensa
+    private Integer RedDespl;   //disminucio de desplaçament
     private Boolean Transitable;
     private Boolean Cura;
 
@@ -21,6 +23,8 @@ public class Terreny extends Image {
                     "River", "River5" , "River6", "River7", "River8",
                     "Stone", "Road", "Floor", "BridgeH", "BridgeV",
                     "Wall", "Throne"};
+
+    //Constructors
 
     public Terreny(){
         super("sample/Imatges/nothing.png");
@@ -38,34 +42,21 @@ public class Terreny extends Image {
         Cura = c;
     }
 
-    public Boolean getTransitable() {
-        return Transitable;
-    }
 
-    public Integer getDefensa() {
-        return Defensa;
-    }
 
-    public Integer getRedDespl() {
-        return RedDespl;
-    }
 
-    public String getTipus() {
-        return Tipus;
-    }
-
-    public Boolean getCura() {
-        return Cura;
-    }
-
-    public String toString(){
-        return (terrains[Id]);
-    }
 
     public Terreny copia() {
         return new Terreny(Tipus, Id, Defensa, RedDespl, Transitable, Cura);
     }
 
+    //Getters
+
+    /**
+     @pre --
+     @post retorna el valor dels atributs d'aquest terreny com a String
+     @return String
+     */
     public String getAtributs() {
         String missatge = "";
         missatge += "Defensa: " + Defensa + "\nReduc Despl: " + RedDespl;
@@ -73,5 +64,59 @@ public class Terreny extends Image {
         if (Cura) missatge += "Si";
         else missatge += "No";
         return missatge;
+    }
+
+    /**
+     @pre --
+     @post retorna el tipus de terreny
+     @return String
+     */
+    public String toString(){
+        return (terrains[Id]);
+    }
+
+    /**
+     @pre --
+     @post retorna el valor de Transitable
+     @return boolea
+     */
+    public Boolean getTransitable() {
+        return Transitable;
+    }
+
+    /**
+     @pre --
+     @post retorna el valor de bonificacio de defensa
+     @return Integer
+     */
+    public Integer getDefensa() {
+        return Defensa;
+    }
+
+    /**
+     @pre --
+     @post retorna el valor de reduccio de desplaçament
+     @return Integer
+     */
+    public Integer getRedDespl() {
+        return RedDespl;
+    }
+
+    /**
+     @pre --
+     @post retorna el tipus de terreny
+     @return String
+     */
+    public String getTipus() {
+        return Tipus;
+    }
+
+    /**
+     @pre --
+     @post retorna cert si aquest terreny pot recuperar punts de vida perduts; altrament fals
+     @return boolea
+     */
+    public Boolean getCura() {
+        return Cura;
     }
 }

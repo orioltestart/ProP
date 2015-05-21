@@ -1,8 +1,11 @@
+/**
+ * @file Marksman.java
+ * @author Lluís Ramon Armengol Xandri
+ * @brief La classe Marksman todo
+ */
+
 package sample.unitats;
 
-/**
- * Created by lluis on 22/04/15.
- */
 public class Marksman extends Ranged {
 
     public Marksman(){
