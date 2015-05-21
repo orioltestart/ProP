@@ -102,8 +102,8 @@ public class Controller {
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
-        File terreny = new File("src/sample/mapes/mapa5");
-        File unitats = new File("src/sample/mapes/unitats51");
+        File terreny = new File("src/sample/mapes/mapa2");
+        File unitats = new File("src/sample/mapes/unitats2");
 
 
         // BOTONS!!!
