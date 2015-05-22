@@ -23,6 +23,7 @@ public class Mapa {
     private Posicio[][] mapa;
     private Integer MAXH;
     private Integer MAXV;
+    private ArrayList<Posicio> forts;//LLUIS
 
 
     public Mapa() {
@@ -185,6 +186,7 @@ public class Mapa {
         return posicions;
     }
 
+
     public Boolean ComprovaObjectiu (Posicio o, Posicio p){
         return (mapa[o.getX()][o.getY()].teUnitat() && mapa[o.getX()][o.getY()].getUnitat().Enemiga(p.getUnitat()));
 
@@ -194,6 +196,7 @@ public class Mapa {
 
     private void llegirMapa(String f) throws IOException {
 
+        forts = new ArrayList<>();//LLUIS
         BufferedReader br = new BufferedReader(new FileReader(f));
         //Llegim el nom del mapa
         nom = br.readLine().substring(4);
@@ -217,6 +220,7 @@ public class Mapa {
                 for (int i = 0; i < pos.length; i++) {
                     mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
+                    if (mapa[i][j].getTerreny().toString().equals("Fortress")) forts.add(mapa[i][j]);   //LLUIS
                 }
                 j++;
             }
@@ -264,5 +268,9 @@ public class Mapa {
 
     public static Integer distanciaRecorreguda(Posicio a, Posicio b) {
         return (Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY()));
+    }
+
+    public ArrayList<Posicio> getForts() {
+        return forts;
     }
 }

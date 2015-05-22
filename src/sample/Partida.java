@@ -91,7 +91,7 @@ public class Partida {
      */
     public void jugar () throws InterruptedException {
 
-        for (int i = 0; i<MaxTorns; i++){
+        for (int i = 1; i<MaxTorns; i++){
             System.out.println("TORN "+i);
             j1.activaExercit();
             j2.activaExercit();
@@ -109,6 +109,22 @@ public class Partida {
         //si arriba aqui vol dir que s'ha acabat la partida
         System.out.println("FI DE LA PARTIDA");
 
+    }
+
+    public void retirada(Unitat u){
+        if (u.getPV()<50){
+
+            Posicio desti = new Posicio();
+            ArrayList<Posicio> candidats = new ArrayList<>();
+
+            for (Posicio p : mapa.getForts()){
+                if (!p.teUnitat()) candidats.add(p);
+            }
+            //buscar cami minim per cada un
+            //backtracking de la posicio on hi ha la fortalesa mes proxima
+            // (si no esta ocupada) ens dirigirem cap alla
+            //moures lo mes rapid possible cap alla
+        }
     }
 
 }
