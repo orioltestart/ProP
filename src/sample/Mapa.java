@@ -158,6 +158,9 @@ public class Mapa {
                 }
             }
         }
+
+        posicions.remove(p);
+
         return posicions;
     }
 

@@ -274,12 +274,6 @@ public abstract class Unitat {
         return movTotal;
     }
 
-
-
-
-
-
-
     /**
      @pre --
      @post assigna fals a ready (descans)

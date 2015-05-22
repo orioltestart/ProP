@@ -38,6 +38,9 @@ public class Controller {
     @FXML
     private VBox barraCursor;
 
+    @FXML
+    private VBox barraAccio;
+
 
     @FXML // fx:id="finestra"
     private BorderPane finestra; // Value injected by FXMLLoader
@@ -73,7 +76,7 @@ public class Controller {
     private Button btSortir;
 
     @FXML
-    private Button ferMoviment;
+    private Button ferMovimentAtac;
 
     @FXML
     private VBox barraDesti;
@@ -102,8 +105,8 @@ public class Controller {
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
 
-        File terreny = new File("src/sample/mapes/mapa2");
-        File unitats = new File("src/sample/mapes/unitats2");
+        File terreny = new File("src/sample/mapes/mapa1");
+        File unitats = new File("src/sample/mapes/unitats1");
 
 
         // BOTONS!!!
@@ -133,9 +136,12 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (!atacables.isEmpty()) {
-                    actualitzaContenidor(atacables.get(index), barraDesti);
                     if (index == 0) index = atacables.size() - 1;
                     else index--;
+                    if (actual != null) actual.pinta(Color.RED);
+                    actual = atacables.get(index);
+                    actual.pinta(Color.YELLOW);
+                    actualitzaContenidor(actual, barraDesti);
                 }
             }
         });
@@ -144,24 +150,72 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (!atacables.isEmpty()) {
-                    actualitzaContenidor(atacables.get(index), barraDesti);
                     if (index == atacables.size() - 1) index = 0;
                     else index++;
+                    if (actual != null) actual.pinta(Color.RED);
+                    actual = atacables.get(index);
+                    actual.pinta(Color.YELLOW);
+                    actualitzaContenidor(actual, barraDesti);
                 }
             }
         });
 
 
-        ferMoviment.setOnAction(new EventHandler<ActionEvent>() {
+        ferMovimentAtac.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (actual != null && !actual.teUnitat() && dinsRang(actual)) {
-                    mapa.desplacar(seleccionada, actual);
-                    seleccionada = actual;
-                    actualitzaContenidor(null, barraDesti);
-                    actualitzaContenidor(null, barraOrigen);
-                    eliminaSeleccio();
-                    pintaRang();
+                if (btAtacMoure.getText().equals("Moure")) {
+                    if (actual != null && !actual.teUnitat() && dinsRang(actual)) {
+                        mapa.desplacar(seleccionada, actual);
+                        actual.reset();
+                        seleccionada = actual;
+                        actual = null;
+                        actualitzaContenidor(null, barraDesti);
+                        actualitzaContenidor(seleccionada, posicioActual);
+                        actualitzaContenidor(seleccionada, barraOrigen);
+                        eliminaSeleccio();
+                        pintaRang();
+                        seleccionada.pinta(Color.BLUE);
+                    }
+                } else {
+                    if (seleccionada != null && actual != null) {
+                        jugador1.atacar(seleccionada.getUnitat(), actual.getUnitat());
+                        if (seleccionada.getUnitat().getPV() == 0) { //Si la atacant es mor
+                            seleccionada.eliminaUnitat();
+                            actualitzaContenidor(null, posicioActual);
+                            actualitzaContenidor(null, barraOrigen);
+                            seleccionada.reset();
+                            eliminaSeleccio();
+                            atacables.clear();
+                            seleccionada = null;
+                        } else { //Si la atacant no es mor
+                            actualitzaContenidor(seleccionada, posicioActual);
+                            actualitzaContenidor(seleccionada, barraOrigen);
+                            seleccionada.pinta(Color.BLUE);
+                        }
+
+                        if (actual.getUnitat().getPV() == 0) { //Si la atacada es mor
+                            actual.eliminaUnitat();
+                            actualitzaContenidor(null, barraDesti);
+                            actual.reset();
+                            actual.pinta(Color.RED);
+                            atacables.remove(actual);
+                            if (atacables.isEmpty()) actual = null;
+                            else {
+                                actual = atacables.get(0);
+                                actual.pinta(Color.YELLOW);
+                                actualitzaContenidor(actual, barraDesti);
+                            }
+                        } else { //Si la atacada no es mor
+                            if (seleccionada != null) {
+                                actual.pinta(Color.YELLOW);
+                                actualitzaContenidor(actual, barraDesti);
+                            } else {
+                                actualitzaContenidor(null, barraDesti);
+                                actual.reset();
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -176,8 +230,7 @@ public class Controller {
                     seg.setDisable(true);
                     ant.setDisable(true);
                     b.setText("Moure");
-                    ferMoviment.setDisable(false);
-                    ferMoviment.setVisible(true);
+                    ferMovimentAtac.setText("Realitza Moviment");
                     ant.setVisible(false);
                     seg.setVisible(false);
                     tipusInforme.setText("Moviment");
@@ -185,8 +238,7 @@ public class Controller {
                     seg.setDisable(false);
                     ant.setDisable(false);
                     b.setText("Atac");
-                    ferMoviment.setDisable(true);
-                    ferMoviment.setVisible(false);
+                    ferMovimentAtac.setText("Realitza Atac");
                     ant.setVisible(true);
                     seg.setVisible(true);
                     tipusInforme.setText("Atac");
@@ -194,8 +246,12 @@ public class Controller {
 
                 if (seleccionada != null) {
                     pintaRang();
-                    if (!atacables.isEmpty())
-                        actualitzaContenidor(atacables.get(index), barraDesti);
+                    actualitzaContenidor(seleccionada, barraOrigen);
+                    if (!atacables.isEmpty()) {
+                        actual = atacables.get(index);
+                        actual.pinta(Color.YELLOW);
+                        actualitzaContenidor(actual, barraDesti);
+                    }
                 }
 
             }
@@ -239,28 +295,39 @@ public class Controller {
                 if (seleccionada != clicada) {
                     if (seleccionada != null) { //Ja n'hi havia una de seleccionada
                         if (dinsRang(clicada) && !clicada.teUnitat()) { //Si he clicat dins d'una posicio dins del rang
-                            if (actual != null) actual.pinta(Color.RED);
+                            if (actual != null && actual != seleccionada) actual.pinta(Color.RED);
                             actual = clicada;
                             actual.pinta(Color.YELLOW); //La pinto de groc
+
                             actualitzaContenidor(actual, barraDesti); //La poso a la barra d'informe
                             actualitzaContenidor(seleccionada, barraOrigen);
                         } else { //Si no estava dins del rang
                             eliminaSeleccio();
                             seleccionada.reset();
                             actual = null;
-                            actualitzaContenidor(null, barraDesti); //Elimino les posicions del informe
-                            actualitzaContenidor(null, barraOrigen);
                             seleccionada = clicada; //Poso la seleccionada com a la clicada
                             pintaRang(); //Pinto el rang de la nova posicio
+
+                            if (!atacables.isEmpty()) {
+                                actual = atacables.get(index);
+                                actual.pinta(Color.YELLOW);
+                                actualitzaContenidor(actual, barraDesti);
+                            } else actualitzaContenidor(null, barraDesti);
+                            actualitzaContenidor(seleccionada, barraOrigen);
+
                             seleccionada.pinta(Color.BLUE);
                         }
                     } else {
                         seleccionada = clicada;
                         pintaRang();
+
+                        actualitzaContenidor(seleccionada, posicioActual);
+                        actualitzaContenidor(seleccionada, barraOrigen);
+
                         seleccionada.pinta(Color.BLUE);
                     }
-
                     actualitzaContenidor(seleccionada, posicioActual);
+                    actualitzaContenidor(seleccionada, barraOrigen);
                 }
             }
         });
@@ -269,11 +336,12 @@ public class Controller {
 
     private void pintaRang() {
         index = 0;
+        atacables.clear();
         if (seleccionada.teUnitat()) {
             for (Posicio i : mapa.getRang(seleccionada, btAtacMoure.getText())) {
                 i.pinta(Color.RED);
                 pintades.add(i);
-                if (btAtacMoure.getText().equals("Atac") && i.teUnitat())
+                if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
                     atacables.add(i);
             }
         }
@@ -295,11 +363,12 @@ public class Controller {
             p.getChildren().add(new Label("Posicio: [" + aux.getX() + "," + aux.getY() + "]"));
             p.getChildren().add(t);
             if (p == barraDesti) {
-                if (!barraDesti.getChildren().isEmpty())
+                if (btAtacMoure.getText().equals("Moure")) {
                     p.getChildren().addAll(
                             new Text("Distància recorreguda: "),
                             new Label(Mapa.distanciaRecorreguda(actual, seleccionada).toString() + " posicions")
                     );
+                }
             }
             if (t.teUnitat()) p.getChildren().add(new Label(t.getUnitat().getAtributs()));
         }

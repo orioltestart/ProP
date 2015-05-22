@@ -62,7 +62,7 @@
                                 <VBox fx:id="barraOrigen" alignment="CENTER" maxWidth="200.0" minWidth="200.0"
                                       prefWidth="200.0"/>
                                 <Region HBox.hgrow="ALWAYS"/>
-                                <VBox alignment="CENTER">
+                                <VBox fx:id="barraAccio" alignment="CENTER">
                                     <children>
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Es desplaça a">
                                             <font>
@@ -87,7 +87,7 @@
                                 <Button fx:id="ant" disable="true" mnemonicParsing="false" text="Anterior"
                                         visible="false"/>
                                 <Region HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="ferMoviment" mnemonicParsing="false" text="Realitza Moviment"/>
+                                <Button fx:id="ferMovimentAtac" mnemonicParsing="false" text="Realitza Moviment"/>
                                 <Region HBox.hgrow="ALWAYS"/>
                                 <Button fx:id="seg" disable="true" mnemonicParsing="false" text="Següent"
                                         visible="false"/>

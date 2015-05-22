@@ -113,6 +113,7 @@ public class Posicio extends Canvas {
     }
 
     public void reset() {
+        super.getGraphicsContext2D().restore();
         dibuixaTerreny();
         dibuixaUnitat();
     }
