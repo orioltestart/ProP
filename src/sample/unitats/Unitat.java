@@ -12,8 +12,6 @@ import sample.Posicio;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.lang.Math.abs;
-
 public abstract class Unitat {
 
     //atributs
@@ -120,9 +118,25 @@ public abstract class Unitat {
      @param u és una unitat
      */
     public boolean potAtacar(Unitat u) {
-        Posicio r = new Posicio(abs(PosAct.getX()-u.PosAct.getX()), abs(PosAct.getY()-u.PosAct.getY()));
-        if (r.getX() <= Rang && r.getY() <= Rang) return true;
-        return false;
+        int x = getPosAct().getX();
+        int y = getPosAct().getY();
+        Posicio f = u.getPosAct();
+
+        int c = 0;  //comptador de quadrats
+
+        while (c<Rang && x!=f.getX() && y!=f.getY()){   //para quan arriba al maxim de rang o bé si es troba dins
+            if (x!=f.getX()){
+                if (x<f.getX()) x++;
+                else x--;
+            }
+            else {
+                if (y<f.getY()) y++;
+                else y--;
+            }
+            c++;
+        }
+        //si amb Rang desplaçaments iguala la posicio, vol dir que es troba dins del rang
+        return ((x==f.getX() && y==f.getY()));
     }
 
     /**
