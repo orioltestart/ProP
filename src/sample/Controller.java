@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -108,10 +109,7 @@ public class Controller {
         File terreny = new File("src/sample/mapes/mapa1");
         File unitats = new File("src/sample/mapes/unitats1");
 
-
-        // BOTONS!!!
         assignarBotons();
-        //Final de BOTONS
 
         jugador1 = new Jugador(1);
         jugador2 = new Jugador(2);
@@ -126,9 +124,6 @@ public class Controller {
                 m.add(mapa.getPos(i, j), i, j);
             }
         }
-
-        mostraExercitJugadors();
-
     }
 
     private void assignarBotons() {
@@ -142,6 +137,7 @@ public class Controller {
                     actual = atacables.get(index);
                     actual.pinta(Color.YELLOW);
                     actualitzaContenidor(actual, barraDesti);
+                    actualitzaContenidor(null, barraAccio);
                 }
             }
         });
@@ -156,10 +152,18 @@ public class Controller {
                     actual = atacables.get(index);
                     actual.pinta(Color.YELLOW);
                     actualitzaContenidor(actual, barraDesti);
+                    actualitzaContenidor(null, barraAccio);
                 }
             }
         });
 
+
+        btSortir.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.exit(1);
+            }
+        });
 
         ferMovimentAtac.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -184,6 +188,7 @@ public class Controller {
                             seleccionada.eliminaUnitat();
                             actualitzaContenidor(null, posicioActual);
                             actualitzaContenidor(null, barraOrigen);
+                            actualitzaContenidor(null, barraAccio);
                             seleccionada.reset();
                             eliminaSeleccio();
                             seleccionada = null;
@@ -197,6 +202,7 @@ public class Controller {
                             atacables.remove(actual);
                             actual.eliminaUnitat();
                             actualitzaContenidor(null, barraDesti);
+                            actualitzaContenidor(null, barraAccio);
                             actual.reset();
                             if (seleccionada != null) actual.pinta(Color.RED);
                             if (atacables.isEmpty()) {
@@ -206,6 +212,7 @@ public class Controller {
                                 actual = atacables.get(0);
                                 actual.pinta(Color.YELLOW);
                                 actualitzaContenidor(actual, barraDesti);
+                                actualitzaContenidor(null, barraAccio);
                             }
                         } else { //Si la atacada no es mor
                             if (seleccionada != null) {
@@ -254,6 +261,7 @@ public class Controller {
                         actualitzaContenidor(actual, barraDesti);
                     }
                 }
+                actualitzaContenidor(null, barraAccio);
 
             }
         });
@@ -307,29 +315,22 @@ public class Controller {
                             seleccionada.reset();
                             actual = null;
                             seleccionada = clicada; //Poso la seleccionada com a la clicada
-                            pintaRang(); //Pinto el rang de la nova posicio
-
+                            pintaRang();
                             if (!atacables.isEmpty()) {
                                 actual = atacables.get(index);
                                 actual.pinta(Color.YELLOW);
                                 actualitzaContenidor(actual, barraDesti);
                             } else actualitzaContenidor(null, barraDesti);
                             actualitzaContenidor(seleccionada, barraOrigen);
-
-                            seleccionada.pinta(Color.BLUE);
                         }
                     } else {
                         seleccionada = clicada;
                         pintaRang();
-
-                        actualitzaContenidor(seleccionada, posicioActual);
-                        actualitzaContenidor(seleccionada, barraOrigen);
-
-                        seleccionada.pinta(Color.BLUE);
                     }
                     actualitzaContenidor(seleccionada, posicioActual);
                     actualitzaContenidor(seleccionada, barraOrigen);
                 }
+                actualitzaContenidor(null, barraAccio);
             }
         });
     }
@@ -339,12 +340,27 @@ public class Controller {
         index = 0;
         atacables.clear();
         if (seleccionada.teUnitat()) {
-            pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
-            for (Posicio i : pintades) {
-                i.pinta(Color.RED);
-                if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
-                    atacables.add(i);
+            if (seleccionada.getUnitat().getPropietari() == 2) {
+                ferMovimentAtac.setDisable(false);
+                ant.setDisable(false);
+                seg.setDisable(false);
+
+                seleccionada.pinta(Color.BLUE);
+                pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
+                for (Posicio i : pintades) {
+                    i.pinta(Color.RED);
+                    if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
+                        atacables.add(i);
+                }
+            } else {
+                ferMovimentAtac.setDisable(true);
+                ant.setDisable(true);
+                seg.setDisable(true);
             }
+        } else {
+            ferMovimentAtac.setDisable(true);
+            ant.setDisable(true);
+            seg.setDisable(true);
         }
     }
 
@@ -356,22 +372,31 @@ public class Controller {
 
     private void actualitzaContenidor(Posicio aux, Pane p) {
         p.getChildren().clear();
-        if (aux != null) {
-            Posicio t = new Posicio(100);
-            t.setTerreny(aux.getTerreny());
-            t.setUnitat(aux.getUnitat(), false);
-
-            p.getChildren().add(new Label("Posicio: [" + aux.getX() + "," + aux.getY() + "]"));
-            p.getChildren().add(t);
-            if (p == barraDesti) {
-                if (btAtacMoure.getText().equals("Moure")) {
-                    p.getChildren().addAll(
-                            new Text("Distància recorreguda: "),
-                            new Label(Mapa.distanciaRecorreguda(actual, seleccionada).toString() + " posicions")
-                    );
-                }
+        if (p == barraAccio) {
+            if (btAtacMoure.getText().equals("Moure")) {
+                barraAccio.getChildren().addAll(new Label("es desplaça a "), new ImageView("sample/Imatges/direction4.png"));
+            } else {
+                if (seleccionada != null && actual != null && seleccionada.teUnitat() && actual.teUnitat())
+                    barraAccio.getChildren().add(new Label("Calcul del Atac: " + seleccionada.getUnitat().calcularAtac(actual.getUnitat())));
             }
-            if (t.teUnitat()) p.getChildren().add(new Label(t.getUnitat().getAtributs()));
+        } else {
+            if (aux != null) {
+                Posicio t = new Posicio(100);
+                t.setTerreny(aux.getTerreny());
+                t.setUnitat(aux.getUnitat(), false);
+
+                p.getChildren().add(new Label("Posicio: [" + aux.getX() + "," + aux.getY() + "]"));
+                p.getChildren().add(t);
+                if (p == barraDesti) {
+                    if (btAtacMoure.getText().equals("Moure")) {
+                        p.getChildren().addAll(
+                                new Text("Distància recorreguda: "),
+                                new Label(Mapa.distanciaRecorreguda(actual, seleccionada).toString() + " posicions")
+                        );
+                    }
+                }
+                if (t.teUnitat()) p.getChildren().add(new Label(t.getUnitat().getAtributs()));
+            }
         }
     }
 
@@ -385,6 +410,14 @@ public class Controller {
         for (Unitat u : jugador1.getExercit()) System.out.println(u);
 
         for (Unitat u : jugador2.getExercit()) System.out.println(u);
+    }
+
+    public void deshabilitaInterficie() {
+        barraInferior.setDisable(true);
+    }
+
+    public void habilitaInterficie() {
+        barraInferior.setDisable(false);
     }
 
 }

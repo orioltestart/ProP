@@ -116,11 +116,7 @@ public class Mapa {
                 throw new IllegalArgumentException("Aquesta posició de destí ja està ocupada per un altre unitats");
             if (ori == fi) throw new IllegalArgumentException("No es pot moure a la mateixa posició de la que està");
 
-            System.out.println(mapa[ori.getX()][ori.getY()].getUnitat().getPosAct());
-
             Unitat aux = mapa[ori.getX()][ori.getY()].getUnitat();
-
-            System.out.println(aux.getPosAct());
 
             aux.restaMov(distanciaRecorreguda(ori, fi));
 

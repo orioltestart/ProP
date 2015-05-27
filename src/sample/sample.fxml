@@ -36,7 +36,13 @@
                                 <VBox fx:id="barraCursor" alignment="TOP_CENTER" VBox.vgrow="ALWAYS"/>
                             </children>
                         </VBox>
-                        <HBox alignment="CENTER"/>
+                        <HBox alignment="CENTER">
+                            <children>
+                                <Button fx:id="passarTorn" maxHeight="50.0" maxWidth="230.0" minHeight="50.0"
+                                        minWidth="230.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0"
+                                        text="Pasar Torn"/>
+                            </children>
+                        </HBox>
                     </children>
                 </VBox>
                 <VBox alignment="CENTER"
@@ -82,12 +88,14 @@
                             </children>
                         </HBox>
                         <Region VBox.vgrow="ALWAYS"/>
-                        <HBox>
+                        <HBox alignment="CENTER">
                             <children>
                                 <Button fx:id="ant" disable="true" mnemonicParsing="false" text="Anterior"
                                         visible="false"/>
                                 <Region HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="ferMovimentAtac" mnemonicParsing="false" text="Realitza Moviment"/>
+                                <Button fx:id="ferMovimentAtac" maxHeight="50.0" maxWidth="230.0" minHeight="50.0"
+                                        minWidth="230.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0"
+                                        text="Realitza Moviment"/>
                                 <Region HBox.hgrow="ALWAYS"/>
                                 <Button fx:id="seg" disable="true" mnemonicParsing="false" text="Següent"
                                         visible="false"/>
@@ -136,9 +144,9 @@
                         <Region VBox.vgrow="ALWAYS"/>
                         <HBox alignment="CENTER">
                             <children>
-                                <Button fx:id="btGuardar" mnemonicParsing="false" text="Guardar"/>
-                                <Region HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="btSortir" mnemonicParsing="false" text="Sortir"/>
+                                <Button fx:id="btSortir" maxHeight="50.0" maxWidth="230.0" minHeight="50.0"
+                                        minWidth="230.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0"
+                                        text="Sortir"/>
                             </children>
                         </HBox>
                     </children>
