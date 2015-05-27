@@ -9,7 +9,7 @@ package sample.unitats;
 public class Halberdier extends Infantry {
 
     public Halberdier(){
-        super("Halberdier", 70 , 45, 5, "Paladin-Knight");
+        super("Halberdier", 70 , 45, 5, "Paladin-Bowknight");
 
     }
 }
