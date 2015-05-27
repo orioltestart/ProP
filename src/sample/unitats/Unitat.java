@@ -50,7 +50,7 @@ public abstract class Unitat {
         Tipus = t;
         Classe = c;
         //els atributs varien
-        POW = atac + r.nextInt(20);
+        POW = atac + r.nextInt(30);
         DEF = defensa + r.nextInt(10);
         movTotal = moviment;
         movActual = movTotal;
@@ -166,7 +166,7 @@ public abstract class Unitat {
     public Integer AplicarBonificacio (Unitat u){
         Integer bonusTotal = 1;
         if (Bonificacio[0].equals(u.Classe) || Bonificacio[1].equals(u.Classe)){
-            bonusTotal*=3;
+            bonusTotal*=2;
         }
         return bonusTotal;
     }

@@ -53,14 +53,22 @@ public class Partida {
             Integer millorDany = 0;
             Posicio Objectiu = new Posicio();
             //obtenir la unitat enemiga a la qual li farem mes punts de dany
-            while (itp.hasNext()){
+            boolean mata = false;
+            while (!mata && itp.hasNext()){
                 Posicio pos = (Posicio) itp.next();
                 if (pos.teUnitat() && pos.getUnitat().Enemiga(agressor) && agressor.calcularAtac(pos.getUnitat()) > millorDany){
                     millorDany = agressor.calcularAtac(pos.getUnitat());
                     Objectiu = pos;
+                    if (millorDany >= Objectiu.getUnitat().getPV()){    //si matem una unitat no cal buscarne cap altra
+                        mata = true;
+                    }
                 }
             }
-            if (millorDany>0){
+            if (agressor.getPV()<35 && !mata){
+                retirada(agressor);
+            }
+
+            else if (millorDany>0){
                 //a partir de la posicio Objectiu, busquem la millor posicio per mourens
                 ArrayList<Posicio> area = mapa.getRang(Objectiu, agressor.getRang());
                 area.retainAll(rang);
@@ -78,6 +86,7 @@ public class Partida {
                 Thread.sleep(2000);
             }
             j.enRepos(agressor);
+
         }
         //si no hi ha cap unitat al rang, no fa res
 
@@ -112,19 +121,17 @@ public class Partida {
     }
 
     public void retirada(Unitat u){
-        if (u.getPV()<50){
 
-            Posicio desti = new Posicio();
-            ArrayList<Posicio> candidats = new ArrayList<>();
+        Posicio desti = new Posicio();
+        ArrayList<Posicio> candidats = new ArrayList<>();
 
-            for (Posicio p : mapa.getForts()){
-                if (!p.teUnitat()) candidats.add(p);
-            }
-            //buscar cami minim per cada un
-            //backtracking de la posicio on hi ha la fortalesa mes proxima
-            // (si no esta ocupada) ens dirigirem cap alla
-            //moures lo mes rapid possible cap alla
+        for (Posicio p : mapa.getForts()){
+            if (!p.teUnitat()) candidats.add(p);
         }
+        //buscar cami minim per cada un
+        //backtracking de la posicio on hi ha la fortalesa mes proxima
+        // (si no esta ocupada) ens dirigirem cap alla
+        //moures lo mes rapid possible cap alla
     }
 
 }
