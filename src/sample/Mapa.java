@@ -6,7 +6,6 @@
 
 package sample;
 
-import javafx.geometry.Pos;
 import sample.terrenys.*;
 import sample.unitats.*;
 
@@ -24,6 +23,7 @@ public class Mapa {
     private Posicio[][] mapa;
     private Integer MAXH;
     private Integer MAXV;
+    private Posicio meta;
     private ArrayList<Posicio> forts;//LLUIS
 
 
@@ -212,6 +212,9 @@ public class Mapa {
         //Llegim les mides X i Y del mapa
         String[] mida = br.readLine().substring(5).split("x");
 
+        String [] o = br.readLine().substring(9).split("x");
+        meta = new Posicio(Integer.parseInt(o[0]), Integer.parseInt(o[1]));
+
         MAXH = Integer.parseInt(mida[0]);
         MAXV = Integer.parseInt(mida[1]);
 
@@ -280,5 +283,11 @@ public class Mapa {
 
     public ArrayList<Posicio> getForts() {
         return forts;
+    }
+
+    public boolean metaAconseguida() {
+        if (mapa[meta.getX()][meta.getY()].teUnitat())
+            return (mapa[meta.getX()][meta.getY()].getUnitat().getPropietari()==1);
+        return false;
     }
 }

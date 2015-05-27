@@ -258,6 +258,15 @@ public abstract class Unitat {
 
     /**
      @pre --
+     @post retorna el propietari d'aquesta unitat
+     @return Imatge
+     */
+    public Integer getPropietari() {
+        return Propietari;
+    }
+
+    /**
+     @pre --
      @post retorna el valor del Moviment actual d'aquesta unitat
      @return Integer
      */

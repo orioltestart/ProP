@@ -17,6 +17,7 @@ public class Partida {
     Integer MaxTorns;
     Mapa mapa;
     Jugador j1, j2;
+    Posicio fi;
 
 
     Partida (){

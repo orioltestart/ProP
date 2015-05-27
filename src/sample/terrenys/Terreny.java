@@ -15,7 +15,6 @@ public class Terreny extends Image {
     private Integer Id;     // castle, bridge1, River1, etc
     private Integer Defensa;    //bonificacio de defensa
     private Integer RedDespl;   //disminucio de desplaçament
-    private Boolean Transitable;
     private Boolean Cura;
 
     final static String terrains[] =
@@ -32,13 +31,12 @@ public class Terreny extends Image {
         RedDespl = 0;
     }
 
-    public Terreny (String t, int i, Integer d, Integer r, Boolean tr, Boolean c){
+    public Terreny (String t, int i, Integer d, Integer r, Boolean c){
         super("sample/Imatges/" + terrains[i] + ".png");
         Tipus = t;
         Id = i;
         Defensa = d;
         RedDespl = r;
-        Transitable = tr;
         Cura = c;
     }
 
@@ -46,9 +44,6 @@ public class Terreny extends Image {
 
 
 
-    public Terreny copia() {
-        return new Terreny(Tipus, Id, Defensa, RedDespl, Transitable, Cura);
-    }
 
     //Getters
 
@@ -73,15 +68,6 @@ public class Terreny extends Image {
      */
     public String toString(){
         return (terrains[Id]);
-    }
-
-    /**
-     @pre --
-     @post retorna el valor de Transitable
-     @return boolea
-     */
-    public Boolean getTransitable() {
-        return Transitable;
     }
 
     /**
