@@ -6,9 +6,7 @@
 
 package sample.unitats;
 
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
-import sample.Controller;
 import sample.Mapa;
 import sample.Posicio;
 
@@ -139,9 +137,18 @@ public abstract class Unitat {
 
         Integer resultat = (atacF - defensaF)* this.AplicarBonificacio(u);
 
-        if (PV<50){
+        if (PV<75){ //todo
+            resultat = resultat *2/3;
+        }
+
+        else if (PV<50){
             resultat/=2;
         }
+
+        else if (PV<25){
+            resultat/=3;
+        }
+
 
         if (resultat < 0){
             resultat = 0;

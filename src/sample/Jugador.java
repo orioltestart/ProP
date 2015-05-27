@@ -63,7 +63,7 @@ public class Jugador {
         if (u.Enemiga(u2)) {
             Integer a = u.calcularAtac(u2);
             u2.reduirPV(a);
-            if (u2.potAtacar(u)) {  //contraatac    todo
+            if (u2.potAtacar(u)) {  //contraatac   todo
                 a = u2.calcularAtac(u);
                 u.reduirPV(a);
             }

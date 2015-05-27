@@ -9,7 +9,7 @@ package sample.unitats;
 public class Bowknight extends Ranged {
 
     public Bowknight(){
-        super("Bowknight", 70 , 40, 6, 2, "Marksman-Wyvernknight");
+        super("Bowknight", 70 , 40, 5, 2, "Marksman-Wyvernknight");
 
     }
 }
