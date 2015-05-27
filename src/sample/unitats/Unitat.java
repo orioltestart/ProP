@@ -50,7 +50,7 @@ public abstract class Unitat {
         Tipus = t;
         Classe = c;
         //els atributs varien
-        POW = atac + r.nextInt(30);
+        POW = atac + r.nextInt(20);
         DEF = defensa + r.nextInt(10);
         movTotal = moviment;
         movActual = movTotal;
@@ -137,16 +137,16 @@ public abstract class Unitat {
 
         Integer resultat = (atacF - defensaF)* this.AplicarBonificacio(u);
 
-        if (PV<75){ //todo
-            resultat = resultat *2/3;
+        if (PV<25){ //todo
+            resultat /= 3;
         }
 
         else if (PV<50){
             resultat/=2;
         }
 
-        else if (PV<25){
-            resultat/=3;
+        else if (PV<75){
+            resultat= resultat*2/3;
         }
 
 

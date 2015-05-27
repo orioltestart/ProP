@@ -9,6 +9,6 @@ package sample.terrenys;
 public class Mountain extends Terreny {
 
     public Mountain (int i){
-        super("Mountain", i, 15, 3, true, false);
+        super("Mountain", i, 10, 3, true, false);
     }
 }
