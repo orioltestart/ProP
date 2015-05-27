@@ -6,7 +6,10 @@
 
 package sample.unitats;
 
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
+import sample.Controller;
+import sample.Mapa;
 import sample.Posicio;
 
 import java.util.Random;
@@ -118,25 +121,8 @@ public abstract class Unitat {
      @param u és una unitat
      */
     public boolean potAtacar(Unitat u) {
-        int x = getPosAct().getX();
-        int y = getPosAct().getY();
-        Posicio f = u.getPosAct();
-
-        int c = 0;  //comptador de quadrats
-
-        while (c<Rang && x!=f.getX() && y!=f.getY()){   //para quan arriba al maxim de rang o bé si es troba dins
-            if (x!=f.getX()){
-                if (x<f.getX()) x++;
-                else x--;
-            }
-            else {
-                if (y<f.getY()) y++;
-                else y--;
-            }
-            c++;
-        }
-        //si amb Rang desplaçaments iguala la posicio, vol dir que es troba dins del rang
-        return ((x==f.getX() && y==f.getY()));
+        if (Mapa.distanciaRecorreguda(PosAct, u.PosAct) <= Rang) return true;
+        else return false;
     }
 
     /**
@@ -199,13 +185,6 @@ public abstract class Unitat {
         return !Propietari.equals(u.Propietari);
     }
 
-
-
-
-
-
-
-
     /**
      @pre --
      @post retorna el valor dels atributs d'aquesta unitat en forma d'String
@@ -214,7 +193,7 @@ public abstract class Unitat {
     public String getAtributs() {
         String missatge = "";
         missatge += "Tipus : " + Tipus + "\nClasse: " + Classe + "\nVida: " + PV;
-        missatge += " | Poder: " + POW + "\nDefensa: " + DEF + "\nMov: " + movTotal + " |  Rang: " + Rang;
+        missatge += " | Poder: " + POW + "\nDefensa: " + DEF + "\nMov: " + movTotal + " |  Rang: " + Rang + "\n";
         return missatge;
     }
 

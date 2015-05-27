@@ -178,15 +178,14 @@ public class Controller {
                         seleccionada.pinta(Color.BLUE);
                     }
                 } else {
-                    if (seleccionada != null && actual != null) {
+                    if (seleccionada != null && actual != null && seleccionada.teUnitat() && actual.teUnitat()) {
                         jugador1.atacar(seleccionada.getUnitat(), actual.getUnitat());
-                        if (seleccionada.getUnitat().getPV() == 0) { //Si la atacant es mor
+                        if (seleccionada.getUnitat().getPV() <= 0) { //Si la atacant es mor
                             seleccionada.eliminaUnitat();
                             actualitzaContenidor(null, posicioActual);
                             actualitzaContenidor(null, barraOrigen);
                             seleccionada.reset();
                             eliminaSeleccio();
-                            atacables.clear();
                             seleccionada = null;
                         } else { //Si la atacant no es mor
                             actualitzaContenidor(seleccionada, posicioActual);
@@ -194,14 +193,16 @@ public class Controller {
                             seleccionada.pinta(Color.BLUE);
                         }
 
-                        if (actual.getUnitat().getPV() == 0) { //Si la atacada es mor
+                        if (actual.getUnitat().getPV() <= 0) { //Si la atacada es mor
+                            atacables.remove(actual);
                             actual.eliminaUnitat();
                             actualitzaContenidor(null, barraDesti);
                             actual.reset();
-                            actual.pinta(Color.RED);
-                            atacables.remove(actual);
-                            if (atacables.isEmpty()) actual = null;
-                            else {
+                            if (seleccionada != null) actual.pinta(Color.RED);
+                            if (atacables.isEmpty()) {
+                                actual = null;
+                                actualitzaContenidor(null, barraDesti);
+                            } else {
                                 actual = atacables.get(0);
                                 actual.pinta(Color.YELLOW);
                                 actualitzaContenidor(actual, barraDesti);
@@ -338,9 +339,9 @@ public class Controller {
         index = 0;
         atacables.clear();
         if (seleccionada.teUnitat()) {
-            for (Posicio i : mapa.getRang(seleccionada, btAtacMoure.getText())) {
+            pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
+            for (Posicio i : pintades) {
                 i.pinta(Color.RED);
-                pintades.add(i);
                 if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
                     atacables.add(i);
             }
@@ -358,7 +359,7 @@ public class Controller {
         if (aux != null) {
             Posicio t = new Posicio(100);
             t.setTerreny(aux.getTerreny());
-            t.setUnitat(aux.getUnitat());
+            t.setUnitat(aux.getUnitat(), false);
 
             p.getChildren().add(new Label("Posicio: [" + aux.getX() + "," + aux.getY() + "]"));
             p.getChildren().add(t);

@@ -62,6 +62,10 @@ public class Posicio extends Canvas {
         midaQuadre = a_mida;
     }
 
+    public Boolean esValida(Integer midaH, Integer midaV) {
+        return (a_x >= 0 && a_x < midaH && a_y >= 0 && a_y < midaV);
+    }
+
     public Integer getX() throws NullPointerException {
         if (a_x != null) return a_x;
         else throw new NullPointerException();
@@ -84,13 +88,13 @@ public class Posicio extends Canvas {
         return unitat != null;
     }
 
-    public void setUnitat(Unitat u) {
+    public void setUnitat(Unitat u, Boolean canviaPos) {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
         if (terreny == null) terreny = new Terreny();
         unitat = u;
 
         if (unitat != null) {
-            unitat.setPosicio(this);
+            if (canviaPos) unitat.setPosicio(this);
             dibuixaUnitat();
         }
     }

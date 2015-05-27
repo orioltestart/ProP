@@ -6,6 +6,7 @@
 
 package sample;
 
+import javafx.geometry.Pos;
 import sample.terrenys.*;
 import sample.unitats.*;
 
@@ -115,12 +116,16 @@ public class Mapa {
                 throw new IllegalArgumentException("Aquesta posició de destí ja està ocupada per un altre unitats");
             if (ori == fi) throw new IllegalArgumentException("No es pot moure a la mateixa posició de la que està");
 
+            System.out.println(mapa[ori.getX()][ori.getY()].getUnitat().getPosAct());
+
             Unitat aux = mapa[ori.getX()][ori.getY()].getUnitat();
+
+            System.out.println(aux.getPosAct());
 
             aux.restaMov(distanciaRecorreguda(ori, fi));
 
             mapa[ori.getX()][ori.getY()].eliminaUnitat(); //Eliminem la unitat del origen
-            mapa[fi.getX()][fi.getY()].setUnitat(aux); //La coloquem al destí
+            mapa[fi.getX()][fi.getY()].setUnitat(aux, true); //La coloquem al destí
 
             ori.reset();
             fi.reset();
@@ -255,7 +260,7 @@ public class Mapa {
                             if (jugador == 1) a.getExercit().add(aux);
                             else b.getExercit().add(aux);
 
-                            mapa[i][j].setUnitat(aux); //Afegim les unitats corresponents a les posicions
+                            mapa[i][j].setUnitat(aux, true); //Afegim les unitats corresponents a les posicions
                         }
                     }
 
