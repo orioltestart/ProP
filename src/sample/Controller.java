@@ -304,7 +304,7 @@ public class Controller {
                 if (seleccionada != clicada) {
                     if (seleccionada != null) { //Ja n'hi havia una de seleccionada
                         if (dinsRang(clicada) && !clicada.teUnitat()) { //Si he clicat dins d'una posicio dins del rang
-                            if (actual != null && actual != seleccionada) actual.pinta(Color.RED);
+                            if (actual != null && actual != seleccionada && dinsRang(actual)) actual.pinta(Color.RED);
                             actual = clicada;
                             actual.pinta(Color.YELLOW); //La pinto de groc
 
