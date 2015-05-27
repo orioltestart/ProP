@@ -31,9 +31,9 @@ public class Dijkstra {
 
        // Dijkstra d = new Dijkstra("laberint.txt", "solucio.txt");
 
-        buscaCamiMinim();
+        //buscaCamiMinim();
 
-        mostraMapaISolucio();
+       // mostraMapaISolucio();
     }
 
     public void buscaCamiMinim(/*Vertex ori, Vertex desti*/){
@@ -80,12 +80,12 @@ public class Dijkstra {
 
 
     public List<Vertex> getCamiMin(Vertex target) {
-        List<Vertex> path = new ArrayList<Vertex>();
+        List<Vertex> p = new ArrayList<Vertex>();
         for (Vertex vertex = target; vertex != null; vertex = vertex.getAnterior()) {
-            path.add(vertex);
+            p.add(vertex);
         }
-        Collections.reverse(path);
-        return path;
+        Collections.reverse(p);
+        return p;
     }
 
     public Vertex getVertex(int x, int y) {
