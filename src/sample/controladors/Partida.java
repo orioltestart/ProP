@@ -216,6 +216,7 @@ public class Partida {
                     if (actual != null && !actual.teUnitat() && dinsRang(actual)) {
                         mapa.desplacar(seleccionada, actual);
                         seleccionada = actual;
+                        seleccionada.getUnitat().setMovActual(0);
                         actualitzaContenidor(null, barraDesti);
                         actualitzaContenidor(seleccionada, posicioActual);
                         actualitzaContenidor(seleccionada, barraOrigen);
