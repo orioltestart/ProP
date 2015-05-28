@@ -27,8 +27,11 @@ public class Vertex implements Comparable<Vertex> {
         adjacencies = new ArrayList<Edge>();
     }
 
-    public void setValors(Integer d, Vertex a){
+    public void setDistMin(Integer d, Vertex a){
         distMin = d;
+    }
+
+    public void setAnterior(Vertex a){
         anterior = a;
     }
 

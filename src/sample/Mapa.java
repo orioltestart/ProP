@@ -146,7 +146,13 @@ public class Mapa {
             if ((y - mov + i) >= 0) {
                 posicions.add(mapa[x][y - mov + i]);
                 for (int j = 1; j <= i; j++) {
-                    if ((x + j) < MAXH) posicions.add(mapa[x + j][y - mov + i]);
+                    if ((x + j) < MAXH) {/*
+                        if (s.equals("Moure") && costosCamins[x + j][y - mov + i] < mapa[x + j][y - mov + i].getUnitat().getMovAct()){
+
+                        }
+                            else*/
+                                posicions.add(mapa[x + j][y - mov + i]);
+                    }
                     if ((x - j) >= 0) posicions.add(mapa[x - j][y - mov + i]);
                 }
             }
@@ -232,19 +238,17 @@ public class Mapa {
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
                     if (mapa[i][j].getTerreny().toString().equals("Fortress")) forts.add(mapa[i][j]);   //LLUIS
                     costosCamins[i][j] = mapa[i][j].getTerreny().getRedDespl();
+                    System.out.print(costosCamins[i][j] + " ");
                 }
+                System.out.println();
                 j++;
             }
         }
+        //FINS AQUI LA MATRIU DE PESOS ESTÀ BEN CREADA
+
         creaGraf();
         System.out.println("Lectura Correcte");
-
-        for (Integer x = 0; x<MAXH; x++){
-            for (Integer y = 0; y<MAXV; y++){
-                System.out.print(costosCamins[x][y] + " ");
-            }
-            System.out.println();
-        }
+        //LA LLISTA DE VERTEXS AMB LES ADJACENCIES TAMBE ES CREA BE
 
 
         br.close();
@@ -284,13 +288,13 @@ public class Mapa {
         Vertex ori = getVertex(p.getX(), p.getY());
 
         busca(ori);
+
     }
 
     public List<Vertex> getCamiMin(Vertex target) {
         List<Vertex> path = new ArrayList<Vertex>();
         for (Vertex vertex = target; vertex != null; vertex = vertex.getAnterior()) {
             path.add(vertex);
-            System.out.println(vertex);
         }
         Collections.reverse(path);
         return path;
@@ -299,11 +303,17 @@ public class Mapa {
     public Integer ValorCamiMin(Posicio p) {
 
         Integer dist = 0;
+        System.out.println("Posicio :" + p);
         List<Vertex> l = getCamiMin(getVertex(p.getX(),p.getY()));
         for (Vertex v : l){
-            dist += v.getDistMin();
+            //System.out.print(v + " distmin es: " + v.getDistMin() + ",  ");
+            //dist += v.getDistMin();
+            dist = v.getDistMin();      //retrasito poderosito, mai acumular acumulacions
+            //System.out.print("[" + v + "] : " + dist + ", ");
+
         }
-        System.out.println(dist);
+        System.out.println();
+       // System.out.println(dist);
         return dist;
 
 
@@ -326,7 +336,8 @@ public class Mapa {
                 Integer acumulat = u.getDistMin() + pes;
                 if (acumulat < v.getDistMin()) {
                     vertexQueue.remove(v);
-                    v.setValors(acumulat, u);
+                    v.setDistMin(acumulat);
+                    v.setAnterior(u);
                     vertexQueue.add(v);
                 }
             }

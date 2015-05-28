@@ -392,21 +392,25 @@ public class Partida {
                 seg.setDisable(false);
 
                 seleccionada.pinta(Color.BLUE);
+                pintades = null;
                 pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
 
-/*todo
+
                 if (btAtacMoure.getText().equals("Moure")){
                     mapa.buscaCamiMinim(seleccionada);
 
+                    ArrayList<Posicio> pintades2 = new ArrayList<Posicio>();
                     for (Posicio p : pintades){
+                        System.out.println("posicio actual: " + seleccionada + " ->> " + mapa.ValorCamiMin(p));
                         Integer costMin = mapa.ValorCamiMin(p);
-                        if (costMin > seleccionada.getUnitat().getMovAct()){    //todo
-                            pintades.remove(p);
+                        if (costMin <= seleccionada.getUnitat().getMovAct()){    //todo
+                            pintades2.add(p);
+                            //System.out.println(p);
                         }
                     }
-
+                    pintades = pintades2;
                 }
-*/
+
 
                 for (Posicio i : pintades) {
                     i.pinta(Color.RED);
