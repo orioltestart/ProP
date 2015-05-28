@@ -253,9 +253,9 @@ public class Mapa {
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
                     if (mapa[i][j].getTerreny().toString().equals("Fortress")) forts.add(mapa[i][j]);   //LLUIS
                     costosCamins[i][j] = mapa[i][j].getTerreny().getRedDespl();
-                    System.out.print(costosCamins[i][j] + " ");
+                   // System.out.print(costosCamins[i][j] + " ");
                 }
-                System.out.println();
+                //System.out.println();
                 j++;
             }
         }
@@ -301,7 +301,7 @@ public class Mapa {
     public void buscaCamiMinim(Posicio p){
 
         Vertex ori = getVertex(p.getX(), p.getY());
-
+        iniciarAnteriors();
         busca(ori);
 
     }
@@ -315,10 +315,17 @@ public class Mapa {
         return path;
     }
 
-    public Integer ValorCamiMin(Posicio p) {
+    private void iniciarAnteriors(){
+         for (Vertex v : adj){
+             v.setAnterior(null);
+             v.setDistMin(999);
+         }
+    }
 
+    public Integer ValorCamiMin(Posicio p) {
+/*
         Integer dist = 0;
-        System.out.println("Posicio :" + p);
+        //System.out.println("Posicio :" + p);
         List<Vertex> l = getCamiMin(getVertex(p.getX(),p.getY()));
         for (Vertex v : l){
             //System.out.print(v + " distmin es: " + v.getDistMin() + ",  ");
@@ -327,13 +334,13 @@ public class Mapa {
             //System.out.print("[" + v + "] : " + dist + ", ");
 
         }
-        System.out.println();
+        //System.out.println();
        // System.out.println(dist);
         return dist;
-
+*/
 
         //Vertex desti = getVertex(p.getX(), p.getY());
-        //return desti.getDistMin();
+        return getVertex(p.getX(),p.getY()).getDistMin();
     }
 
     public void busca(Vertex inici) {
