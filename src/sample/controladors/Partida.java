@@ -8,13 +8,16 @@ package sample.controladors;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,7 +30,9 @@ import sample.unitats.Unitat;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ResourceBundle;
 
 public class Partida {
 
@@ -89,9 +94,6 @@ public class Partida {
     @FXML
     private VBox barraOrigen;
 
-    @FXML
-    private Label puntuacio;
-
     private Integer index = 0;
 
     public static File terreny = new File("src/sample/mapes/mapa1");
@@ -127,7 +129,6 @@ public class Partida {
         jugador2 = new Jugador(2);
 
         //Abans de carregar el mapa
-
 
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
@@ -542,8 +543,12 @@ public class Partida {
                         desti = h;
                 }
 
+                //Passar temps
+                System.out.println("Unitat " + agressor + " es desplaça a " + desti);
+
                 mapa.desplacar(agressor.getPosAct(), desti);
 
+                System.out.println("Unitat " + agressor + " ataca a " + Objectiu.getUnitat());
                 j.atacar(agressor, Objectiu.getUnitat());
             }
             j.enRepos(agressor);

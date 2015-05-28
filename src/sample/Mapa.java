@@ -18,6 +18,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -34,12 +37,16 @@ public class Mapa {
 
 
     private ArrayList<Posicio> forts;//LLUIS
+    private Integer [][] costosCamins;
+    private ArrayList<Vertex> adj;
 
 
     public Mapa() {
         MAXH = 0;
         MAXV = 0;
         mapa = new Posicio[MAXH][MAXV];
+        costosCamins = new Integer[MAXH][MAXV];
+        adj = new ArrayList<>();
         nom = "Mapa no construit";
     }
 
@@ -83,7 +90,7 @@ public class Mapa {
 
     //FABRIQUES D'OBJECTES
 
-    private Terreny fabricaTerrenys(Integer i) {
+    public static Terreny fabricaTerrenys(Integer i) {
         if (i.equals(0)) return new Plain(0);   //plain
         else if (i.equals(1)) return new Forest(1); //forest
         else if (i.equals(2)) return new Mountain(2);   //mountain
@@ -169,6 +176,9 @@ public class Mapa {
 
         posicions.remove(p);
 
+
+
+
         return posicions;
     }
 
@@ -222,6 +232,7 @@ public class Mapa {
         MAXV = Integer.parseInt(mida[1]);
 
         mapa = new Posicio[MAXH][MAXV]; //Reservem memoria
+        costosCamins = new Integer[MAXH][MAXV];
 
         String sCurrentLine;
         Integer j = 0;
@@ -235,12 +246,115 @@ public class Mapa {
                     mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
                     if (mapa[i][j].getTerreny().toString().equals("Fortress")) forts.add(mapa[i][j]);   //LLUIS
+                    costosCamins[i][j] = mapa[i][j].getTerreny().getRedDespl();
                 }
                 j++;
             }
         }
+        creaGraf();
         System.out.println("Lectura Correcte");
+
+        for (Integer x = 0; x<MAXH; x++){
+            for (Integer y = 0; y<MAXV; y++){
+                System.out.print(costosCamins[x][y] + " ");
+            }
+            System.out.println();
+        }
+
+
         br.close();
+    }
+
+    private ArrayList<Vertex> creaGraf(){
+        adj = new ArrayList<Vertex>();
+        for (int i=0; i<MAXH; i++) {
+            for (int j = 0; j < MAXV; j++) {
+                adj.add(new Vertex(i + " " + j));
+            }
+        }
+        // llista de tots els vertexs
+        for (Vertex v1 : adj) {
+            String[] s1 = v1.toString().split(" ");
+            v1.iniciaAdjacencies();
+            for (Vertex v2 : adj) {
+                if (v1 != v2) {
+                    String[] s2 = v2.toString().split(" ");
+                    if (((Integer.parseInt(s2[0]) == Integer.parseInt(s1[0]) - 1 || Integer.parseInt(s2[0]) == Integer.parseInt(s1[0]) + 1) &&
+                            Integer.parseInt(s2[1]) == Integer.parseInt(s1[1])) ||
+
+                            ((Integer.parseInt(s2[1]) == Integer.parseInt(s1[1]) + 1 || Integer.parseInt(s2[1]) == Integer.parseInt(s1[1]) - 1) &&
+                                    Integer.parseInt(s2[0]) == Integer.parseInt(s1[0]))) {
+
+                        v1.getAdjacencies().add(new Edge(v2, (costosCamins[Integer.parseInt(s2[0])][Integer.parseInt(s2[1])])));
+                    }
+                }
+            }
+        }
+        return adj;
+    }
+
+
+    public void buscaCamiMinim(Posicio p){
+
+        Vertex ori = getVertex(p.getX(), p.getY());
+
+        busca(ori);
+    }
+
+    public List<Vertex> getCamiMin(Vertex target) {
+        List<Vertex> path = new ArrayList<Vertex>();
+        for (Vertex vertex = target; vertex != null; vertex = vertex.getAnterior()) {
+            path.add(vertex);
+            System.out.println(vertex);
+        }
+        Collections.reverse(path);
+        return path;
+    }
+
+    public Integer ValorCamiMin(Posicio p) {
+
+        Integer dist = 0;
+        List<Vertex> l = getCamiMin(getVertex(p.getX(),p.getY()));
+        for (Vertex v : l){
+            dist += v.getDistMin();
+        }
+        System.out.println(dist);
+        return dist;
+
+
+        //Vertex desti = getVertex(p.getX(), p.getY());
+        //return desti.getDistMin();
+    }
+
+    public void busca(Vertex inici) {
+        inici.setDistMin(0);
+        PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
+        vertexQueue.add(inici);
+
+        while (!vertexQueue.isEmpty()) {
+            Vertex u = vertexQueue.poll();
+
+            for (Edge e : u.getAdjacencies())
+            {
+                Vertex v = e.getTarget();
+                Integer pes = e.getCost();
+                Integer acumulat = u.getDistMin() + pes;
+                if (acumulat < v.getDistMin()) {
+                    vertexQueue.remove(v);
+                    v.setValors(acumulat, u);
+                    vertexQueue.add(v);
+                }
+            }
+        }
+    }
+
+    public Vertex getVertex(int x, int y) {
+        for (Vertex g : adj) {
+            String[] str = g.toString().split(" ");
+            if (Integer.parseInt(str[0]) == x && Integer.parseInt(str[1]) == y)
+                return g;
+        }
+        return null;
     }
 
     public void llegirUnitats(String u, Jugador a, Jugador b) {
