@@ -392,7 +392,6 @@ public class Partida {
                 seg.setDisable(false);
 
                 seleccionada.pinta(Color.BLUE);
-                pintades = null;
                 pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
 
 
@@ -400,8 +399,9 @@ public class Partida {
                     mapa.buscaCamiMinim(seleccionada);
 
                     ArrayList<Posicio> pintades2 = new ArrayList<Posicio>();
+                    pintades2.clear();
                     for (Posicio p : pintades){
-                        System.out.println("posicio actual: " + seleccionada + " ->> " + mapa.ValorCamiMin(p));
+                       // System.out.println("posicio actual: " + seleccionada + " ->> " + mapa.ValorCamiMin(p));
                         Integer costMin = mapa.ValorCamiMin(p);
                         if (costMin <= seleccionada.getUnitat().getMovAct()){    //todo
                             pintades2.add(p);

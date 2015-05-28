@@ -27,7 +27,7 @@ public class Vertex implements Comparable<Vertex> {
         adjacencies = new ArrayList<Edge>();
     }
 
-    public void setDistMin(Integer d, Vertex a){
+    public void setDistMin(Integer d){
         distMin = d;
     }
 
@@ -53,10 +53,6 @@ public class Vertex implements Comparable<Vertex> {
 
     public Integer getDistMin() {
         return distMin;
-    }
-
-    public void setDistMin(Integer distMin) {
-        this.distMin = distMin;
     }
 
     public void iniciaAdjacencies() {
