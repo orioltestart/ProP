@@ -8,27 +8,29 @@ package sample.controladors;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import sample.Jugador;
 import sample.Mapa;
 import sample.Posicio;
 import sample.unitats.Unitat;
 
-
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ResourceBundle;
 
 public class Partida {
 
@@ -125,6 +127,7 @@ public class Partida {
         jugador2 = new Jugador(2);
 
         //Abans de carregar el mapa
+        System.out.println("ABANS DE CARREGAR MAPA " + terreny + " -> " + unitats);
 
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
@@ -390,6 +393,21 @@ public class Partida {
 
                 seleccionada.pinta(Color.BLUE);
                 pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
+
+/*todo
+                if (btAtacMoure.getText().equals("Moure")){
+                    mapa.buscaCamiMinim(seleccionada);
+
+                    for (Posicio p : pintades){
+                        Integer costMin = mapa.ValorCamiMin(p);
+                        if (costMin > seleccionada.getUnitat().getMovAct()){    //todo
+                            pintades.remove(p);
+                        }
+                    }
+
+                }
+*/
+
                 for (Posicio i : pintades) {
                     i.pinta(Color.RED);
                     if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
