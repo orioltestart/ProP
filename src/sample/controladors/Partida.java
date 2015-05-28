@@ -20,12 +20,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import sample.Jugador;
 import sample.Mapa;
 import sample.Posicio;
 import sample.unitats.Unitat;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -129,6 +127,7 @@ public class Partida {
         jugador2 = new Jugador(2);
 
         //Abans de carregar el mapa
+        System.out.println("ABANS DE CARREGAR MAPA " + terreny + " -> " + unitats);
 
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
@@ -216,60 +215,18 @@ public class Partida {
                 if (btAtacMoure.getText().equals("Moure")) {
                     if (actual != null && !actual.teUnitat() && dinsRang(actual)) {
                         mapa.desplacar(seleccionada, actual);
-                        if (mapa.esFinal()) {
-                            try {
-                                Button aux = (Button) actionEvent.getSource();
-                                Stage stage = (Stage) aux.getScene().getWindow();
-                                Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalVictoria.fxml"));
-
-                                stage.setTitle("CONQUER ARMY - FINAL");
-                                stage.setScene(new Scene(root, 1050, 750));
-
-                                stage.show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            seleccionada = actual;
-                            actualitzaContenidor(null, barraDesti);
-                            actualitzaContenidor(seleccionada, posicioActual);
-                            actualitzaContenidor(seleccionada, barraOrigen);
-                            eliminaSeleccio();
-                            pintaRang();
-                            seleccionada.pinta(Color.BLUE);
-                        }
+                        seleccionada = actual;
+                        actualitzaContenidor(null, barraDesti);
+                        actualitzaContenidor(seleccionada, posicioActual);
+                        actualitzaContenidor(seleccionada, barraOrigen);
+                        eliminaSeleccio();
+                        pintaRang();
+                        seleccionada.pinta(Color.BLUE);
                     }
                 } else {
                     if (seleccionada != null && actual != null && seleccionada.teUnitat() && actual.teUnitat()) {
                         jugador1.atacar(seleccionada.getUnitat(), actual.getUnitat());
-                        if (jugador1.getExercit().isEmpty()) {
-                            try {
-                                Button aux = (Button) actionEvent.getSource();
-                                Stage stage = (Stage) aux.getScene().getWindow();
-                                Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalVictoria.fxml"));
-
-                                stage.setTitle("CONQUER ARMY - FINAL");
-                                stage.setScene(new Scene(root, 1050, 750));
-
-                                stage.show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else if (jugador2.getExercit().isEmpty()) {
-                            try {
-                                Button aux = (Button) actionEvent.getSource();
-                                Stage stage = (Stage) aux.getScene().getWindow();
-                                Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalDerrota.fxml"));
-
-                                stage.setTitle("FINAL");
-                                stage.setScene(new Scene(root, 1050, 750));
-
-                                stage.show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
+                        System.out.println("HOLA");
                         if (!seleccionada.teUnitat()) { //Si la atacant es mor
                             seleccionada.eliminaUnitat();
                             actualitzaContenidor(null, posicioActual);
@@ -435,7 +392,26 @@ public class Partida {
                 seg.setDisable(false);
 
                 seleccionada.pinta(Color.BLUE);
+                pintades = null;
                 pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
+
+
+                if (btAtacMoure.getText().equals("Moure")){
+                    mapa.buscaCamiMinim(seleccionada);
+
+                    ArrayList<Posicio> pintades2 = new ArrayList<Posicio>();
+                    for (Posicio p : pintades){
+                        System.out.println("posicio actual: " + seleccionada + " ->> " + mapa.ValorCamiMin(p));
+                        Integer costMin = mapa.ValorCamiMin(p);
+                        if (costMin <= seleccionada.getUnitat().getMovAct()){    //todo
+                            pintades2.add(p);
+                            //System.out.println(p);
+                        }
+                    }
+                    pintades = pintades2;
+                }
+
+
                 for (Posicio i : pintades) {
                     i.pinta(Color.RED);
                     if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
