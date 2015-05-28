@@ -302,6 +302,7 @@ public abstract class Unitat {
     public void setReady (){
         ready = true;
         movActual = movTotal;
+        if (PosAct.getTerreny().getCura()) recuperarPV();
     }
 
 
