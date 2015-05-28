@@ -6,6 +6,11 @@
 
 package sample;
 
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.WindowEvent;
 import sample.terrenys.*;
 import sample.unitats.*;
 
@@ -24,6 +29,10 @@ public class Mapa {
     private Integer MAXH;
     private Integer MAXV;
     private Posicio meta;
+    private Boolean end = false;
+
+
+
     private ArrayList<Posicio> forts;//LLUIS
 
 
@@ -118,9 +127,15 @@ public class Mapa {
             mapa[fi.getX()][fi.getY()].setUnitat(aux, true); //La coloquem al destí
             mapa[ori.getX()][ori.getY()].eliminaUnitat(); //Eliminem la unitat del origen
 
-            ori.reset();
-            fi.reset();
+            mapa[fi.getX()][fi.getY()].reset();
+            mapa[ori.getX()][ori.getY()].reset();
+
+            if (fi.getX() == meta.getX() && fi.getY() == meta.getY()) end = true;
         }
+    }
+
+    public Boolean esFinal() {
+        return end;
     }
 
     // CERCA DE LES CASELLES ON ES POT DESPLAÇAR LA UNITAT

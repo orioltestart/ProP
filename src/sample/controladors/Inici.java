@@ -12,7 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -44,6 +46,8 @@ public class Inici {
     @FXML
     private VBox barraCentral;
 
+    final ToggleGroup menu = new ToggleGroup();
+
     @FXML
     void initialize() {
         assert rbtMitja != null : "fx:id=\"rbtMitja\" was not injected: check your FXML file 'inici.fxml'.";
@@ -53,6 +57,10 @@ public class Inici {
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'inici.fxml'.";
         assert barraCentral != null : "fx:id=\"barraCentral\" was not injected: check your FXML file 'inici.fxml'.";
 
+        rbtFacil.setToggleGroup(menu);
+        rbtMitja.setToggleGroup(menu);
+        rbtDificil.setToggleGroup(menu);
+
         btInici.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -61,14 +69,24 @@ public class Inici {
                 Parent inici = null;
 
                 try {
-                    Partida.terreny = new File("src/sample/mapes/mapa1");
-                    Partida.unitats = new File("src/sample/mapes/unitats1");
-                    inici = FXMLLoader.load(getClass().getResource("partida.fxml"));
+                    if (rbtFacil.isSelected()) {
+                        Partida.terreny = new File("src/sample/mapes/mapa1");
+                        Partida.unitats = new File("src/sample/mapes/unitats1");
+                        inici = FXMLLoader.load(getClass().getResource("partida.fxml"));
+                    } else if (rbtMitja.isSelected()) {
+                        Partida.terreny = new File("src/sample/mapes/mapa2");
+                        Partida.unitats = new File("src/sample/mapes/unitats2");
+                        inici = FXMLLoader.load(getClass().getResource("partida.fxml"));
+                    } else if (rbtDificil.isSelected()) {
+                        Partida.terreny = new File("src/sample/mapes/mapa3");
+                        Partida.unitats = new File("src/sample/mapes/unitats3");
+                        inici = FXMLLoader.load(getClass().getResource("partida.fxml"));
+                    }
                 } catch (IOException e) {
                     System.exit(0);
                 }
 
-                stage.setTitle("ProP - FIRE EMBLEM");
+                stage.setTitle("CONQUER ARMY - JOC");
                 stage.setScene(new Scene(inici, 1050, 750));
 
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

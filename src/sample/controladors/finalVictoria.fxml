@@ -8,20 +8,18 @@
 
 <BorderPane fx:id="finestra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.controladors.Inici">
+            fx:controller="sample.Final">
     <center>
         <VBox fx:id="barraCentral" alignment="CENTER" spacing="40.0"
               style="-fx-border-color: #FFFFFF; -fx-background-color: darkslategrey; -fx-border-radius: 4px; -fx-border-width: 4px;">
             <children>
-                <Label text="Escull nivell de dificultat" textFill="WHITE">
+                <Label text="Felicitats! Has Guanyat!" textFill="WHITE">
                     <font>
                         <Font size="29.0"/>
                     </font>
                 </Label>
-                <RadioButton fx:id="rbtFacil" mnemonicParsing="false" selected="true" text="Fàcil"/>
-                <RadioButton fx:id="rbtMitja" mnemonicParsing="false" text="Mitjà"/>
-                <RadioButton fx:id="rbtDificil" mnemonicParsing="false" text="Dificil"/>
-                <Button fx:id="btInici" mnemonicParsing="false" text="Inicia Partida">
+                <Button fx:id="tornaJugar" mnemonicParsing="false" text="Torna a Jugar"/>
+                <Button fx:id="finalitza" mnemonicParsing="false" text="Abandona el Programa">
                 </Button>
             </children>
         </VBox>

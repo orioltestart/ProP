@@ -84,3 +84,10 @@ public static void mostraRangMov() {
             System.out.println();
         }
     }
+
+    busca() -> ori, tots els vertex adjacents, s'assigna la distancia minima corresponent
+
+
+    Vertex v ->
+    [] EDGE Vertex-> dist
+

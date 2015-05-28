@@ -18,6 +18,7 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(inici, 1050, 750));
 
+        primaryStage.setTitle("CONQUER ARMY - INICI");
         primaryStage.show();
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
