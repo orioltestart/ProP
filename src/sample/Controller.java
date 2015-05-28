@@ -8,19 +8,24 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import sample.unitats.Unitat;
 
 
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller {
 
@@ -34,7 +39,7 @@ public class Controller {
     private ScrollPane contenidorMapa; // Value injected by FXMLLoader
 
     @FXML // fx:id="barraInferior"
-    private HBox barraInferior; // Value injected by FXMLLoader
+    private TitledPane barraInferior; // Value injected by FXMLLoader
 
     @FXML
     private VBox barraCursor;
@@ -68,10 +73,7 @@ public class Controller {
     private Button btAtacMoure;
 
     @FXML
-    private Text textCursor;
-
-    @FXML
-    private Button btGuardar;
+    private Button passarTorn;
 
     @FXML
     private Button btSortir;
@@ -87,6 +89,10 @@ public class Controller {
 
     private Integer index = 0;
 
+    public static File terreny = new File("src/sample/mapes/mapa1");
+
+    public static File unitats = new File("src/sample/mapes/unitats1");
+
 
     private ArrayList<Posicio> atacables = new ArrayList<Posicio>();
 
@@ -99,20 +105,22 @@ public class Controller {
     Jugador jugador1;
     Jugador jugador2;
 
+    Integer torn = 0;
+
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws InterruptedException {
+    void initialize() throws InterruptedException, IOException {
         assert contenidorMapa != null : "fx:id=\"contenidorMapa\" was not injected: check your FXML file 'sample.fxml'.";
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
-
-        File terreny = new File("src/sample/mapes/mapa1");
-        File unitats = new File("src/sample/mapes/unitats1");
 
         assignarBotons();
 
         jugador1 = new Jugador(1);
         jugador2 = new Jugador(2);
+
+        //Abans de carregar el mapa
+        System.out.println("ABANS DE CARREGAR MAPA " + terreny + " -> " + unitats);
 
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
@@ -127,6 +135,37 @@ public class Controller {
     }
 
     private void assignarBotons() {
+
+        passarTorn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Passant torn: " + torn);
+
+                final Timer timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    int i = 3;
+
+                    public void run() {
+                        System.out.println(i--);
+                        barraInferior.setExpanded(false);
+                        if (i < 0) {
+                            timer.cancel();
+                            barraInferior.setExpanded(true);
+                        }
+                    }
+                }, 0, 1000);
+
+                //ControlMaquina(jugador2);
+
+                barraInferior.setExpanded(true);
+                jugador1.activaExercit();
+                jugador2.activaExercit();
+                if (seleccionada != null && seleccionada.teUnitat()) pintaRang();
+                torn++;
+            }
+        });
+
         ant.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -184,6 +223,7 @@ public class Controller {
                 } else {
                     if (seleccionada != null && actual != null && seleccionada.teUnitat() && actual.teUnitat()) {
                         jugador1.atacar(seleccionada.getUnitat(), actual.getUnitat());
+                        seleccionada.getUnitat().acabaTorn();
                         if (seleccionada.getUnitat().getPV() <= 0) { //Si la atacant es mor
                             seleccionada.eliminaUnitat();
                             actualitzaContenidor(null, posicioActual);
@@ -195,6 +235,7 @@ public class Controller {
                         } else { //Si la atacant no es mor
                             actualitzaContenidor(seleccionada, posicioActual);
                             actualitzaContenidor(seleccionada, barraOrigen);
+                            pintaRang();
                             seleccionada.pinta(Color.BLUE);
                         }
 
@@ -340,7 +381,7 @@ public class Controller {
         index = 0;
         atacables.clear();
         if (seleccionada.teUnitat()) {
-            if (seleccionada.getUnitat().getPropietari() == 2) {
+            if (seleccionada.getUnitat().getPropietari() == 2 && seleccionada.getUnitat().isReady()) {
                 ferMovimentAtac.setDisable(false);
                 ant.setDisable(false);
                 seg.setDisable(false);
@@ -412,12 +453,71 @@ public class Controller {
         for (Unitat u : jugador2.getExercit()) System.out.println(u);
     }
 
-    public void deshabilitaInterficie() {
-        barraInferior.setDisable(true);
+    /**
+     * @param j es el jugador controlat per la maquina
+     * @return void
+     * @pre --
+     * @post la maquina realitza les funcions de un jugador j
+     */
+    public void ControlMaquina(Jugador j) throws InterruptedException {
+        //iterador per totes les unitats del jugador
+        Iterator itu = j.getExercit().iterator();
+        while (itu.hasNext()) {
+            Unitat agressor = (Unitat) itu.next();
+            ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(), agressor.getRang() + agressor.getMovTot());
+            Iterator itp = rang.iterator();
+            //iterador per totes les caselles dins del rang
+            Integer millorDany = 0;
+            Posicio Objectiu = new Posicio();
+            //obtenir la unitat enemiga a la qual li farem mes punts de dany
+            boolean mata = false;
+            while (!mata && itp.hasNext()) {
+                Posicio pos = (Posicio) itp.next();
+                if (pos.teUnitat() && pos.getUnitat().Enemiga(agressor) && agressor.calcularAtac(pos.getUnitat()) > millorDany) {
+                    millorDany = agressor.calcularAtac(pos.getUnitat());
+                    Objectiu = pos;
+                    if (millorDany >= Objectiu.getUnitat().getPV()) {    //si matem una unitat no cal buscarne cap altra
+                        mata = true;
+                    }
+                }
+            }
+            if (agressor.getPV() < 35 && !mata) {
+                retirada(agressor);
+            } else if (millorDany > 0) {
+                //a partir de la posicio Objectiu, busquem la millor posicio per mourens
+                ArrayList<Posicio> area = mapa.getRang(Objectiu, agressor.getRang());
+                area.retainAll(rang);
+                Posicio desti = new Posicio();
+                Integer millorDef = -20;
+                for (Posicio h : area) {
+                    if (h.getTerreny().getDefensa() > millorDef)
+                        desti = h;
+                }
+
+                Thread.sleep(2000);
+                mapa.desplacar(agressor.getPosAct(), desti);
+                Thread.sleep(2000);
+                j.atacar(agressor, Objectiu.getUnitat());
+                Thread.sleep(2000);
+            }
+            j.enRepos(agressor);
+
+        }
+        //si no hi ha cap unitat al rang, no fa res
     }
 
-    public void habilitaInterficie() {
-        barraInferior.setDisable(false);
+    public void retirada(Unitat u) {
+
+        Posicio desti = new Posicio();
+        ArrayList<Posicio> candidats = new ArrayList<>();
+
+        for (Posicio p : mapa.getForts()) {
+            if (!p.teUnitat()) candidats.add(p);
+        }
+        //buscar cami minim per cada un
+        //backtracking de la posicio on hi ha la fortalesa mes proxima
+        // (si no esta ocupada) ens dirigirem cap alla
+        //moures lo mes rapid possible cap alla
     }
 
 }

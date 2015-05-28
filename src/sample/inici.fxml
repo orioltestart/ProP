@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="finestra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.ControladorInici">
+    <center>
+        <VBox fx:id="barraCentral" alignment="CENTER" spacing="40.0"
+              style="-fx-border-color: #FFFFFF; -fx-background-color: darkslategrey; -fx-border-radius: 4px; -fx-border-width: 4px;">
+            <children>
+                <Label text="Escull nivell de dificultat" textFill="WHITE">
+                    <font>
+                        <Font size="29.0"/>
+                    </font>
+                </Label>
+                <RadioButton fx:id="rbtFacil" mnemonicParsing="false" text="Fàcil"/>
+                <RadioButton fx:id="rbtMitja" mnemonicParsing="false" text="Mitjà"/>
+                <RadioButton fx:id="rbtDificil" mnemonicParsing="false" text="Dificil"/>
+                <Button fx:id="btInici" mnemonicParsing="false" text="Inicia Partida">
+                </Button>
+            </children>
+        </VBox>
+    </center>
+    <top>
+        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #000000;"
+              BorderPane.alignment="CENTER"/>
+    </top>
+    <bottom>
+        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #000000;"
+              BorderPane.alignment="CENTER"/>
+    </bottom>
+</BorderPane>

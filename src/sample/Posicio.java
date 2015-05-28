@@ -22,7 +22,7 @@ public class Posicio extends Canvas {
     private Boolean teMascara = false;
     private Color colorMascara;
 
-    final static Integer a_mida = 40;
+    final static Integer a_mida = 80;
     private Integer midaQuadre;
 
 

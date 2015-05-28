@@ -14,10 +14,11 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent inici = FXMLLoader.load(getClass().getResource("inici.fxml"));
 
-        primaryStage.setTitle("ProP - FIRE EMBLEM");
-        primaryStage.setScene(new Scene(root, 1050, 750));
+        primaryStage.setScene(new Scene(inici, 1050, 750));
+
+        primaryStage.show();
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -25,8 +26,6 @@ public class Main extends Application {
                 System.exit(0);
             }
         });
-
-        primaryStage.show();
     }
 
 

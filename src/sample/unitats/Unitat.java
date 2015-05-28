@@ -41,6 +41,7 @@ public abstract class Unitat {
         DEF = 0;
         movTotal = 0;
         movActual = 0;
+        ready = false;
     }
 
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
@@ -58,6 +59,7 @@ public abstract class Unitat {
         Bonificacio = bonus.split("-");
         Rang = rang;
         img = null;
+        ready = true;
 
     }
 
@@ -299,6 +301,16 @@ public abstract class Unitat {
      */
     public void setReady (){
         ready = true;
+        movActual = movTotal;
+    }
+
+
+    public void acabaTorn() {
+        ready = false;
+    }
+
+    public Boolean isReady() {
+        return ready;
     }
 
     /**
