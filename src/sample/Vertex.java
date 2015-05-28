@@ -11,7 +11,7 @@ public class Vertex implements Comparable<Vertex> {
 
     private ArrayList<Edge> adjacencies;
 
-    private Integer distMin = 999999999;
+    private Integer distMin;
 
     private Vertex anterior;
 
@@ -25,6 +25,7 @@ public class Vertex implements Comparable<Vertex> {
     public Vertex(String n) {
         codi = n;
         adjacencies = new ArrayList<Edge>();
+        distMin = 0;
     }
 
     public void setValors(Integer d, Vertex a){
@@ -58,9 +59,5 @@ public class Vertex implements Comparable<Vertex> {
 
     public void iniciaAdjacencies() {
         adjacencies = new ArrayList<Edge>();
-    }
-
-    public void setAnterior(Vertex anterior) {
-        this.anterior = anterior;
     }
 }
