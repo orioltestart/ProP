@@ -313,6 +313,10 @@ public abstract class Unitat {
         return ready;
     }
 
+    public void setMovActual(Integer movActual) {
+        this.movActual = movActual;
+    }
+
     /**
      @pre --
      @post assigna n a la posicio actual
