@@ -1,4 +1,4 @@
-package sample;
+package sample.controladors;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class ControladorInici {
+public class Inici {
 
     @FXML
     private ResourceBundle resources;
@@ -61,9 +61,9 @@ public class ControladorInici {
                 Parent inici = null;
 
                 try {
-                    Controller.terreny = new File("src/sample/mapes/mapa3");
-                    Controller.unitats = new File("src/sample/mapes/unitats3");
-                    inici = FXMLLoader.load(getClass().getResource("sample.fxml"));
+                    Partida.terreny = new File("src/sample/mapes/mapa1");
+                    Partida.unitats = new File("src/sample/mapes/unitats1");
+                    inici = FXMLLoader.load(getClass().getResource("partida.fxml"));
                 } catch (IOException e) {
                     System.exit(0);
                 }

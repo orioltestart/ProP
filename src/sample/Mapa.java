@@ -108,26 +108,18 @@ public class Mapa {
     //Pre: --
     //Post: Trasllada la unitat de la Posició ori a la Posició fi
     //Excepcions: Desplaçar una unitat a una posició ja ocupada llança una IllegalArgumentException així que la posició ori no tingui cap unitat per desplaçar
-    public void desplacar(Posicio ori, Posicio fi) throws IllegalArgumentException {
-        try {
-            if (!mapa[ori.getX()][ori.getY()].teUnitat())
-                throw new IllegalArgumentException("Aquesta posició no té cap unitats dins");
-            if (mapa[fi.getX()][fi.getY()].teUnitat())
-                throw new IllegalArgumentException("Aquesta posició de destí ja està ocupada per un altre unitats");
-            if (ori == fi) throw new IllegalArgumentException("No es pot moure a la mateixa posició de la que està");
+    public void desplacar(Posicio ori, Posicio fi) {
+        if (ori != fi && !mapa[fi.getX()][fi.getY()].teUnitat() && mapa[ori.getX()][ori.getY()].teUnitat()) {
 
             Unitat aux = mapa[ori.getX()][ori.getY()].getUnitat();
 
             aux.restaMov(distanciaRecorreguda(ori, fi));
 
-            mapa[ori.getX()][ori.getY()].eliminaUnitat(); //Eliminem la unitat del origen
             mapa[fi.getX()][fi.getY()].setUnitat(aux, true); //La coloquem al destí
+            mapa[ori.getX()][ori.getY()].eliminaUnitat(); //Eliminem la unitat del origen
 
             ori.reset();
             fi.reset();
-
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
         }
     }
 

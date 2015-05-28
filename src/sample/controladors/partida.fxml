@@ -17,7 +17,8 @@
 
 <BorderPane fx:id="finestra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: darkslategrey;"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.controladors.Partida">
     <bottom>
         <TitledPane fx:id="barraInferior" animated="false" text="Interficie">
             <content>
@@ -73,7 +74,7 @@
                                                 </Text>
                                                 <ImageView pickOnBounds="true" preserveRatio="true">
                                                     <image>
-                                                        <Image url="@Imatges/direction4.png"/>
+                                                        <Image url="@../Imatges/direction4.png"/>
                                                     </image>
                                                 </ImageView>
                                             </children>

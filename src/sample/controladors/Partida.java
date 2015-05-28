@@ -1,8 +1,8 @@
 /**
- * Sample Skeleton for 'sample.fxml' Controller Class
+ * Sample Skeleton for 'partida.fxml' Partida Class
  */
 
-package sample;
+package sample.controladors;
 
 
 import javafx.event.ActionEvent;
@@ -18,6 +18,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.Jugador;
+import sample.Mapa;
+import sample.Posicio;
 import sample.unitats.Unitat;
 
 
@@ -27,7 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class Controller {
+public class Partida {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -97,6 +100,8 @@ public class Controller {
     private ArrayList<Posicio> atacables = new ArrayList<Posicio>();
 
     private ArrayList<Posicio> pintades = new ArrayList<Posicio>();
+    private Iterator<Posicio> itatac = atacables.iterator();
+
 
     private Posicio seleccionada;
     private Posicio cursor;
@@ -110,9 +115,9 @@ public class Controller {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws InterruptedException, IOException {
-        assert contenidorMapa != null : "fx:id=\"contenidorMapa\" was not injected: check your FXML file 'sample.fxml'.";
-        assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'sample.fxml'.";
-        assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'sample.fxml'.";
+        assert contenidorMapa != null : "fx:id=\"contenidorMapa\" was not injected: check your FXML file 'partida.fxml'.";
+        assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'partida.fxml'.";
+        assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'partida.fxml'.";
 
         assignarBotons();
 
@@ -120,7 +125,6 @@ public class Controller {
         jugador2 = new Jugador(2);
 
         //Abans de carregar el mapa
-        System.out.println("ABANS DE CARREGAR MAPA " + terreny + " -> " + unitats);
 
         mapa = new Mapa(terreny.getAbsolutePath());
         mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
@@ -141,27 +145,25 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Passant torn: " + torn);
+                barraInferior.setExpanded(false);
+                try {
+                    ControlMaquina(jugador1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                final Timer timer = new Timer();
-                timer.scheduleAtFixedRate(new TimerTask() {
-                    int i = 3;
-
-                    public void run() {
-                        System.out.println(i--);
-                        barraInferior.setExpanded(false);
-                        if (i < 0) {
-                            timer.cancel();
-                            barraInferior.setExpanded(true);
-                        }
-                    }
-                }, 0, 1000);
-
-                //ControlMaquina(jugador2);
-
+                System.out.println("Final Maquina");
                 barraInferior.setExpanded(true);
                 jugador1.activaExercit();
                 jugador2.activaExercit();
-                if (seleccionada != null && seleccionada.teUnitat()) pintaRang();
+                eliminaSeleccio();
+                if (seleccionada != null) {
+                    pintaRang();
+                    seleccionada.pinta(Color.BLUE);
+                }
+                actualitzaContenidor(null, barraDesti);
+                actualitzaContenidor(null, barraOrigen);
+                actualitzaContenidor(null, posicioActual);
                 torn++;
             }
         });
@@ -210,9 +212,7 @@ public class Controller {
                 if (btAtacMoure.getText().equals("Moure")) {
                     if (actual != null && !actual.teUnitat() && dinsRang(actual)) {
                         mapa.desplacar(seleccionada, actual);
-                        actual.reset();
                         seleccionada = actual;
-                        actual = null;
                         actualitzaContenidor(null, barraDesti);
                         actualitzaContenidor(seleccionada, posicioActual);
                         actualitzaContenidor(seleccionada, barraOrigen);
@@ -223,8 +223,8 @@ public class Controller {
                 } else {
                     if (seleccionada != null && actual != null && seleccionada.teUnitat() && actual.teUnitat()) {
                         jugador1.atacar(seleccionada.getUnitat(), actual.getUnitat());
-                        seleccionada.getUnitat().acabaTorn();
-                        if (seleccionada.getUnitat().getPV() <= 0) { //Si la atacant es mor
+                        System.out.println("HOLA");
+                        if (!seleccionada.teUnitat()) { //Si la atacant es mor
                             seleccionada.eliminaUnitat();
                             actualitzaContenidor(null, posicioActual);
                             actualitzaContenidor(null, barraOrigen);
@@ -235,16 +235,18 @@ public class Controller {
                         } else { //Si la atacant no es mor
                             actualitzaContenidor(seleccionada, posicioActual);
                             actualitzaContenidor(seleccionada, barraOrigen);
+                            seleccionada.getUnitat().acabaTorn();
                             pintaRang();
                             seleccionada.pinta(Color.BLUE);
                         }
 
-                        if (actual.getUnitat().getPV() <= 0) { //Si la atacada es mor
-                            atacables.remove(actual);
+                        if (!actual.teUnitat()) { //Si la atacada es mor
                             actual.eliminaUnitat();
                             actualitzaContenidor(null, barraDesti);
                             actualitzaContenidor(null, barraAccio);
                             actual.reset();
+                            atacables.remove(actual);
+                            System.out.println("HOLA");
                             if (seleccionada != null) actual.pinta(Color.RED);
                             if (atacables.isEmpty()) {
                                 actual = null;
@@ -462,6 +464,7 @@ public class Controller {
     public void ControlMaquina(Jugador j) throws InterruptedException {
         //iterador per totes les unitats del jugador
         Iterator itu = j.getExercit().iterator();
+        long fi = System.currentTimeMillis();
         while (itu.hasNext()) {
             Unitat agressor = (Unitat) itu.next();
             ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(), agressor.getRang() + agressor.getMovTot());
@@ -494,11 +497,13 @@ public class Controller {
                         desti = h;
                 }
 
-                Thread.sleep(2000);
+                //Passar temps
+                System.out.println("Unitat " + agressor + " es desplaça a " + desti);
+
                 mapa.desplacar(agressor.getPosAct(), desti);
-                Thread.sleep(2000);
+
+                System.out.println("Unitat " + agressor + " ataca a " + Objectiu.getUnitat());
                 j.atacar(agressor, Objectiu.getUnitat());
-                Thread.sleep(2000);
             }
             j.enRepos(agressor);
 

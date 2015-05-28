@@ -1,4 +1,4 @@
-package com.company;
+package sample;
 
 import java.io.IOException;
 import java.util.ArrayList;

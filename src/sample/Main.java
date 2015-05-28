@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        Parent inici = FXMLLoader.load(getClass().getResource("inici.fxml"));
+        Parent inici = FXMLLoader.load(getClass().getResource("controladors/inici.fxml"));
 
         primaryStage.setScene(new Scene(inici, 1050, 750));
 

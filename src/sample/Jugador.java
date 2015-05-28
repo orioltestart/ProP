@@ -63,10 +63,16 @@ public class Jugador {
         if (u.Enemiga(u2)) {
             Integer a = u.calcularAtac(u2);
             u2.reduirPV(a);
+            if (u2.getPV() <= 0) u2.getPosAct().eliminaUnitat();
             if (u2.potAtacar(u)) {  //contraatac   todo
                 a = u2.calcularAtac(u);
                 u.reduirPV(a);
+                if (u.getPV() <= 0) u.getPosAct().eliminaUnitat();
             }
+
+            u.getPosAct().reset();
+            u2.getPosAct().reset();
+
             //puntuacions
             if (u.AplicarBonificacio(u2) == 3) Puntacio += 500;
             else Puntacio += 300;

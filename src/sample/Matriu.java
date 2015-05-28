@@ -1,4 +1,4 @@
-package com.company;
+package sample;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
