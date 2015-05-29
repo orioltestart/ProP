@@ -6,31 +6,32 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="finestra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.controladors.Inici">
+<BorderPane fx:id="finestra" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controladors.Inici">
     <center>
-        <VBox fx:id="barraCentral" alignment="CENTER" spacing="40.0"
-              style="-fx-border-color: #FFFFFF; -fx-background-color: darkslategrey; -fx-border-radius: 4px; -fx-border-width: 4px;">
+        <VBox fx:id="barraCentral" alignment="CENTER" spacing="40.0" style="-fx-border-color: #FFFFFF; -fx-background-color: darkslategrey; -fx-border-radius: 4px; -fx-border-width: 4px;">
             <children>
                 <Label text="Escull nivell de dificultat" textFill="WHITE">
                     <font>
-                        <Font size="29.0"/>
+                        <Font size="29.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="niv1" mnemonicParsing="false" selected="true" text="Nivell 1" textFill="WHITE"/>
-                <RadioButton fx:id="niv2" mnemonicParsing="false" text="Nivell 2" textFill="WHITE"/>
+                <RadioButton fx:id="niv1" mnemonicParsing="false" selected="true" text="Nivell 1" textFill="WHITE" />
+                <RadioButton fx:id="niv2" mnemonicParsing="false" text="Nivell 2" textFill="WHITE" />
                 <Button fx:id="btInici" mnemonicParsing="false" text="Inicia Partida">
                 </Button>
             </children>
         </VBox>
     </center>
     <top>
-        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #000000;"
-              BorderPane.alignment="CENTER"/>
+        <HBox prefHeight="50.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="50.0" HBox.hgrow="ALWAYS" />
+         </children></HBox>
     </top>
     <bottom>
-        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #000000;"
-              BorderPane.alignment="CENTER"/>
+        <HBox style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="50.0" HBox.hgrow="ALWAYS" />
+         </children></HBox>
     </bottom>
 </BorderPane>

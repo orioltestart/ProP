@@ -57,7 +57,7 @@ public class Final {
                     Parent root = (Parent) FXMLLoader.load(getClass().getResource("inici.fxml"));
 
                     stage.setTitle("CONQUER ARMY - INICI");
-                    stage.setScene(new Scene(root, 1050, 750));
+                    stage.setScene(new Scene(root, 1280, 800));
 
                     stage.show();
                 } catch (IOException e) {

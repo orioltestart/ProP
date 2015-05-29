@@ -9,13 +9,14 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
         Parent inici = FXMLLoader.load(getClass().getResource("controladors/inici.fxml"));
-        primaryStage.setScene(new Scene(inici, 1050, 750));
+        primaryStage.setScene(new Scene(inici, 1280, 800));
         primaryStage.setTitle("CONQUER ARMY - INICI");
         primaryStage.show();
 

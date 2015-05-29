@@ -74,7 +74,7 @@
                                                 </Text>
                                                 <ImageView pickOnBounds="true" preserveRatio="true">
                                                     <image>
-                                                        <Image url="@../Imatges/direction4.png"/>
+                                                        <Image url="@../unitats/imatges/direction4.png"/>
                                                     </image>
                                                 </ImageView>
                                             </children>

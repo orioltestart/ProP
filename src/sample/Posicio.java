@@ -19,9 +19,6 @@ public class Posicio extends Canvas {
     private Unitat unitat;
     private Terreny terreny;
 
-    private Boolean teMascara = false;
-    private Color colorMascara;
-
     final static Integer a_mida = 80;
     private Integer midaQuadre;
 
@@ -49,7 +46,7 @@ public class Posicio extends Canvas {
         a_x = -1;
         a_y = -1;
         unitat = null;
-        terreny = new Terreny();
+        terreny = new Obstacle(14);
         midaQuadre = mida;
     }
 
@@ -90,7 +87,7 @@ public class Posicio extends Canvas {
 
     public void setUnitat(Unitat u, Boolean canviaPos) {
         if (unitat != null) throw new IllegalArgumentException("Aquesta Posicio ja tenia una unitat");
-        if (terreny == null) terreny = new Terreny();
+        if (terreny == null) terreny = new Obstacle(14);
         unitat = u;
 
         if (unitat != null) {
@@ -137,7 +134,7 @@ public class Posicio extends Canvas {
 
     private void dibuixaTerreny() {
         super.getGraphicsContext2D().restore();
-        super.getGraphicsContext2D().drawImage(terreny, 0, 0, midaQuadre, midaQuadre);
+        super.getGraphicsContext2D().drawImage(terreny.getImg(), 0, 0, midaQuadre, midaQuadre);
         super.getGraphicsContext2D().save();
     }
 

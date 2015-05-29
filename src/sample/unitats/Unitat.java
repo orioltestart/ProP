@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import sample.Mapa;
 import sample.Posicio;
 
+import java.io.InputStream;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -336,6 +337,8 @@ public abstract class Unitat {
      */
     public void setPropietari(Integer jugador) {
         Propietari = jugador;
-        img = new Image("sample/Imatges/" + Classe + "v" + Propietari + ".png");
+        String s = "imatges/" + Classe + "v" + Propietari + ".png";
+        InputStream is = Unitat.class.getResourceAsStream(s);
+        img = new Image(is);
     }
 }

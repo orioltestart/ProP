@@ -29,7 +29,6 @@ import sample.Mapa;
 import sample.Posicio;
 import sample.unitats.Unitat;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -98,15 +97,14 @@ public class Partida {
 
     private Integer index = 0;
 
-    public static File terreny = new File("src/sample/mapes/mapa1");
+    public static String terreny;
 
-    public static File unitats = new File("src/sample/mapes/unitats1");
+    public static String unitats;
 
 
     private ArrayList<Posicio> atacables = new ArrayList<Posicio>();
 
     private ArrayList<Posicio> pintades = new ArrayList<Posicio>();
-    private Iterator<Posicio> itatac = atacables.iterator();
 
 
     private Posicio seleccionada;
@@ -131,11 +129,9 @@ public class Partida {
         jugador2 = new Jugador(2);
 
         //Abans de carregar el mapa
-        System.out.println("ABANS DE CARREGAR MAPA " + terreny + " -> " + unitats);
 
-        mapa = new Mapa(terreny.getAbsolutePath());
-        mapa.llegirUnitats(unitats.getAbsolutePath(), jugador1, jugador2);
-
+        mapa = new Mapa(terreny);
+        mapa.llegirUnitats(unitats, jugador1, jugador2);
 
         for (int i = 0; i < mapa.getMidaH(); i++) {
             for (int j = 0; j < mapa.getMidaV(); j++) {
@@ -179,7 +175,7 @@ public class Partida {
                         Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalDerrota.fxml"));
 
                         s.setTitle("CONQUEST ARMY - FINAL DERROTA");
-                        s.setScene(new Scene(root, 1050, 750));
+                        s.setScene(new Scene(root, 1280, 800));
                         s.show();
 
                     } catch (IOException e) {
@@ -192,7 +188,7 @@ public class Partida {
                         Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalVictoria.fxml"));
 
                         s.setTitle("CONQUEST ARMY - FINAL VICTORIA");
-                        s.setScene(new Scene(root, 1050, 750));
+                        s.setScene(new Scene(root, 1280, 800));
                         s.show();
 
                     } catch (IOException e) {
@@ -244,7 +240,7 @@ public class Partida {
                     Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalDerrota.fxml"));
 
                     s.setTitle("CONQUEST ARMY - FINAL DERROTA");
-                    s.setScene(new Scene(root, 1050, 750));
+                    s.setScene(new Scene(root, 1280, 800));
                     s.show();
 
                 } catch (IOException e) {
@@ -266,7 +262,7 @@ public class Partida {
                                 Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalVictoria.fxml"));
 
                                 s.setTitle("CONQUEST ARMY - FINAL VICTORIA");
-                                s.setScene(new Scene(root, 1050, 750));
+                                s.setScene(new Scene(root, 1280, 800));
                                 s.show();
 
                             } catch (IOException e) {
@@ -293,7 +289,7 @@ public class Partida {
                                 Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalDerrota.fxml"));
 
                                 s.setTitle("CONQUEST ARMY - FINAL DERROTA");
-                                s.setScene(new Scene(root, 1050, 750));
+                                s.setScene(new Scene(root, 1280, 800));
                                 s.show();
 
                             } catch (IOException e) {
@@ -306,7 +302,7 @@ public class Partida {
                                 Parent root = (Parent) FXMLLoader.load(getClass().getResource("finalVictoria.fxml"));
 
                                 s.setTitle("CONQUEST ARMY - FINAL VICTORIA");
-                                s.setScene(new Scene(root, 1050, 750));
+                                s.setScene(new Scene(root, 1280, 800));
                                 s.show();
 
                             } catch (IOException e) {
@@ -525,7 +521,7 @@ public class Partida {
         p.getChildren().clear();
         if (p == barraAccio) {
             if (btAtacMoure.getText().equals("Moure")) {
-                barraAccio.getChildren().addAll(new Label("es desplaça a "), new ImageView("sample/Imatges/direction4.png"));
+                barraAccio.getChildren().addAll(new Label("es desplaça a "), new ImageView("sample/unitats/imatges/direction4.png"));
             } else {
                 if (seleccionada != null && actual != null && seleccionada.teUnitat() && actual.teUnitat())
                     barraAccio.getChildren().add(new Label("Calcul del Atac: " + seleccionada.getUnitat().calcularAtac(actual.getUnitat())));
@@ -600,11 +596,9 @@ public class Partida {
                 }
 
                 //Passar temps
-                System.out.println("Unitat " + agressor + " es desplaça a " + desti);
 
                 mapa.desplacar(agressor.getPosAct(), desti);
 
-                System.out.println("Unitat " + agressor + " ataca a " + Objectiu.getUnitat());
                 j.atacar(agressor, Objectiu.getUnitat());
 
                 if (agressor.getPV() <= 0) {

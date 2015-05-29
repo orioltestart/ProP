@@ -64,17 +64,17 @@ public class Inici {
 
                 try {
                     if (niv1.isSelected()) {
-                        Partida.terreny = new File("src/sample/mapes/mapa3");
-                        Partida.unitats = new File("src/sample/mapes/unitats3");
+                        Partida.terreny = "mapes/mapa3";
+                        Partida.unitats = "mapes/unitats3";
                     } else if (niv2.isSelected()) {
-                        Partida.terreny = new File("src/sample/mapes/mapa1");
-                        Partida.unitats = new File("src/sample/mapes/unitats1");
+                        Partida.terreny = "mapes/mapa1";
+                        Partida.unitats = "mapes/unitats1";
                     }
 
                     Parent inici = FXMLLoader.load(getClass().getResource("partida.fxml"));
 
                     stage.setTitle("CONQUER ARMY - JOC");
-                    stage.setScene(new Scene(inici, 1050, 750));
+                    stage.setScene(new Scene(inici, 1280, 800));
 
                     stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                         @Override
@@ -83,8 +83,9 @@ public class Inici {
                     }
                 });
 
-                stage.show();
+                    stage.show();
                 } catch (IOException e) {
+                    e.printStackTrace();
                     System.exit(0);
                 }
             }

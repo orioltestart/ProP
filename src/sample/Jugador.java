@@ -68,10 +68,6 @@ public class Jugador {
                 u.reduirPV(a);
             }
 
-            System.out.println("Exercit Jugador " + Num);
-            for (Unitat k : Exercit) {
-                System.out.println(k);
-            }
             u.getPosAct().reset();
             u2.getPosAct().reset();
 

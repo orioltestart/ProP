@@ -8,14 +8,17 @@ package sample.terrenys;
 
 import javafx.scene.image.Image;
 
+import java.io.InputStream;
 
-public class Terreny extends Image {
+
+public abstract class Terreny {
 
     private String Tipus; //fortress, plain, forest ...
     private Integer Id;     // castle, bridge1, River1, etc
     private Integer Defensa;    //bonificacio de defensa
     private Integer RedDespl;   //disminucio de desplaçament
     private Boolean Cura;
+    private Image img;
 
     final static String terrains[] =
             {"Plain", "Forest", "Mountain", "Fortress",
@@ -25,23 +28,16 @@ public class Terreny extends Image {
 
     //Constructors
 
-    public Terreny(){
-        super("sample/Imatges/nothing.png");
-        Defensa = 15;
-        RedDespl = 0;
-    }
-
-    public Terreny (String t, int i, Integer d, Integer r, Boolean c){
-        super("sample/Imatges/" + terrains[i] + ".png");
+    public Terreny (String t, int i, Integer d, Integer r, Boolean c) {
         Tipus = t;
         Id = i;
         Defensa = d;
         RedDespl = r;
         Cura = c;
+        InputStream is = Terreny.class.getResourceAsStream("imatges/" + terrains[i] + ".png");
+        if (is == null) System.out.println("ES NULL");
+        img = new Image(is);
     }
-
-
-
 
 
 
@@ -59,6 +55,10 @@ public class Terreny extends Image {
         if (Cura) missatge += "Si";
         else missatge += "No";
         return missatge;
+    }
+
+    public Image getImg(){
+        return img;
     }
 
     /**

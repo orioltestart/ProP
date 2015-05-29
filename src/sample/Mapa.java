@@ -14,13 +14,8 @@ import javafx.stage.WindowEvent;
 import sample.terrenys.*;
 import sample.unitats.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created by OriolTestart on 18/4/15.
@@ -107,7 +102,7 @@ public class Mapa {
         else if (i.equals(13)) return new Plain(13); //pontV
         else if (i.equals(14)) return new Obstacle(14); //murH
         else if (i.equals(15)) return new Fortress(15); //meta
-        else return new Terreny();
+        else return new Obstacle(14);
     }
 
     private Unitat fabricaUnitats(Integer i) {
@@ -218,14 +213,16 @@ public class Mapa {
     private void llegirMapa(String f) throws IOException {
 
         forts = new ArrayList<>();//LLUIS
-        BufferedReader br = new BufferedReader(new FileReader(f));
+
+        InputStream is = Mapa.class.getResourceAsStream(f);
+        Scanner s = new Scanner(is);
         //Llegim el nom del mapa
-        nom = br.readLine().substring(4);
+        nom = s.nextLine().substring(4);
 
         //Llegim les mides X i Y del mapa
-        String[] mida = br.readLine().substring(5).split("x");
+        String[] mida = s.nextLine().substring(5).split("x");
 
-        String [] o = br.readLine().substring(9).split("x");
+        String [] o = s.nextLine().substring(9).split("x");
         meta = new Posicio(Integer.parseInt(o[0]), Integer.parseInt(o[1]));
 
         MAXH = Integer.parseInt(mida[0]);
@@ -234,33 +231,27 @@ public class Mapa {
         mapa = new Posicio[MAXH][MAXV]; //Reservem memoria
         costosCamins = new Integer[MAXH][MAXV];
 
-        String sCurrentLine;
         Integer j = 0;
 
-        while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-            if (!sCurrentLine.isEmpty()) {
+        while (s.hasNext()) { //Saltem les possibles linies en blanc
+            String aux = s.nextLine();
+            if (!aux.isEmpty()) {
 
-                String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
+                String[] pos = aux.split(" "); //Agafem la linia en questió
 
                 for (int i = 0; i < pos.length; i++) {
                     mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
                     if (mapa[i][j].getTerreny().toString().equals("Fortress")) forts.add(mapa[i][j]);   //LLUIS
                     costosCamins[i][j] = mapa[i][j].getTerreny().getRedDespl();
-                   // System.out.print(costosCamins[i][j] + " ");
                 }
-                //System.out.println();
                 j++;
             }
         }
-        //FINS AQUI LA MATRIU DE PESOS ESTÀ BEN CREADA
-
         creaGraf();
         System.out.println("Lectura Correcte");
-        //LA LLISTA DE VERTEXS AMB LES ADJACENCIES TAMBE ES CREA BE
 
-
-        br.close();
+        s.close();
     }
 
     private ArrayList<Vertex> creaGraf(){
@@ -317,23 +308,6 @@ public class Mapa {
     }
 
     public Integer ValorCamiMin(Posicio p) {
-/*
-        Integer dist = 0;
-        //System.out.println("Posicio :" + p);
-        List<Vertex> l = getCamiMin(getVertex(p.getX(),p.getY()));
-        for (Vertex v : l){
-            //System.out.print(v + " distmin es: " + v.getDistMin() + ",  ");
-            //dist += v.getDistMin();
-            dist = v.getDistMin();      //retrasito poderosito, mai acumular acumulacions
-            //System.out.print("[" + v + "] : " + dist + ", ");
-
-        }
-        //System.out.println();
-       // System.out.println(dist);
-        return dist;
-*/
-
-        //Vertex desti = getVertex(p.getX(), p.getY());
         return getVertex(p.getX(),p.getY()).getDistMin();
     }
 
@@ -369,41 +343,34 @@ public class Mapa {
         return null;
     }
 
-    public void llegirUnitats(String u, Jugador a, Jugador b) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(u));
-
-            String sCurrentLine;
-            Integer j = 0;
-            Integer jugador = 1;
-            Unitat aux;
-            while ((sCurrentLine = br.readLine()) != null) { //Saltem les possibles linies en blanc
-                if (sCurrentLine.isEmpty()) {
-                    j = 0;
-                    jugador++;
-                }
-                else {
-                    String[] pos = sCurrentLine.split(" "); //Agafem la linia en questió
-                    for (int i = 0; i < pos.length; i++) {
-                        aux = fabricaUnitats(Integer.parseInt(pos[i]));
-                        if (aux != null) {
-                            aux.setPropietari(jugador);
-
-                            if (jugador == 1) a.getExercit().add(aux);
-                            else b.getExercit().add(aux);
-
-                            mapa[i][j].setUnitat(aux, true); //Afegim les unitats corresponents a les posicions
-                        }
+    public void llegirUnitats(String u, Jugador a, Jugador b){
+        InputStream is = Mapa.class.getResourceAsStream(u);
+        Scanner s = new Scanner(is);
+        Integer j = 0;
+        Integer jugador = 1;
+        Unitat aux;
+        while (s.hasNext()) { //Saltem les possibles linies en blanc
+            String s2 = s.nextLine();
+            if (s2.isEmpty()) {
+                j = 0;
+                jugador++;
+            } else {
+                String[] pos = s2.split(" "); //Agafem la linia en questió
+                for (int i = 0; i < pos.length; i++) {
+                    aux = fabricaUnitats(Integer.parseInt(pos[i]));
+                    if (aux != null) {
+                        aux.setPropietari(jugador);
+                        if (jugador == 1) a.getExercit().add(aux);
+                        else b.getExercit().add(aux);
+                        mapa[i][j].setUnitat(aux, true); //Afegim les unitats corresponents a les posicions
                     }
-
-                    j++;
                 }
-            }
-            System.out.println("Lectura d'unitats correcte");
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                j++;
+            }
         }
+        s.close();
+        System.out.println("Lectura d'unitats correcte");
     }
 
     public static Integer distanciaRecorreguda(Posicio a, Posicio b) {
