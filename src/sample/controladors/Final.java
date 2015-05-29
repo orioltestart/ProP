@@ -1,4 +1,4 @@
-package sample;
+package sample.controladors;
 
 import java.io.IOException;
 import java.net.URL;
