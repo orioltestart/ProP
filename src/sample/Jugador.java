@@ -35,12 +35,12 @@ public class Jugador {
      @post afegeix a la llista d'unitats d'aquest jugador la unitat u i modifica la puntuacio
      @return void
      @param u es una unitat
-     */
+     *//*
     public void AfegirUnitat (Unitat u) {
         Exercit.add(u);
         Puntacio +=1000;
     }
-
+*/
     /**
      @pre punts de vida de u = 0 i u es propietat d'aquest jugador
      @post treu la unitat u de la llista d'unitats d'aquest jugador i modifica la puntuacio
@@ -63,19 +63,15 @@ public class Jugador {
         if (u.Enemiga(u2)) {
             Integer a = u.calcularAtac(u2);
             u2.reduirPV(a);
-            if (u2.getPV() <= 0) {
-                u2.getPosAct().eliminaUnitat();
-                getExercit().remove(u2);
-            }
             if (u2.potAtacar(u)) {  //contraatac   todo
                 a = u2.calcularAtac(u);
                 u.reduirPV(a);
-                if (u.getPV() <= 0) {
-                    u.getPosAct().eliminaUnitat();
-                    getExercit().remove(u);
-                }
             }
 
+            System.out.println("Exercit Jugador " + Num);
+            for (Unitat k : Exercit) {
+                System.out.println(k);
+            }
             u.getPosAct().reset();
             u2.getPosAct().reset();
 

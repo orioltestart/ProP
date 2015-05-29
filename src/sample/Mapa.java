@@ -161,13 +161,7 @@ public class Mapa {
             if ((y - mov + i) >= 0) {
                 posicions.add(mapa[x][y - mov + i]);
                 for (int j = 1; j <= i; j++) {
-                    if ((x + j) < MAXH) {/*
-                        if (s.equals("Moure") && costosCamins[x + j][y - mov + i] < mapa[x + j][y - mov + i].getUnitat().getMovAct()){
-
-                        }
-                            else*/
-                                posicions.add(mapa[x + j][y - mov + i]);
-                    }
+                    if ((x + j) < MAXH) posicions.add(mapa[x + j][y - mov + i]);
                     if ((x - j) >= 0) posicions.add(mapa[x - j][y - mov + i]);
                 }
             }
@@ -422,7 +416,7 @@ public class Mapa {
 
     public boolean metaAconseguida() {
         if (mapa[meta.getX()][meta.getY()].teUnitat())
-            return (mapa[meta.getX()][meta.getY()].getUnitat().getPropietari()==1);
+            return (mapa[meta.getX()][meta.getY()].getUnitat().getPropietari() == 2);
         return false;
     }
 }

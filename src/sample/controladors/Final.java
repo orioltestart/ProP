@@ -54,8 +54,7 @@ public class Final {
                 try {
                     Button aux = (Button) actionEvent.getSource();
                     Stage stage = (Stage) aux.getScene().getWindow();
-                    Parent root = null;
-                    root = (Parent) FXMLLoader.load(getClass().getResource("inici.fxml"));
+                    Parent root = (Parent) FXMLLoader.load(getClass().getResource("inici.fxml"));
 
                     stage.setTitle("CONQUER ARMY - INICI");
                     stage.setScene(new Scene(root, 1050, 750));

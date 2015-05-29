@@ -15,9 +15,7 @@ public class Main extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         Parent inici = FXMLLoader.load(getClass().getResource("controladors/inici.fxml"));
-
         primaryStage.setScene(new Scene(inici, 1050, 750));
-
         primaryStage.setTitle("CONQUER ARMY - INICI");
         primaryStage.show();
 
