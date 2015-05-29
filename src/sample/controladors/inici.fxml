@@ -18,9 +18,8 @@
                         <Font size="29.0"/>
                     </font>
                 </Label>
-                <RadioButton fx:id="rbtFacil" mnemonicParsing="false" selected="true" text="Fàcil"/>
-                <RadioButton fx:id="rbtMitja" mnemonicParsing="false" text="Mitjà"/>
-                <RadioButton fx:id="rbtDificil" mnemonicParsing="false" text="Dificil"/>
+                <RadioButton fx:id="niv1" mnemonicParsing="false" selected="true" text="Nivell 1" textFill="WHITE"/>
+                <RadioButton fx:id="niv2" mnemonicParsing="false" text="Nivell 2" textFill="WHITE"/>
                 <Button fx:id="btInici" mnemonicParsing="false" text="Inicia Partida">
                 </Button>
             </children>
