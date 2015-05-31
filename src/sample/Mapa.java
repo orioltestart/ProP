@@ -18,11 +18,7 @@ public class Mapa {
     private Integer MAXH;
     private Integer MAXV;
     private Posicio meta;
-    private Boolean end = false;
 
-
-
-    private ArrayList<Posicio> forts;
     private Integer [][] costosCamins;
     private ArrayList<Vertex> vertexs;
 
