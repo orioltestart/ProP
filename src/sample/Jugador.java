@@ -105,14 +105,4 @@ public class Jugador {
     public ArrayList<Unitat> getExercit() {
         return Exercit;
     }
-
-    /**
-     @pre --
-     @post canvia l'estat de la unitat u (apunt->descans)
-     @return void
-     @param u es una unitat
-     */
-    public void enRepos(Unitat u){
-        u.repos();
-    }
 }

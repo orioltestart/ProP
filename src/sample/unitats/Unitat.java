@@ -286,14 +286,6 @@ public abstract class Unitat {
         return movTotal;
     }
 
-    /**
-     @pre --
-     @post assigna fals a ready (descans)
-     @return void
-     */
-    public void repos(){
-        ready = false;
-    }
 
     /**
      @pre --

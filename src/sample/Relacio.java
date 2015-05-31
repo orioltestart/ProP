@@ -13,8 +13,6 @@ public class Relacio {
 
     private Integer cost;
 
-
-
     public Relacio(Vertex v, Integer c) {
         vert = v; cost = c; }
 

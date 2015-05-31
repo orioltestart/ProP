@@ -26,7 +26,10 @@ public class Mapa {
     private Integer [][] costosCamins;
     private ArrayList<Vertex> vertexs;
 
-
+    /**
+     @pre cert
+     @post Crea un mapa buit
+     */
     public Mapa() {
         MAXH = 0;
         MAXV = 0;
@@ -36,6 +39,10 @@ public class Mapa {
         nom = "Mapa no construit";
     }
 
+    /**
+     @pre cert
+     @post crea un mapa a partir del fitxer al que es refereix l'string f
+     */
     public Mapa(String f) {
         try {
             llegirMapa(f);
@@ -44,25 +51,46 @@ public class Mapa {
         }
     }
 
-
+     /**
+     @pre cert
+     @post retorna la mida horizontal del mapa
+      @return Integer
+     */
     public Integer getMidaH() {
         return MAXH;
     }
 
+    /**
+     @pre cert
+     @post retorna la mida vertical del mapa
+     @return Integer
+     */
     public Integer getMidaV() {
         return MAXV;
     }
 
+    /**
+     @pre cert
+     @post retorna la posicio equivalent a les coordenades x, y
+     @return Posicio
+     */
     public Posicio getPos(int x, int y) {
         return mapa[x][y];
     }
 
+    /**
+     @pre cert
+     @post retorna el mapa sencer
+     @return Matriu de Posicions
+     */
     public Posicio[][] getMapa() {
         return mapa;
     }
 
-    //Pre: --
-    //Post: Retorna un string amb la matriu del mapa a dins
+    /**
+     @pre cert
+     @post retorna un string amb el nom del mapa i el contingut de cada casella.
+     */
     public String toString() {
         String aux = "Nom: " + nom + "\n";
         for (int i = 0; i < MAXH; i++) {
@@ -75,7 +103,10 @@ public class Mapa {
     }
 
     //FABRIQUES D'OBJECTES
-//todo
+    /**
+     @pre cert
+     @post retorna un nou objecte del tipus Terreny determinat per l'enter 'i'
+     */
     public static Terreny fabricaTerrenys(Integer i) {
         if (i.equals(0)) return new Plain(0);   //plain
         else if (i.equals(1)) return new Forest(1); //forest
@@ -95,7 +126,10 @@ public class Mapa {
         else if (i.equals(15)) return new Fortress(15); //meta
         else return new Obstacle(14);
     }
-    //todo
+    /**
+     @pre cert
+     @post retorna un nou objecte del tipus Unitat determinat per l'enter 'i'
+     */
     private Unitat fabricaUnitats(Integer i) {
         if (i.equals(1)) return new Halberdier();
         else if (i.equals(2)) return new Knight();
@@ -106,16 +140,15 @@ public class Mapa {
         else return null;
     }
 
-    //todo
-    //Pre: --
-    //Post: Trasllada la unitat de la Posició ori a la Posició fi
-    //Excepcions: Desplaçar una unitat a una posició ja ocupada llança una IllegalArgumentException així que la posició ori no tingui cap unitat per desplaçar
+    /**
+     @pre ori i fi han de ser valides (dins del rang del mapa)
+     @post Si les dos posicions són diferents i la posicio de fi no te unitat i la d'origen si, la unitat de la posicio
+     d'origen desapareixerà i passarà a estar a la posicio fi
+     */
     public void desplacar(Posicio ori, Posicio fi) {
         if (ori != fi && !mapa[fi.getX()][fi.getY()].teUnitat() && mapa[ori.getX()][ori.getY()].teUnitat()) {
 
             Unitat aux = mapa[ori.getX()][ori.getY()].getUnitat();
-
-            aux.restaMov(distanciaRecorreguda(ori, fi));
 
             mapa[fi.getX()][fi.getY()].setUnitat(aux, true); //La coloquem al destí
             mapa[ori.getX()][ori.getY()].eliminaUnitat(); //Eliminem la unitat del origen
@@ -125,11 +158,6 @@ public class Mapa {
 
             if (fi.getX() == meta.getX() && fi.getY() == meta.getY()) end = true;
         }
-    }
-
-    //todo
-    public Boolean esFinal() {
-        return end;
     }
 
     // CERCA DE LES CASELLES ON ES POT DESPLAÇAR LA UNITAT
@@ -241,10 +269,14 @@ public class Mapa {
 
     }
 
-    //todo
+    /**
+     @pre Mapa en format corretce. Primera linia nom, segona mides, tercera objectiu i tot seguit una matriu d'enters
+     del 0 al 15. Cada element ha d'anar separat per un espai en blanc.
+     @post Construeix el mapa actual amb els elements determinats pel fitxer que correspon l'string f
+     @return void
+     @param f és la ubicacio on es troba el fitxer que processarem.
+     */
     private void llegirMapa(String f) throws IOException {
-
-        forts = new ArrayList<>();//LLUIS
 
         InputStream is = Mapa.class.getResourceAsStream(f);
         Scanner s = new Scanner(is);
@@ -274,15 +306,12 @@ public class Mapa {
                 for (int i = 0; i < pos.length; i++) {
                     mapa[i][j] = new Posicio(i, j); //Creem la nova posició
                     mapa[i][j].setTerreny(fabricaTerrenys(Integer.parseInt(pos[i]))); //Inserim el terreny determinat a la posició recent creada.
-                    if (mapa[i][j].getTerreny().toString().equals("Fortress")) forts.add(mapa[i][j]);   //LLUIS
                     costosCamins[i][j] = mapa[i][j].getTerreny().getRedDespl();
                 }
                 j++;
             }
         }
         creaGraf();
-        System.out.println("Lectura Correcte");
-
         s.close();
     }
 
@@ -417,7 +446,15 @@ public class Mapa {
 
 
 
-    //todo
+    /**
+     @pre Fitxer en format correcte, dos matrius d'enters del 1 al 6 separades per una linia en blanc. Les mides de cada
+     matriu han de ser les mateixes que les del mapa sobre on les carregarà.
+     @post Afegeix les unitats especificades pel fitxer que es troba a la ubicacio del string f a les posicions corresponents.
+     @return void
+     @param u es el directori on resideix el fitxer d'unitats
+     @param a és el jugador que serà la màquina
+     @param b és el jugador que serà l'usuari
+     */
     public void llegirUnitats(String u, Jugador a, Jugador b){
         InputStream is = Mapa.class.getResourceAsStream(u);
         Scanner s = new Scanner(is);

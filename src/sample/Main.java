@@ -1,3 +1,8 @@
+/**
+ * @file Main.java
+ * @author Oriol Testart
+ * @brief Inicialitza l'escena d'inici
+ */
 package sample;
 
 import javafx.application.Application;

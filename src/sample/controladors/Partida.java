@@ -686,7 +686,7 @@ public class Partida {
                 }
 
             }
-            j.enRepos(agressor);
+            agressor.acabaTorn();
         }
     }
 }
