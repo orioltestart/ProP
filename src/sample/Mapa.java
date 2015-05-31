@@ -151,13 +151,8 @@ public class Mapa {
 
             mapa[fi.getX()][fi.getY()].reset();
             mapa[ori.getX()][ori.getY()].reset();
-
-            if (fi.getX() == meta.getX() && fi.getY() == meta.getY()) end = true;
         }
     }
-
-    // CERCA DE LES CASELLES ON ES POT DESPLAÇAR LA UNITAT
-    //todo ajuntar els metodes?
 
     /**
      @pre p es dins del mapa
@@ -491,17 +486,6 @@ public class Mapa {
     public static Integer distanciaRecorreguda(Posicio a, Posicio b) {
         return (Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY()));
     }
-
-
-    /**
-     @pre --
-     @post retorna la llista de fortaleses del mapa
-     @return forts es una llista que conte les fortaleses del mapa
-     */
-    public ArrayList<Posicio> getForts() {
-        return forts;
-    }
-
 
     /**
      @pre --
