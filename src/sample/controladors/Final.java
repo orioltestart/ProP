@@ -36,6 +36,10 @@ public class Final {
     private Button tornaJugar;
 
     @FXML
+    /**
+     @pre cert
+     @post Inicialitza l'interficie amb els mètodes corresponents als botons
+     */
     void initialize() {
         assert finestra != null : "fx:id=\"finestra\" was not injected: check your FXML file 'finalVictoria.fxml'.";
         assert barraCentral != null : "fx:id=\"barraCentral\" was not injected: check your FXML file 'finalVictoria.fxml'.";
@@ -44,6 +48,11 @@ public class Final {
         finalitza.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el comportament del botó per finalitzar partida
+                 @pre cert
+                 @post es tallarà el programa
+                 */
                 System.exit(0);
             }
         });
@@ -51,6 +60,11 @@ public class Final {
         tornaJugar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el comportament del botó per tornar a iniciar partida
+                 @pre cert
+                 @post Es canviarà l'escena a l'escena d'inici.
+                 */
                 try {
                     Button aux = (Button) actionEvent.getSource();
                     Stage stage = (Stage) aux.getScene().getWindow();

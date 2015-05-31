@@ -46,6 +46,10 @@ public class Inici {
     final ToggleGroup menu = new ToggleGroup();
 
     @FXML
+    /**
+     @pre cert
+     @post Inicialitza l'interficie amb els mètodes corresponents als botons
+     */
     void initialize() {
         assert niv1 != null : "fx:id=\"niv1\" was not injected: check your FXML file 'inici.fxml'.";
         assert niv2 != null : "fx:id=\"niv2\" was not injected: check your FXML file 'inici.fxml'.";
@@ -59,6 +63,11 @@ public class Inici {
         btInici.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el comportament del botó per iniciar partida
+                 @pre algun nivell seleccionat
+                 @post s'iniciara la partida amb el mapa corresponent al nivell seleccionat. Canviant d'escena
+                 */
                 Button bt = (Button) actionEvent.getSource();
                 Stage stage = (Stage) bt.getScene().getWindow();
 
