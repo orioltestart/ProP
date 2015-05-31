@@ -1,7 +1,7 @@
 /**
  * @file Obstacle.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Obstacle todo
+ * @brief La classe Obstacle es un tipus de Terreny
  */
 
 package sample.terrenys;

@@ -1,7 +1,7 @@
 /**
  * @file Mounted.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Mounted todo
+ * @brief La classe Mounted es un tipus d'unitat
  */
 
 package sample.unitats;

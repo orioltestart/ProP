@@ -1,7 +1,7 @@
 /**
  * @file Forest.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Forest todo
+ * @brief La classe Forest es un tipus de Terreny
  */
 
 package sample.terrenys;

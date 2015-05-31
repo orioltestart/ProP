@@ -1,7 +1,7 @@
 /**
  * @file Fortress.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Fortress todo
+ * @brief La classe Fortress es un tipus de Terreny
  */
 
 package sample.terrenys;

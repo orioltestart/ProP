@@ -1,7 +1,7 @@
 /**
  * @file Mountain.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Mountain todo
+ * @brief La classe Mountain es un tipus de Terreny
  */
 
 package sample.terrenys;

@@ -1,7 +1,7 @@
 /**
  * @file Posicio.java
  * @author Oriol Testart
- * @brief La classe Posicio todo
+ * @brief La classe Posicio equival a una casella del mapa. Conté un terreny i pot contenir també una unitat
  */
 
 package sample;

@@ -271,6 +271,7 @@ public class Partida {
                         }
 
                         seleccionada = actual;
+                        seleccionada.getUnitat().setMovActual(0);
                         actualitzaContenidor(null, barraDesti);
                         actualitzaContenidor(seleccionada, posicioActual);
                         actualitzaContenidor(seleccionada, barraOrigen);

@@ -1,7 +1,7 @@
 /**
  * @file Wyverknight.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Wyvernknight todo
+ * @brief La classe Wyvernknight es una classe d'unitat del tipus Mounted
  */
 
 package sample.unitats;

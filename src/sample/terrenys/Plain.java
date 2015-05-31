@@ -1,7 +1,7 @@
 /**
  * @file Plain.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Plain todo
+ * @brief La classe Plain es un tipus de Terreny
  */
 
 package sample.terrenys;

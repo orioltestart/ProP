@@ -1,7 +1,7 @@
 /**
  * @file River.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe River todo
+ * @brief La classe River es un tipus de Terreny
  */
 
 package sample.terrenys;

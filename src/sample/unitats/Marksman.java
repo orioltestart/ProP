@@ -1,7 +1,7 @@
 /**
  * @file Marksman.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Marksman todo
+ * @brief La classe Marksman es una classe d'unitat del tipus Ranged
  */
 
 package sample.unitats;

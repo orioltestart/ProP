@@ -1,7 +1,7 @@
 /**
  * @file Unitat.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Unitat todo
+ * @brief La classe Unitat es troba en una posicio del mapa i rep accions del jugador
  */
 
 package sample.unitats;
@@ -307,16 +307,31 @@ public abstract class Unitat {
     }
 
 
+    /**
+     @pre --
+     @post assigna l'atribut ready a fals (en repos)
+     @return void
+     */
     public void acabaTorn() {
         ready = false;
     }
 
+    /**
+     @pre --
+     @post retorna cert si la unitat esta apunt, altrament fals
+     @return boolean
+     */
     public Boolean isReady() {
         return ready;
     }
 
-    public void setMovActual(Integer movActual) {
-        this.movActual = movActual;
+    /**
+     @pre --
+     @post assigna el valor de mov a moviment actual
+     @return void
+     */
+    public void setMovActual(Integer mov) {
+        this.movActual = mov;
     }
 
     /**

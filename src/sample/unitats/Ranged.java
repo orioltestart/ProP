@@ -1,7 +1,7 @@
 /**
  * @file Ranged.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Ranged todo
+ * @brief La classe Ranged es un tipus d'unitat
  */
 
 package sample.unitats;

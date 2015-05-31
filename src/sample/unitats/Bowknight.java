@@ -1,7 +1,7 @@
 /**
  * @file Bowknight.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Bowknight todo
+ * @brief La classe Bowknight es una classe d'unitat del tipus Ranged
  */
 
 package sample.unitats;

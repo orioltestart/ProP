@@ -1,7 +1,7 @@
 /**
  * @file Terreny.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Terreny todo
+ * @brief La classe Terreny conte un tipus i pot contenir una unitat
  */
 
 package sample.terrenys;
@@ -57,6 +57,11 @@ public abstract class Terreny {
         return missatge;
     }
 
+    /**
+     @pre --
+     @post retorna la imatge d'aquest Terreny
+     @return Image
+     */
     public Image getImg(){
         return img;
     }

@@ -1,7 +1,7 @@
 /**
  * @file Infantry.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Infantry todo
+ * @brief La classe Infantry es un tipus d'unitat
  */
 
 package sample.unitats;

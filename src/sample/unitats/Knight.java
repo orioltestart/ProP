@@ -1,7 +1,7 @@
 /**
  * @file Knight.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Knight todo
+ * @brief La classe Knight es una classe d'unitat del tipus Infantry
  */
 
 package sample.unitats;

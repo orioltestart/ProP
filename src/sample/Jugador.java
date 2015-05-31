@@ -1,7 +1,7 @@
 /**
  * @file Jugador.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Jugador todo
+ * @brief La classe Jugador realitza accions sobre les unitats i el mapa.
  */
 
 package sample;
@@ -13,20 +13,17 @@ import java.util.ArrayList;
 public class Jugador {
 
     Integer Num;  //1 o 2 identificador de jugador
-    Integer Puntacio;
     ArrayList <Unitat> Exercit;
 
     //constructors
 
     public Jugador(){
-        Puntacio = 0;
         Num = 0;
     }
 
     public Jugador (int i) {
-        Puntacio = 0;
         Num = i;
-        Exercit = new ArrayList<Unitat>();
+        Exercit = new ArrayList<>();
     }
 
 
@@ -35,12 +32,11 @@ public class Jugador {
      @post afegeix a la llista d'unitats d'aquest jugador la unitat u i modifica la puntuacio
      @return void
      @param u es una unitat
-     *//*
+     */
     public void AfegirUnitat (Unitat u) {
         Exercit.add(u);
-        Puntacio +=1000;
     }
-*/
+
     /**
      @pre punts de vida de u = 0 i u es propietat d'aquest jugador
      @post treu la unitat u de la llista d'unitats d'aquest jugador i modifica la puntuacio
@@ -49,7 +45,6 @@ public class Jugador {
      */
     public void EliminaUnitat (Unitat u) {
         Exercit.remove(u);
-        Puntacio -=1000;
     }
 
     /**
@@ -63,17 +58,13 @@ public class Jugador {
         if (u.Enemiga(u2)) {
             Integer a = u.calcularAtac(u2);
             u2.reduirPV(a);
-            if (u2.potAtacar(u)) {  //contraatac   todo
+            if (u2.potAtacar(u)) {  //contraatac
                 a = u2.calcularAtac(u);
                 u.reduirPV(a);
             }
 
             u.getPosAct().reset();
             u2.getPosAct().reset();
-
-            //puntuacions
-            if (u.AplicarBonificacio(u2) == 3) Puntacio += 500;
-            else Puntacio += 300;
         }
     }
 
@@ -86,18 +77,6 @@ public class Jugador {
         for (Unitat u : Exercit){
             u.setReady();
         }
-    }
-
-
-
-
-    /**
-     @pre --
-     @post retorna la puntuació  que té aquest jugador
-     @return Integer
-     */
-    public Integer getPuntacio() {
-        return Puntacio;
     }
 
     /**

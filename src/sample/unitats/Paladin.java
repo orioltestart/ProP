@@ -1,7 +1,7 @@
 /**
  * @file Paladin.java
  * @author Lluís Ramon Armengol Xandri
- * @brief La classe Paladin todo
+ * @brief La classe Paladin es una classe d'unitat del tipus Mounted
  */
 
 package sample.unitats;
