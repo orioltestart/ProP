@@ -171,13 +171,11 @@ public class Partida {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                System.out.println("Final Maquina");
                 barraInferior.setExpanded(true);
                 jugador1.activaExercit();
                 jugador2.activaExercit();
                 eliminaSeleccio();
-                if (seleccionada != null) {
+                if (seleccionada != null && seleccionada.teUnitat() && seleccionada.getUnitat().getPropietari() == 2) {
                     pintaRang();
                     seleccionada.pinta(Color.BLUE);
                 }
