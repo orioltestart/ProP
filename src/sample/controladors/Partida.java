@@ -1,5 +1,7 @@
 /**
- * Sample Skeleton for 'partida.fxml' Partida Class
+ * @file Mapa.java
+ * @author Oriol Testart
+ * @brief La classe Mapa engloba totes les unitats dels jugadors i els terrenys.
  */
 
 package sample.controladors;
@@ -117,7 +119,10 @@ public class Partida {
     Integer torn = 0;
 
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    /**
+     @pre cert
+     @post inicialitza l'escena amb el mapa corresponent i els jugadors 1 = Maquina / 2 = Usuari
+     */
     void initialize() throws InterruptedException, IOException {
         assert contenidorMapa != null : "fx:id=\"contenidorMapa\" was not injected: check your FXML file 'partida.fxml'.";
         assert barraInferior != null : "fx:id=\"barraInferior\" was not injected: check your FXML file 'partida.fxml'.";
@@ -141,13 +146,25 @@ public class Partida {
         }
     }
 
+
+    /**
+     @pre cert
+     @post Assigna accions a cada un dels botons de la interficie
+     */
     private void assignarBotons() {
+
 
         passarTorn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Passant torn: " + torn);
+                /**
+                 @brief classe interna que gestiona el moviment del passarTorn
+                 @pre cert
+                 @post Quan s'acciona aquest botó es passa al seguent torn, la barra de l'usuari s'amaga i juga la maquina
+                 si després de jugar la maquina un dels dos queda sense exercit, en cas de ser l'usuari es passa a l'escena
+                 derrota i en cas de ser la maquina es passa a l'escena victòria
+                 */
                 barraInferior.setExpanded(false);
                 try {
                     ControlMaquina(jugador1);
@@ -203,6 +220,12 @@ public class Partida {
         ant.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el passar les unitats en mode Atac
+                 @pre cert
+                 @post Es passa a la anterior unitat del ArrayList d'atacables, en cas de no haber-n'hi més es passarà al
+                 darrer element
+                 */
                 if (!atacables.isEmpty()) {
                     if (index == 0) index = atacables.size() - 1;
                     else index--;
@@ -218,6 +241,12 @@ public class Partida {
         seg.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el passar les unitats en mode Atac
+                 @pre cert
+                 @post Es passa a la seguent unitat del ArrayList d'atacables, en cas de no haber-n'hi més es passarà al
+                 primer element
+                 */
                 if (!atacables.isEmpty()) {
                     if (index == atacables.size() - 1) index = 0;
                     else index++;
@@ -233,7 +262,11 @@ public class Partida {
 
         btSortir.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent actionEvent) {
+            public void handle(ActionEvent actionEvent) {/**
+             @brief classe interna que gestiona el sortir de la partida sense acabar
+             @pre cert
+             @post Es canvia a l'escena final de derrota
+             */
                 try {
                     Button aux = (Button) actionEvent.getTarget();
                     Stage s = (Stage) aux.getScene().getWindow();
@@ -252,6 +285,14 @@ public class Partida {
         ferMovimentAtac.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el fer l'atac o bé de moviment
+                 @pre cert
+                 @post Si el botó estava en mode "Moure" la unitat de la posicio 'seleccionada' es desplaçara a la
+                 posició actual sempre i quant a la posicio 'actual' no hi hagi cap unitat. Si el botó estava en mode
+                 "Atac" la unitat de la posició 'seleccionada' atacarà a la unitat de la posicio 'index' dins del vector
+                 d'atacables. S'actualitzaràn els contenidors que calgui per mostrar adecuadament la informació.
+                 */
                 if (btAtacMoure.getText().equals("Moure")) {
                     if (actual != null && !actual.teUnitat() && dinsRang(actual)) {
                         mapa.desplacar(seleccionada, actual);
@@ -364,6 +405,13 @@ public class Partida {
         btAtacMoure.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /**
+                 @brief classe interna que gestiona el mode d'"Atac" i "Moure
+                 @pre cert
+                 @post Si estava en "Atac", passarà a estar a "Moure" i viceversa. Si esta en atac es mostraràn els
+                 botons per seleccionar la unitat a la que atacar així com canviarà el text del botó de fer l'atac/Mov
+                 Si estava en moviment, s'amagaran els botons per passar les unitats.
+                 */
                 Button b = (Button) actionEvent.getTarget();
                 eliminaSeleccio();
                 if (b.getText().equals("Atac")) {
@@ -384,7 +432,7 @@ public class Partida {
                     tipusInforme.setText("Atac");
                 }
 
-                if (seleccionada != null) {
+                if (seleccionada != null && seleccionada.teUnitat()) {
                     pintaRang();
                     actualitzaContenidor(seleccionada, barraOrigen);
                     if (!atacables.isEmpty()) {
@@ -406,6 +454,12 @@ public class Partida {
         pos[x][y].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                /**
+                 @brief classe interna que gestiona el comportament del mapa al passar el cursor per sobre "Entrada a Casella"
+                 @pre cert
+                 @post La posicio a la qual tens el cursor es veurà pintada amb un marc de color Verd a no ser que sigui
+                 la posició seleccionada o bé la posició actual. Actualitzarà el contenidor "Barra Cursor"
+                 */
                 cursor = (Posicio) mouseEvent.getTarget();
 
                 actualitzaContenidor(cursor, barraCursor);
@@ -417,6 +471,12 @@ public class Partida {
         pos[x][y].setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                /**
+                 @brief classe interna que gestiona el comportament del mapa al passar el cursor per sobre "Sortida de Casella"
+                 @pre cert
+                 @post La posició de la qual surt el cursor, en cas d'estar pintada es despintara. En cas d'estar dins
+                 del rang d'alguna unitat, la tornarà a pintar de vermell.
+                 */
                 Posicio aux = (Posicio) mouseEvent.getTarget();
 
                 Boolean rang = dinsRang(aux);
@@ -431,6 +491,17 @@ public class Partida {
         pos[x][y].setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                /**
+                 @brief classe interna que gestiona el comportament mapa quan és clicada una posicio
+                 @pre cert
+                 @post Si es la primera posició que es clica, es convertirà amb la posició seleccionada i s'actualitzarà
+                 el contenidor de "Posicio Actual". Altrament, si cliques dins del rang d'una unitat, i no tenia unitat
+                 la posició clicada passarà a ser la posició actual i la pintarà de groc; Si tenia unitat, es pintarà el
+                 rang de la unitat seleccionada i s'assignarà aquesta com a nova 'seleccionada'.
+                 Si l'actual ja tenia valor i estava dins del rang tornarà a ser pintada de vermell. Si no estava dins
+                 del rang, es cancelara la selecció  i la nova posicio seleccionada serà de nou la clicada. Si era una
+                 unitat en pintarà el rang. S'actualitzen els contenidors de "barraDesti", "barraOrigen" i "Posicio Actual".
+                 */
                 Posicio clicada = (Posicio) mouseEvent.getTarget();
 
                 if (seleccionada != clicada) {
@@ -467,57 +538,57 @@ public class Partida {
         });
     }
 
-
+    /**
+     @pre cert
+     @post Es pintarà el rang de la unitat seleccionada aplicant les restriccions de moviment i es reiniciarà el vector
+     de atacables. Si estas en mode atac s'omplenarà el vector d'atacables.
+     */
     private void pintaRang() {
+        //Inicialitzem estructura
         index = 0;
         atacables.clear();
-        if (seleccionada.teUnitat()) {
-            if (seleccionada.getUnitat().getPropietari() == 2 && seleccionada.getUnitat().isReady()) {
-                ferMovimentAtac.setDisable(false);
+        if (seleccionada.teUnitat()) { //Si la seleccionada te unitat
+            if (seleccionada.getUnitat().getPropietari() == 2 && seleccionada.getUnitat().isReady()) { //Si esta llesta i n'ets el propietari
+                ferMovimentAtac.setDisable(false); //Habilita el moviment
                 ant.setDisable(false);
                 seg.setDisable(false);
 
-                seleccionada.pinta(Color.BLUE);
-                pintades = mapa.getRang(seleccionada, btAtacMoure.getText());
+                seleccionada.pinta(Color.BLUE); //Pinta-la de color blau
+                if (btAtacMoure.getText().equals("Moure")) pintades = mapa.getRang(seleccionada, "Moure"); //Si estem en moure, agafem rang de moure'ns
+                else pintades = mapa.getRang(seleccionada, "Atac"); //Sino, agafem rang d'atac
 
-
-                if (btAtacMoure.getText().equals("Moure")){
-                    mapa.buscaCamiMinim(seleccionada);
-
-                    ArrayList<Posicio> pintades2 = new ArrayList<Posicio>();
-                    pintades2.clear();
-                    for (Posicio p : pintades){
-                       // System.out.println("posicio actual: " + seleccionada + " ->> " + mapa.ValorCamiMin(p));
-                        Integer costMin = mapa.ValorCamiMin(p);
-                        if (costMin <= seleccionada.getUnitat().getMovAct()) pintades2.add(p);
-                    }
-                    pintades = pintades2;
-                }
-
-
-                for (Posicio i : pintades) {
+                for (Posicio i : pintades) { //Pintem totes les caselles del rang de vermell
                     i.pinta(Color.RED);
                     if (btAtacMoure.getText().equals("Atac") && i.teUnitat() && i.getUnitat().Enemiga(seleccionada.getUnitat()))
+                        //Si hem d'atacar, les afegim al vector d'atacables
                         atacables.add(i);
                 }
-            } else {
+            } else { //Si la unitat es enemiga o no esta llesta (Final de torn) deshabilita botons
                 ferMovimentAtac.setDisable(true);
                 ant.setDisable(true);
                 seg.setDisable(true);
             }
         } else {
-            ferMovimentAtac.setDisable(true);
+            ferMovimentAtac.setDisable(true); //Sino te unitat, deshabilita botons
             ant.setDisable(true);
             seg.setDisable(true);
         }
     }
 
+    /**
+     @pre cert
+     @post es reinicien totes les posicions pintades, s'eliminen totes les atacables
+     */
     private void eliminaSeleccio() {
         for (Posicio i : pintades) i.reset();
         pintades.clear();
         atacables.clear();
     }
 
+    /**
+     @pre cert
+     @post El contenidor p s'actualitza adecuadament segons el que sigui amb la posicio aux.
+     */
     private void actualitzaContenidor(Posicio aux, Pane p) {
         p.getChildren().clear();
         if (p == barraAccio) {
@@ -548,7 +619,10 @@ public class Partida {
         }
     }
 
-
+    /**
+     @pre cert
+     @post retorna cert si aux pertany a les posicions pintades. Altrament fals
+     */
     private Boolean dinsRang(Posicio aux) {
         for (Posicio i : pintades) if (i == aux) return true;
         return false;
@@ -566,7 +640,7 @@ public class Partida {
 
         while (itu.hasNext()) {
             Unitat agressor = (Unitat) itu.next();
-            ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(), agressor.getRang() + agressor.getMovTot());
+            ArrayList<Posicio> rang = mapa.getRangVisio(agressor.getPosAct(), agressor.getRang() + agressor.getMovTot());
             Iterator itp = rang.iterator();
             //iterador per totes les caselles dins del rang
             Integer millorDany = 0;
@@ -583,20 +657,17 @@ public class Partida {
                     }
                 }
             }
-            if (agressor.getPV() < 35 && !mata) {
-                retirada(agressor);
-            } else if (millorDany > 0) {
+            if (millorDany > 0) {
                 //a partir de la posicio Objectiu, busquem la millor posicio per mourens
-                ArrayList<Posicio> area = mapa.getRang(Objectiu, agressor.getRang());
+                ArrayList<Posicio> area = mapa.getRangVisio(Objectiu, agressor.getRang());
                 area.retainAll(rang);
                 Posicio desti = new Posicio();
                 Integer millorDef = -20;
+                //Busquem la millor posicio on moure-ns
                 for (Posicio h : area) {
                     if (h.getTerreny().getDefensa() > millorDef)
                         desti = h;
                 }
-
-                //Passar temps
 
                 mapa.desplacar(agressor.getPosAct(), desti);
 
@@ -616,23 +687,6 @@ public class Partida {
 
             }
             j.enRepos(agressor);
-
         }
-        //si no hi ha cap unitat al rang, no fa res
     }
-
-    public void retirada(Unitat u) {
-
-        Posicio desti = new Posicio();
-        ArrayList<Posicio> candidats = new ArrayList<>();
-
-        for (Posicio p : mapa.getForts()) {
-            if (!p.teUnitat()) candidats.add(p);
-        }
-        //buscar cami minim per cada un
-        //backtracking de la posicio on hi ha la fortalesa mes proxima
-        // (si no esta ocupada) ens dirigirem cap alla
-        //moures lo mes rapid possible cap alla
-    }
-
 }

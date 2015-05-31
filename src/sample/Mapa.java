@@ -169,10 +169,18 @@ public class Mapa {
             }
         }
 
+        if (s.equals("Moure")) {
+            buscaCamiMinim(p);
+
+            ArrayList<Posicio> aux = new ArrayList<Posicio>();
+
+            for (Posicio k : posicions) {
+                Integer costMin = ValorCamiMin(k);
+                if (costMin <= p.getUnitat().getMovAct()) aux.add(k);
+            }
+            posicions = aux;
+        }
         posicions.remove(p);
-
-
-
 
         return posicions;
     }
@@ -185,7 +193,7 @@ public class Mapa {
      @param p es una posicio
      @param mov es un enter
      */
-    public ArrayList<Posicio> getRang(Posicio p, Integer mov){
+    public ArrayList<Posicio> getRangVisio(Posicio p, Integer mov){
         ArrayList<Posicio> posicions = new ArrayList<Posicio>();
         int x = p.getX();
         int y = p.getY();
@@ -206,6 +214,17 @@ public class Mapa {
                 }
             }
         }
+
+        if (mov.equals(p.getUnitat().getMovAct()))
+        buscaCamiMinim(p);
+
+        ArrayList<Posicio> aux = new ArrayList<Posicio>();
+
+        for (Posicio k : posicions) {
+            Integer costMin = ValorCamiMin(k);
+            if (costMin <= p.getUnitat().getMovAct()) aux.add(k);
+        }
+        posicions = aux;
 
         return posicions;
     }
