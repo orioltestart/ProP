@@ -13,6 +13,11 @@ public class Relacio {
 
     private Integer cost;
 
+
+    /**
+     @pre --
+     @post crea una relacio amb vert v i cost c
+     */
     public Relacio(Vertex v, Integer c) {
         vert = v; cost = c; }
 

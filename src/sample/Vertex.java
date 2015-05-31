@@ -22,12 +22,18 @@ public class Vertex implements Comparable<Vertex> {
     private Vertex anterior;    //vertex pel qual s'arriba
 
 
-
+    /**
+     @pre --
+     @post crea un Vertex
+     */
    public Vertex(){
        adjacencies = new ArrayList<Relacio>();
    }
 
-
+    /**
+     @pre --
+     @post crea un Vertex amb codi n
+     */
     public Vertex(String n) {
         codi = n;
         adjacencies = new ArrayList<Relacio>();

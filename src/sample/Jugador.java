@@ -17,10 +17,18 @@ public class Jugador {
 
     //constructors
 
+    /**
+     @pre --
+     @post crea un JUgador
+     */
     public Jugador(){
         Num = 0;
     }
 
+    /**
+     @pre --
+     @post crea un JUgador amb Num i
+     */
     public Jugador (int i) {
         Num = i;
         Exercit = new ArrayList<>();

@@ -36,6 +36,11 @@ public abstract class Unitat {
     //
 
     //constructors
+
+    /**
+     @pre --
+     @post crea una Unitat
+     */
     Unitat(){
         PV = 100;
         POW = 0;
@@ -45,6 +50,11 @@ public abstract class Unitat {
         ready = false;
     }
 
+    /**
+     @pre --
+     @post crea una Unitat de tipus t, classe c, pow atac, def defensa, movActual i movTotal moviment,
+          Rang rang i Bonificacio bonus
+     */
     Unitat(String t, String c,  Integer atac, Integer defensa, Integer moviment, Integer rang, String bonus){
         Random r = new Random();
         ID = seq.getAndIncrement();
@@ -166,7 +176,7 @@ public abstract class Unitat {
      @return Integer
      @param u és la unitat agredida
      */
-    public Integer AplicarBonificacio (Unitat u){
+    private Integer AplicarBonificacio (Unitat u){
         Integer bonusTotal = 1;
         if (Bonificacio[0].equals(u.Classe) || Bonificacio[1].equals(u.Classe)){
             bonusTotal*=2;

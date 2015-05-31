@@ -1,6 +1,6 @@
 /**
  * @file Mapa.java
- * @author Oriol Testart
+ * @author Oriol Testart i Lluís Ramon Armengol(Dijkstra)
  * @brief La classe Mapa engloba totes les unitats dels jugadors i els terrenys.
  */
 

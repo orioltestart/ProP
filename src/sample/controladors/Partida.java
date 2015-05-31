@@ -1,7 +1,7 @@
 /**
  * @file Mapa.java
- * @author Oriol Testart
- * @brief La classe Mapa engloba totes les unitats dels jugadors i els terrenys.
+ * @author Oriol Testart i Lluís Armengol (ControlMaquina)
+ * @brief Partida engloba tot el joc de l’usuari i la màquina, així com el mapa
  */
 
 package sample.controladors;
