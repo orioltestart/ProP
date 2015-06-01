@@ -665,16 +665,29 @@ public class Partida {
                 for (Posicio h : area) {
                     if (!h.teUnitat()) {
                         h.setUnitat(agressor, false);
-                        if (mapa.getRang(h, "Atac").contains(Objectiu)) {
-                            if (mapa.distanciaRecorreguda(h, Objectiu) == agressor.getRang()) {
-                                if (h.getTerreny().getDefensa() > millorDef)
+                        if (!mapa.getRang(agressor.getPosAct(), "Atac").contains(Objectiu)) {
+                            if (mapa.getRang(h, "Atac").contains(Objectiu)) {
+                                desti = h;
+                                if (mapa.distanciaRecorreguda(h, Objectiu) == agressor.getRang()) {
                                     desti = h;
+                                    if (h.getTerreny().getDefensa() > millorDef)
+                                        desti = h;
+                                }
                             }
                         }
                         h.eliminaUnitat();
                     }
                 }
-                System.out.println("Agressor de : " + agressor.getPosAct() + " -> " + agressor + " anira a :" + desti + " i atacara a " + Objectiu);
+
+                if (desti == agressor.getPosAct() && !mapa.getRang(desti, "Atac").contains(Objectiu)){
+                    for (Posicio h : area){
+                        if (!h.teUnitat()){
+                            Integer dist = mapa.distanciaRecorreguda(Objectiu, desti);
+                            if (mapa.distanciaRecorreguda(h, Objectiu) < dist) desti = h;
+                        }
+                    }
+                }
+
 
                 if (desti.esValida(mapa.getMidaH(), mapa.getMidaV()))
                     mapa.desplacar(agressor.getPosAct(), desti);
