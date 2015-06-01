@@ -11,12 +11,5 @@ public class Ranged extends Unitat {
     public Ranged(String c, Integer atk, Integer def, Integer m, Integer r, String bonus){
         super("Ranged", c, atk, def, m, r, bonus);
     }
-
-
-    public void mostrar() {
-        Mostrar();
-    }
-
-
 }
 

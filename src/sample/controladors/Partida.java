@@ -632,13 +632,13 @@ public class Partida {
      * @pre --
      * @post la maquina realitza les funcions de un jugador j
      */
-    public void ControlMaquina(Jugador j) throws InterruptedException {
+    private void ControlMaquina(Jugador j) throws InterruptedException {
         //iterador per totes les unitats del jugador
         Iterator itu = j.getExercit().iterator();
 
         while (itu.hasNext()) {
             Unitat agressor = (Unitat) itu.next();
-            ArrayList<Posicio> rang = mapa.getRangVisio(agressor.getPosAct(), agressor.getRang() + agressor.getMovTot());
+            ArrayList<Posicio> rang = mapa.getRang(agressor.getPosAct(), "Visio");
             Iterator itp = rang.iterator();
             //iterador per totes les caselles dins del rang
             Integer millorDany = 0;
@@ -667,7 +667,8 @@ public class Partida {
                         desti = h;
                 }
 
-                mapa.desplacar(agressor.getPosAct(), desti);
+                if (desti.esValida(mapa.getMidaH(), mapa.getMidaV()))
+                    mapa.desplacar(agressor.getPosAct(), desti);
 
                 j.atacar(agressor, Objectiu.getUnitat());
 

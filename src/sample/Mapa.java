@@ -169,6 +169,7 @@ public class Mapa {
         if (s.equals("Atac")) mov = p.getUnitat().getRang();
         else if (s.equals("Moure")) mov = p.getUnitat().getMovAct();
         else if (s.equals("Total")) mov = p.getUnitat().getRang() + p.getUnitat().getMovAct();
+        else if (s.equals("Visio")) mov = p.getUnitat().getMovAct()+p.getUnitat().getRang();
 
 
         for (int i = 0; i <= mov; i++) {
@@ -188,7 +189,7 @@ public class Mapa {
             }
         }
 
-        if (s.equals("Moure")) {
+        if (s.equals("Moure") || s.equals("Visio")) {
             buscaCamiMinim(p);
 
             ArrayList<Posicio> aux = new ArrayList<Posicio>();
@@ -234,16 +235,17 @@ public class Mapa {
             }
         }
 
-        if (mov.equals(p.getUnitat().getMovAct()))
-        buscaCamiMinim(p);
+        if (mov.equals(p.getUnitat().getMovAct())) {
+            buscaCamiMinim(p);
 
-        ArrayList<Posicio> aux = new ArrayList<Posicio>();
+            ArrayList<Posicio> aux = new ArrayList<Posicio>();
 
-        for (Posicio k : posicions) {
-            Integer costMin = ValorCamiMin(k);
-            if (costMin <= p.getUnitat().getMovAct()) aux.add(k);
+            for (Posicio k : posicions) {
+                Integer costMin = ValorCamiMin(k);
+                if (costMin <= p.getUnitat().getMovAct()) aux.add(k);
+            }
+            posicions = aux;
         }
-        posicions = aux;
 
         return posicions;
     }

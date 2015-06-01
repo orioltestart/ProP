@@ -12,12 +12,4 @@ public class Infantry extends Unitat {
         super("Infantry", c, atk, def, m, 1, bonus);
     }
 
-
-
-
-    public void mostrar() {
-        Mostrar();
-    }
-
-
 }

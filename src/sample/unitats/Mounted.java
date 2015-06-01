@@ -12,11 +12,5 @@ public class Mounted extends Unitat {
         super("Mounted", c, atk, def, m, 1, bonus);
     }
 
-
-    public void mostrar() {
-        Mostrar();
-    }
-
-
 }
 
