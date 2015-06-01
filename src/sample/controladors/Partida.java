@@ -657,20 +657,30 @@ public class Partida {
             }
             if (millorDany > 0) {
                 //a partir de la posicio Objectiu, busquem la millor posicio per mourens
-                ArrayList<Posicio> area = mapa.getRangVisio(Objectiu, agressor.getRang());
-                area.retainAll(rang);
-                Posicio desti = new Posicio();
-                Integer millorDef = -20;
+                ArrayList<Posicio> area = mapa.getRang(agressor.getPosAct(), "Moure");
+                //area.retainAll(rang);
+                Posicio desti = agressor.getPosAct();
+                Integer millorDef = desti.getTerreny().getDefensa();
                 //Busquem la millor posicio on moure-ns
                 for (Posicio h : area) {
-                    if (h.getTerreny().getDefensa() > millorDef)
-                        desti = h;
+                    if (!h.teUnitat()) {
+                        h.setUnitat(agressor, false);
+                        if (mapa.getRang(h, "Atac").contains(Objectiu)) {
+                            if (mapa.distanciaRecorreguda(h, Objectiu) == agressor.getRang()) {
+                                if (h.getTerreny().getDefensa() > millorDef)
+                                    desti = h;
+                            }
+                        }
+                        h.eliminaUnitat();
+                    }
                 }
+                System.out.println("Agressor de : " + agressor.getPosAct() + " -> " + agressor + " anira a :" + desti + " i atacara a " + Objectiu);
 
                 if (desti.esValida(mapa.getMidaH(), mapa.getMidaV()))
                     mapa.desplacar(agressor.getPosAct(), desti);
 
-                j.atacar(agressor, Objectiu.getUnitat());
+                if (mapa.getRang(desti, "Atac").contains(Objectiu))
+                    j.atacar(agressor, Objectiu.getUnitat());
 
                 if (agressor.getPV() <= 0) {
                     j.getExercit().remove(agressor);

@@ -189,7 +189,7 @@ public class Mapa {
             }
         }
 
-        if (s.equals("Moure") || s.equals("Visio")) {
+        if (s.equals("Moure")) {
             buscaCamiMinim(p);
 
             ArrayList<Posicio> aux = new ArrayList<Posicio>();
@@ -200,6 +200,7 @@ public class Mapa {
             }
             posicions = aux;
         }
+
         posicions.remove(p);
 
         return posicions;
