@@ -167,7 +167,7 @@ public class Partida {
                  */
                 barraInferior.setExpanded(false);
                 try {
-                    ControlMaquina(jugador1);
+                    ControlMaquina();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -367,8 +367,8 @@ public class Partida {
                             seleccionada.pinta(Color.BLUE);
                         }
 
-                        if (actual.getUnitat().getPV() <= 0) { //Si la atacada es mor
-                            jugador1.getExercit().remove(actual);
+                        if (actual.getUnitat().getPV() == 0) { //Si la atacada es mor
+                            jugador1.getExercit().remove(actual.getUnitat());
                             actual.eliminaUnitat();
                             actualitzaContenidor(null, barraDesti);
                             actualitzaContenidor(null, barraAccio);
@@ -627,14 +627,13 @@ public class Partida {
     }
 
     /**
-     * @param j es el jugador controlat per la maquina
      * @return void
      * @pre --
      * @post la maquina realitza les funcions de un jugador j
      */
-    private void ControlMaquina(Jugador j) throws InterruptedException {
+    private void ControlMaquina() throws InterruptedException {
         //iterador per totes les unitats del jugador
-        Iterator itu = j.getExercit().iterator();
+        Iterator itu = jugador1.getExercit().iterator();
 
         while (itu.hasNext()) {
             Unitat agressor = (Unitat) itu.next();
@@ -693,15 +692,15 @@ public class Partida {
                     mapa.desplacar(agressor.getPosAct(), desti);
 
                 if (mapa.getRang(desti, "Atac").contains(Objectiu))
-                    j.atacar(agressor, Objectiu.getUnitat());
+                    jugador1.atacar(agressor, Objectiu.getUnitat());
 
-                if (agressor.getPV() <= 0) {
-                    j.getExercit().remove(agressor);
+                if (agressor.getPV() == 0) {
+                    jugador1.getExercit().remove(agressor);
                     agressor.getPosAct().eliminaUnitat();
                     agressor.getPosAct().reset();
-                    itu = j.getExercit().iterator();
+                    itu = jugador1.getExercit().iterator();
                 }
-                if (Objectiu.getUnitat().getPV() <= 0) {
+                if (Objectiu.getUnitat().getPV() == 0) {
                     jugador2.getExercit().remove(Objectiu.getUnitat());
                     Objectiu.eliminaUnitat();
                     Objectiu.reset();
